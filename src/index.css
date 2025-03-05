@@ -3,6 +3,7 @@
 @theme {
   --color-primary: oklch(63.4% 0.2307 25.48);
   --color-dark-teal-blue: oklch(43.27% 0.0835 231.32);
+  --color-secondary-text: oklch(51.03% 0 0);
 }
 
 @font-face {
@@ -72,9 +73,14 @@ button {
   cursor: pointer;
   transition: border-color 0.25s; */
 }
+
 button:hover {
   cursor: pointer;
 }
+
+input {
+  all: unset;
+} 
 
 @media (prefers-color-scheme: light) {
   :root {

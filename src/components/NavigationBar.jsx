@@ -1,5 +1,6 @@
 import AppLogo from "../assets/app-logo.svg?react";
 import Search from "../assets/search.svg?react";
+import RoundedButton from "./RoundedButton";
 
 export default function NavigationBar() {
   return (
@@ -30,8 +31,13 @@ export default function NavigationBar() {
         />
       </div>
 
-      <div className="flex items-center gap-6">
-        
+      <div className="flex items-center gap-6 h-full py-1">
+        <SearchBar />
+        <RoundedButton 
+          action={"Masuk"}
+          onClick={() => {}}
+          className="h-full"
+        />
       </div>
     </div>
   );
@@ -47,7 +53,7 @@ function LogoWithText() {
 }
 
 /**
- * Text button for routes
+ * Text button for individual route.
  * @param {string} route - name of the route. 
  * @param {boolean} selected - whether this route selected or not. 
  * @param {Function} onClick - callback function for click event. 
@@ -67,6 +73,30 @@ function RouteButton({
       onClick={onClick}
     >
       {route}
+    </div>
+  );
+}
+
+/**
+ * Search bar for navigation bar.
+ * @param {string} value - text field's value.
+ * @param {(newValue: string) => void} onValueChange - callback function when the value changes.   
+ */
+function SearchBar({
+  value,
+  onValueChange 
+}) {
+  return (
+    <div className={`
+      flex py-2 px-4 w-full h-full items-center text-secondary-text
+      rounded-full bg-white
+    `}>
+      <input 
+        value={value}
+        onChange={e => onValueChange(e.target)}
+        placeholder="Pencarian"
+      />
+      <Search className="w-[20px] h-[20px]" />
     </div>
   );
 }
