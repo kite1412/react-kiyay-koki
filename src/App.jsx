@@ -1,11 +1,10 @@
 import { useState } from 'react'
+import Header from './components/Header'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <div className="text-pink-500">
-      A Content
+    <div className="text-white w-screen h-screen">
+      <Header />
     </div>
   )
 }
