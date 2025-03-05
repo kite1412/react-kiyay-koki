@@ -7,7 +7,7 @@ export default function Header() {
   const size = "w-[20px] h-[20px]"
 
   return (
-    <div className="w-full h-[40px] bg-black flex gap-6 justify-center items-center">
+    <div className="w-full h-[40px] bg-black flex gap-8 justify-center items-center">
       <TextButton 
         icon={<FacebookLogo className={size} />}
         text={"kiyay_koki"}
