@@ -25,8 +25,12 @@ export default function HomePage() {
           mix-blend-multiply
         `} />
         <img src={bg} className="inset-0 w-full h-full object-cover" />
-        <Landing />
-        <Benefits />
+        <div className={`
+          flex flex-col gap-[120px] ${contentPadding} top-[calc(40px*3+80px)]
+        `}>
+          <Landing />
+          <Benefits />
+        </div>
       </div>
     </div>
   );
@@ -37,8 +41,8 @@ const contentPadding = "absolute w-3/4 left-1/2 transform -translate-x-1/2"
 function Landing({ className = "" }) {
   return (
     <div className={`
-      flex items-center  justify-between top-[calc(40px*3+80px)] px-6
-      ${contentPadding} ${className} gap-20
+      flex items-center justify-between px-6
+      ${className} gap-20
     `}>
       <BrandIntroduction />
       <FishesPager images={fishImages} />
@@ -68,9 +72,7 @@ function BrandIntroduction() {
   );
 }
 
-function FishesPager({
-  images
-}) {
+function FishesPager({ images }) {
   const iconSize = "h-[40px] w-[40px]"
 
   return (
@@ -104,7 +106,6 @@ function Benefits() {
   return (
     <div className={`
       flex py-4 px-6 rounded-full bg-primary text-white justify-evenly
-      ${contentPadding}
     `}>
       <Benefit 
         icon={<Fish1 />}
