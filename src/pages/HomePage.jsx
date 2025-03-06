@@ -19,7 +19,7 @@ export default function HomePage() {
         h-full w-full
       `}
     >
-      <div className="select-none relative">
+      <div className="relative">
         <div className={`
           absolute inset-0 bg-gradient-to-tr from-[rgb(40,40,40)] to-dark-teal-blue
           mix-blend-multiply

@@ -82,6 +82,24 @@ button:hover {
   all: unset;
 }
 
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #F73138;
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #ff4b51;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #242424;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
