@@ -5,6 +5,12 @@ import ChevronRight from "../assets/chevron-right.svg?react";
 import Fish1 from "../assets/fish-1.svg?react";
 import Fish2 from "../assets/fish-2.svg?react";
 import FreeShipping from "../assets/free-shipping.svg?react";
+import orandaRoseTail from "../assets/oranda-rose-tail.png";
+import fishSample1 from "../assets/fish-sample-1.png";
+import fishSample2 from "../assets/fish-sample-2.png";
+import fishSample3 from "../assets/fish-sample-3.png";
+
+const fishImages = [fishSample1, fishSample2, fishSample3];
 
 export default function HomePage() {
   return (
@@ -13,7 +19,7 @@ export default function HomePage() {
         h-full w-full
       `}
     >
-      <div class="select-none relative">
+      <div className="select-none relative">
         <div className={`
           absolute inset-0 bg-gradient-to-tr from-[rgb(40,40,40)] to-dark-teal-blue
           mix-blend-multiply
@@ -31,10 +37,11 @@ const contentPadding = "absolute w-3/4 left-1/2 transform -translate-x-1/2"
 function Landing({ className = "" }) {
   return (
     <div className={`
-      flex items-center justify-between top-[calc(40px*3+80px)] px-6
-      ${contentPadding} ${className}  
+      flex items-center  justify-between top-[calc(40px*3+80px)] px-6
+      ${contentPadding} ${className} gap-20
     `}>
       <BrandIntroduction />
+      <FishesPager images={fishImages} />
     </div>
   );
 }
@@ -61,10 +68,34 @@ function BrandIntroduction() {
   );
 }
 
-function FishesPager() {
+function FishesPager({
+  images
+}) {
+  const iconSize = "h-[40px] w-[40px]"
+
   return (
-    <div className="flex flex-col gap-6">
-      
+    <div className="flex flex-col justify-center gap-10 relative">
+      <div className="relative ">
+        <img 
+          src={orandaRoseTail}
+          className="rounded-[8px] border-2 "
+        />
+        <div className="flex justify-between absolute inset-y-0 items-center w-full">
+          <ChevronLeft className={`${iconSize}`} />
+          <ChevronRight className={`${iconSize}`} />
+        </div>
+      </div>
+      <div className="w-full grid grid-cols-3 gap-4">
+        {
+          images.map((i, _) => {
+            return <img 
+              src={i}
+              // 3:4 ratio 
+              className="rounded-[8px] border-2 h-[100px] w-[133px]"
+            />
+          })
+        }
+      </div>     
     </div>
   );
 }

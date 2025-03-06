@@ -17,8 +17,9 @@ function App() {
         {/* 40px comes from Header's height */}
         <div
           className={`
-        w-3/4 fixed z-1 left-1/2 transform -translate-x-1/2 top-[calc(40px*3)]
-        `}>
+            w-3/4 fixed z-1 left-1/2 transform -translate-x-1/2 top-[calc(40px*3)]
+          `}
+        >
           <NavigationBar />
         </div>
         <Routes>

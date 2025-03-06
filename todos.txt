@@ -1,3 +1,8 @@
 Components:
   * NavigationBar:
     - Responsive
+  
+Pages:
+  * HomePage
+   * FishesPager
+    - implement paging funcitonality
