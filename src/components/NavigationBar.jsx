@@ -96,6 +96,7 @@ function SearchBar({ value, onValueChange }) {
         value={value}
         onChange={(e) => onValueChange(e.target)}
         placeholder="Pencarian"
+        className="unset-all"
       />
       <Search className="w-[20px] h-[20px] select-none" />
     </div>
