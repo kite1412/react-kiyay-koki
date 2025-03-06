@@ -1,44 +1,50 @@
+import { useLocation, useNavigate } from "react-router-dom";
 import AppLogo from "../assets/app-logo.svg?react";
 import Search from "../assets/search.svg?react";
 import RoundedButton from "./RoundedButton";
 
 export default function NavigationBar() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const routes = [
+    { name: "Beranda", path: "/" },
+    { name: "Koleksi", path: "/koleksi" },
+    { name: "Kontak", path: "/kontak" },
+    { name: "Tentang", path: "/tentang" },
+  ];
+
+  const isLoginPage = location.pathname === "/login";
+
   return (
-    <div className={`
+    <div
+      className={`
       w-full h-[60px] rounded-full py-2 px-8 bg-black flex items-center justify-between
     `}>
-      <div className="flex gap-6 items-center">
+      <div className={`flex items-center ${isLoginPage ? "gap-128" : "gap-6"}`}>
         <LogoWithText />
-        <RouteButton 
-          route={"Beranda"}
-          selected={true}
-          onClick={() => {}}
-        />
-        <RouteButton 
-          route={"Koleksi"}
-          selected={false}
-          onClick={() => {}}
-        />
-        <RouteButton 
-          route={"Kontak"}
-          selected={false}
-          onClick={() => {}}
-        />
-        <RouteButton 
-          route={"Tentang"}
-          selected={false}
-          onClick={() => {}}
-        />
+        <div className="flex items-center gap-6">
+          {routes.map(({ name, path }) => (
+            <RouteButton
+              key={path}
+              route={name}
+              selected={location.pathname === path}
+              onClick={() => navigate(path)}
+            />
+          ))}
+        </div>
       </div>
 
-      <div className="flex items-center gap-6 h-full py-1">
-        <SearchBar />
-        <RoundedButton 
-          action={"Masuk"}
-          onClick={() => {}}
-          className="h-full"
-        />
-      </div>
+      {!isLoginPage && (
+        <div className="flex items-center gap-6 h-full py-1">
+          <SearchBar />
+          <RoundedButton
+            action={"Masuk"}
+            onClick={() => navigate("/login")}
+            className="h-full"
+          />
+        </div>
+      )}
     </div>
   );
 }
@@ -54,24 +60,21 @@ function LogoWithText() {
 
 /**
  * Text button for individual route.
- * @param {string} route - name of the route. 
- * @param {boolean} selected - whether this route selected or not. 
- * @param {Function} onClick - callback function for click event. 
- * @returns 
+ * @param {string} route - name of the route.
+ * @param {boolean} selected - whether this route selected or not.
+ * @param {Function} onClick - callback function for click event.
+ * @returns
  */
-function RouteButton({ 
-  route,
-  selected, 
-  onClick
-}) {
+function RouteButton({ route, selected, onClick }) {
   return (
     <div
       className={`
-        ${selected ? "text-primary font-bold" : "text-white" }
-        select-none hover:cursor-pointer ${selected ? "hover:opacity-100" : "hover:opacity-80"}
+        ${selected ? "text-primary font-bold" : "text-white"}
+        select-none hover:cursor-pointer ${
+          selected ? "hover:opacity-100" : "hover:opacity-80"
+        }
       `}
-      onClick={onClick}
-    >
+      onClick={onClick}>
       {route}
     </div>
   );
@@ -80,21 +83,20 @@ function RouteButton({
 /**
  * Search bar for navigation bar.
  * @param {string} value - text field's value.
- * @param {(newValue: string) => void} onValueChange - callback function when the value changes.   
+ * @param {(newValue: string) => void} onValueChange - callback function when the value changes.
  */
-function SearchBar({
-  value,
-  onValueChange 
-}) {
+function SearchBar({ value, onValueChange }) {
   return (
-    <div className={`
+    <div
+      className={`
       flex py-2 px-4 w-full h-full items-center text-secondary-text
       rounded-full bg-white
     `}>
-      <input 
+      <input
         value={value}
-        onChange={e => onValueChange(e.target)}
+        onChange={(e) => onValueChange(e.target)}
         placeholder="Pencarian"
+        className="unset-all"
       />
       <Search className="w-[20px] h-[20px] select-none" />
     </div>
