@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import AppLogo from "../assets/app-logo.svg?react";
 import Search from "../assets/search.svg?react";
 import RoundedButton from "./RoundedButton";
+import LogoWithText from "./LogoWithText";
 
 export default function NavigationBar() {
   const navigate = useNavigate();
@@ -45,15 +45,6 @@ export default function NavigationBar() {
           />
         </div>
       )}
-    </div>
-  );
-}
-
-function LogoWithText() {
-  return (
-    <div className="flex gap-4 items-center">
-      <AppLogo className="h-[30px] w-[30px]" />
-      <b>Kiyay Goldfish</b>
     </div>
   );
 }

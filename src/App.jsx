@@ -4,6 +4,7 @@ import NavigationBar from "./components/NavigationBar";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import ContactPage from "./pages/ContactPage";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -22,11 +23,14 @@ function App() {
         >
           <NavigationBar />
         </div>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-        </Routes>
+        <div className="flex flex-col items-center">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+          </Routes>
+          <Footer className="w-3/4" />
+        </div>
       </div>
     </Router>
   );
