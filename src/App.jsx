@@ -39,7 +39,10 @@ function App() {
               </>
             } />
             <Route path="/login" element={
-              <LoginPage onConfirm={() => {}} />
+              <LoginPage 
+                onPhoneNumberConfirm={number => {}} 
+                onOtpConfirm={otp => {}} 
+              />
             } />
             <Route path="/contact" element={
               <ContactPage />
