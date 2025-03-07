@@ -4,6 +4,7 @@
   --color-primary: oklch(63.4% 0.2307 25.48);
   --color-dark-teal-blue: oklch(43.27% 0.0835 231.32);
   --color-secondary-text: oklch(51.03% 0 0);
+  --color-dark-gray: oklch(43.48% 0 0);
 }
 
 @font-face {
@@ -98,6 +99,11 @@ button:hover {
 
 ::-webkit-scrollbar-track {
   background-color: #242424;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
 }
 
 @media (prefers-color-scheme: light) {

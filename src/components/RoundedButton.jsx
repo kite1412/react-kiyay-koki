@@ -5,19 +5,20 @@
  * @param {number} horizontalPadding - horizontal padding value to the {@link action} in px. 
  * @param {number} action - vertical padding value to the {@link action} in px. 
  * @param {string} className - additional class name. 
- * @returns 
+ * @param {boolean} disabled - whether the button is disabled or not. 
  */
 export default function RoundedButton({ 
   action,
   onClick,
   horizontalPadding = 24,
   verticalPadding = 8,
-  className = ""
+  className = "",
+  disabled = false
 }) {
   return (
     <div
       className={`
-        bg-primary hover:opacity-80 rounded-full hover:cursor-pointer
+        ${ !disabled ? "bg-primary hover:cursor-pointer hover:opacity-80" : "bg-dark-gray text-gray-400" } rounded-full
         select-none ${className} flex items-center justify-center
       `}
       style={{
@@ -26,7 +27,9 @@ export default function RoundedButton({
         paddingLeft: `${horizontalPadding}px`,
         paddingRight: `${horizontalPadding}px`,
       }}
-      onClick={onClick}
+      onClick={() => {
+        if (!disabled) onClick();
+      }}
     >
       {action}
     </div>

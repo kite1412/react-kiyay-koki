@@ -38,8 +38,12 @@ function App() {
                 <HomePage />
               </>
             } />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/login" element={
+              <LoginPage onConfirm={() => {}} />
+            } />
+            <Route path="/contact" element={
+              <ContactPage />
+            } />
           </Routes>
         </div>
       </div>
