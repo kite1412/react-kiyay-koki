@@ -4,7 +4,7 @@ import NavigationBar from "./components/NavigationBar";
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import ContactPage from "./pages/ContactPage";
-import Footer from "./components/Footer";
+import bg from "./assets/landing-page-bg.png";
 
 function App() {
   return (
@@ -23,13 +23,24 @@ function App() {
         >
           <NavigationBar />
         </div>
+
         <div className="flex flex-col items-center">
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={
+              <>
+                <div className="absolute">
+                  <div className={`
+                    absolute inset-0 bg-gradient-to-tr from-[rgb(40,40,40)] to-dark-teal-blue
+                    mix-blend-multiply
+                  `} />
+                  <img src={bg} className="inset-0 w-full h-full object-cover" />
+                </div>
+                <HomePage />
+              </>
+            } />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/contact" element={<ContactPage />} />
           </Routes>
-          <Footer className="w-3/4" />
         </div>
       </div>
     </Router>

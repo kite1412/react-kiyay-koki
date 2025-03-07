@@ -1,33 +1,27 @@
-//Login Page Belum kelar nat
+import PageLayout from "../layouts/PageLayout";
 
 export default function LoginPage() {
-  return (
-    <div
-      className={`
-        h-full w-full
-      `}>
-      <div className="select-none relative">
-        <div
-          className={`
-            absolute inset-0 bg-gradient-to-tr from-[rgb(40,40,40)] to-dark-teal-blue
-            mix-blend-multiply
-          `}
-        />
+  return <PageLayout 
+    content={
+      <div
+        className={`
+          h-full w-full
+        `}>
         <Content />
       </div>
-    </div>
-  );
+    }
+    useFooter={false} 
+  />;
 }
 
-const contentPadding = "absolute w-1/2 left-1/2 transform -translate-x-1/2";
-
-function Content({ className = "" }) {
+function Content() {
   return (
     <div
       className={`
-      flex flex-col items-center justify-between top-[calc(40px*3+80px)] px-6
-      ${contentPadding} gap-6 ${className}  
-    `}>
+        flex flex-col items-center justify-between top-[calc(40px*3+80px)] px-6
+        gap-6
+      `}
+    >
       <LoginInfo />
       <LoginForm />
     </div>
@@ -42,7 +36,7 @@ function LoginInfo() {
       </div>
       <div>
         Anda tidak perlu membuat akun, nomor WhatsApp Anda akan otomatis
-        terdaftar. Cukup masukkan nomor WhatsApp untuk melanjutkan.
+        terdaftar. <br /> Cukup masukkan nomor WhatsApp untuk melanjutkan.
       </div>
     </div>
   );

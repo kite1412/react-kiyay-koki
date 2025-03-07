@@ -1,4 +1,3 @@
-import bg from "../assets/landing-page-bg.png";
 import RoundedButton from "../components/RoundedButton";
 import ChevronLeft from "../assets/chevron-left.svg?react";
 import ChevronRight from "../assets/chevron-right.svg?react";
@@ -9,34 +8,25 @@ import orandaRoseTail from "../assets/oranda-rose-tail.png";
 import fishSample1 from "../assets/fish-sample-1.png";
 import fishSample2 from "../assets/fish-sample-2.png";
 import fishSample3 from "../assets/fish-sample-3.png";
+import PageLayout from "../layouts/PageLayout";
 
 const fishImages = [fishSample1, fishSample2, fishSample3];
 
 export default function HomePage() {
-  return (
-    <div
-      className={`
-        h-full w-full
-      `}
-    >
-      <div className="relative">
-        <div className={`
-          absolute inset-0 bg-gradient-to-tr from-[rgb(40,40,40)] to-dark-teal-blue
-          mix-blend-multiply
-        `} />
-        <img src={bg} className="inset-0 w-full h-full object-cover" />
-        <div className={`
-          flex flex-col gap-[120px] ${contentPadding} top-[calc(40px*3+80px)]
-        `}>
-          <Landing />
-          <Benefits />
-        </div>
+  return <PageLayout content={
+    <div className={`
+      relative h-full w-full flex flex-col
+    `}>
+      <div className={`
+        flex flex-col gap-[120px]
+      `}>
+        <Landing />
+        <Benefits />
       </div>
+      <div>ads</div>
     </div>
-  );
+  } />;
 }
-
-const contentPadding = "absolute w-3/4 left-1/2 transform -translate-x-1/2"
 
 function Landing({ className = "" }) {
   return (
