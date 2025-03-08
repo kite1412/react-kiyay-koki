@@ -19,11 +19,12 @@ export default function FishCard({
   discountPercentage = 0,
 }) {
   return (
-    <div className="relative w-[350px]">
+    <div className="group relative w-[350px]">
       <div 
         className={`
-          w-full h-2/3 absolute bottom-0 bg-black rounded-[8px]
-          border-2 border-primary z-1
+          w-full h-2/3 absolute bottom-0 bg-black rounded-[8px] outline-2
+          outline-primary group-hover:outline-0 z-1 group-hover:bg-linear-to-br group-hover:from-primary
+          group-hover:to-[rgba(0,0,0,0.5)]
         `}
       />
       <div className="flex flex-col gap-4 px-12 py-6 relative z-1">
