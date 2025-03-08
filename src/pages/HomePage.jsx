@@ -9,14 +9,14 @@ import fishSample1 from "../assets/fish-sample-1.png";
 import fishSample2 from "../assets/fish-sample-2.png";
 import fishSample3 from "../assets/fish-sample-3.png";
 import PageLayout from "../layouts/PageLayout";
-import FishCard from "../components/FishCard";
+import FishCards from "../components/FishCards";
 
 const fishImages = [fishSample1, fishSample2, fishSample3];
 
 export default function HomePage() {
   return <PageLayout content={
     <div className={`
-      relative h-full w-full flex flex-col
+      relative h-full w-full flex flex-col gap-20
     `}>
       <div className={`
         flex flex-col gap-[120px]
@@ -24,14 +24,20 @@ export default function HomePage() {
         <Landing />
         <Benefits />
       </div>
-      <div>
-        <FishCard 
-          image={orandaRoseTail}
-          name={"Oranda Rose Tail"}
-          price={250000}
-          rating={4}
-          totalVotes={5}
-          discountPercentage={20}
+      <div className="flex transform translate-x-1">
+        <FishCards 
+          fishes={
+            Array.from({ length: 5 }).map((_, i) => {
+              return {
+                image: orandaRoseTail,
+                name: "Oranda Rose Tail",
+                price: 250000,
+                rating: i + 1,
+                totalVotes: 5,
+                discountPercentage: 20
+              }
+            })
+          }
         />
       </div>
     </div>
