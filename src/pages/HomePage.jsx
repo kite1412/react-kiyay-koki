@@ -24,7 +24,7 @@ export default function HomePage() {
         <Landing />
         <Benefits />
       </div>
-      <div className="flex transform translate-x-1">
+      <div className="px-4">
         <FishCards 
           fishes={
             Array.from({ length: 5 }).map((_, i) => {

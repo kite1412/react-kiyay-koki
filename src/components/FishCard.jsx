@@ -36,12 +36,12 @@ export default function FishCard({
         <div className="flex gap-4 items-center">
           <b className="text-[16px]">
             Rp. {
-              !discountPercentage ? price : (price * (1 - discountPercentage / 100))
+              !discountPercentage ? formatPrice(price) : formatPrice(price * (1 - discountPercentage / 100))
             }
           </b>
           {
             discountPercentage ? <div className="relative text-primary">
-              <b className="text-[16px]">Rp. {price}</b>
+              <b className="text-[16px]">Rp. {formatPrice(price)}</b>
               <hr className="absolute top-1/2 left-0 w-full border-t-2 border-primary" />
             </div> : <></>
           }
@@ -61,4 +61,8 @@ export default function FishCard({
       </div>
     </div>
   );
+}
+
+function formatPrice(price) {
+  return price.toLocaleString("id-ID");
 }
