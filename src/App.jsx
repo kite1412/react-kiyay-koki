@@ -14,11 +14,11 @@ function App() {
         text-white w-screen h-screen bg-gradient-to-tr from-black to-dark-teal-blue
           overflow-x-hidden relative
         `}>
-        <Header className="sticky top-0 z-1" />
+        <Header className="sticky top-0 z-100" />
         {/* 40px comes from Header's height */}
         <div
           className={`
-            max-lg:w-full max-lg:px-6 lg:w-3/4 fixed z-1 left-1/2 transform -translate-x-1/2 
+            max-lg:w-full max-lg:px-6 lg:w-3/4 fixed z-100 left-1/2 transform -translate-x-1/2 
             top-[calc(40px*3)]
           `}
         >
