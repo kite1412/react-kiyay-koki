@@ -1,9 +1,9 @@
 /**
  * Rounded rectangle text button.
- * @param {string} action - the action name of the button. 
+ * @param {any} action - the action name of the button. 
  * @param {Function} onClick - callback function on click event. 
  * @param {number} horizontalPadding - horizontal padding value to the {@link action} in px. 
- * @param {number} action - vertical padding value to the {@link action} in px. 
+ * @param {number} verticalPadding - vertical padding value to the {@link action} in px. 
  * @param {string} className - additional class name. 
  * @param {boolean} disabled - whether the button is disabled or not. 
  */

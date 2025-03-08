@@ -1,4 +1,4 @@
-import LogoWithText from "./LogoWithText";
+import AppLogo from "./AppLogo";
 import { JSX } from "react";
 import FacebookLogo from "../assets/facebook.svg?react";
 import TiktokLogo from "../assets/tiktok.svg?react";
@@ -63,7 +63,7 @@ export default function Footer({ className = "" }) {
           }
         />
       </div>
-      <LogoWithText className="py-4" />
+      <AppLogo className="py-4" />
     </div>
   );
 }

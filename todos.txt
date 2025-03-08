@@ -1,6 +1,6 @@
 Components:
   * NavigationBar:
-    - Responsive
+    - Responsive ✅
   
 Pages:
   * HomePage
