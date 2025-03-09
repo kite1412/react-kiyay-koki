@@ -1,9 +1,13 @@
+Models:
+  * Product
+    - List of images instead of an image
+
 Components:
   * NavigationBar:
     - Responsive ✅
   * Footer:
     - Responsive ✅
-  
+
 Pages:
   * HomePage
    * FishesPager

@@ -8,7 +8,6 @@ import RoundedButton from "../components/RoundedButton";
 import { useState } from "react";
 import Add from "../assets/add.svg?react";
 import Remove from "../assets/remove.svg?react";
-import orandaRoseTail from "../assets/oranda-rose-tail.png";
 
 export default function DetailPage() {
   const location = useLocation();
@@ -23,7 +22,7 @@ export default function DetailPage() {
           productType={data.type}
           quantity={quantity}
           setQuantity={setQuantity}
-          className="px-20"
+          className="lg:px-20 max-lg:px-10"
         />
       </div>
     }
@@ -49,14 +48,20 @@ function ProductDetail({
   setQuantity,
   className = ""
 }) {
+  const mockImages = Array.from({ length: 5 }).fill(product.image);
+
   return (
     <div 
       className={`
-        flex justify-between w-full gap-20 items-center flex-grow
-        ${className}
+        flex justify-between w-full lg:gap-20 max-lg:gap-10 flex-grow
+        max-sm:flex-col max-sm:gap-10 ${className} 
       `}
     >
-      <div className="flex flex-col gap-6 flex-2">
+      <ProductImages 
+        images={mockImages}
+        className={"min-sm:hidden"}
+      />
+      <div className="flex flex-col gap-6 flex-2 max-sm:w-full sm:w-[50%]">
         <div className="flex flex-col gap-1">
           <div className="text-[14px] text-primary">{productType}</div>
           <h2 className="font-bold">{product.name}</h2>
@@ -75,9 +80,9 @@ function ProductDetail({
         }
         <ProductPrice 
           product={product}
-          className="text-[22px]" 
+          className="xl:text-[22px] min-lg:text-[18px]" 
         />
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           <QuantityPicker
             quantity={quantity}
             setQuantity={setQuantity}
@@ -97,7 +102,8 @@ function ProductDetail({
         />
       </div>
       <ProductImages 
-        images={Array.from({ length: 5 }).fill(product.image)}
+        images={mockImages}
+        className={"max-sm:hidden"}
       />
     </div>
   );
@@ -120,15 +126,20 @@ function QuantityPicker({
   quantity,
   setQuantity
 }) {
+  const iconSize = "size-[22px] max-lg:size-[18px] max-sm:-size[14px]"
+
   return (
-    <div className="flex gap-6 items-center outline-1 rounded-[4px] text-[20px] px-4 py-1">
+    <div className={`
+      flex gap-6 items-center outline-1 rounded-[4px] text-[20px] px-4 py-1
+      max-lg:px-2
+    `}>
       <button 
         className="font-bold"
         onClick={() => {
           if (quantity > 1) setQuantity(quantity - 1);
         }}
       >
-        <Remove />
+        <Remove className={iconSize} />
       </button>
       <div>
         {quantity}
@@ -138,7 +149,7 @@ function QuantityPicker({
           setQuantity(quantity + 1);
         }}
       >
-        <Add />
+        <Add className={iconSize} />
       </button>
     </div>
   );
@@ -147,13 +158,13 @@ function QuantityPicker({
 /**
  * @param {Array<string>} images - the image URLs. 
  */
-function ProductImages({ images }) {
+function ProductImages({ images, className = "" }) {
   if (images.length === 0) return;
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
   return (
-    <div className="flex flex-col gap-4 w-[50%]">
+    <div className={`flex flex-col gap-4 sm:w-[50%] ${className}`}>
       <img 
         src={images[currentIndex]}
         className="rounded-[8px]"
