@@ -24,22 +24,20 @@ export default function HomePage() {
         <Landing />
         <Benefits />
       </div>
-      <div className="px-4">
-        <FishCards 
-          fishes={
-            Array.from({ length: 5 }).map((_, i) => {
-              return {
-                image: orandaRoseTail,
-                name: "Oranda Rose Tail",
-                price: 250000,
-                rating: i + 1,
-                totalVotes: 5,
-                discountPercentage: 20
-              }
-            })
-          }
-        />
-      </div>
+      <FishCards 
+        fishes={
+          Array.from({ length: 5 }).map((_, i) => {
+            return {
+              image: orandaRoseTail,
+              name: "Oranda Rose Tail",
+              price: 250000,
+              rating: i + 1,
+              totalVotes: 5,
+              discountPercentage: 20
+            }
+          })
+        }
+      />
     </div>
   } />;
 }

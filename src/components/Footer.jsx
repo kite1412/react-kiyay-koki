@@ -18,9 +18,9 @@ export default function Footer({ className = "" }) {
   return (
     <div className={`
       px-12 pt-12 pb-4 flex flex-col gap-8 items-center bg-black
-      ${className} rounded-[10px]
+      ${className} lg:rounded-[10px]
     `}>
-      <div className="flex justify-evenly w-full">
+      <div className="flex max-sm:flex-col max-sm:gap-10 justify-evenly w-full">
         <InformationSection 
           title={"Informasi Kami"}
           fields={

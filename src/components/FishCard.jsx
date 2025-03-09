@@ -19,7 +19,7 @@ export default function FishCard({
   discountPercentage = 0,
 }) {
   return (
-    <div className="group relative w-[350px]">
+    <div className="group relative w-[320px]">
       <div 
         className={`
           w-full h-2/3 absolute bottom-0 bg-black rounded-[8px] outline-2

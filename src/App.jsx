@@ -25,7 +25,7 @@ function App() {
           <NavigationBar />
         </div>
 
-        <div className="flex flex-col items-center">
+        <div className="flex justify-center">
           <Routes>
             <Route path="/" element={
               <>
