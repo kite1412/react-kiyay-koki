@@ -12,16 +12,16 @@ import PageLayout from "../layouts/PageLayout";
 import ProductCards from "../components/ProductCards";
 import { useState } from "react";
 import { createProduct } from "../models/Product";
-import { createProducts } from "../models/Products";
 import ProductType from "../models/ProductType";
 import ProductSelections, { createProductSelections } from "../models/ProductSelections";
+import testimonies from "../../public/testimonies.json";
 
 const fishImages = [fishSample1, fishSample2, fishSample3];
 
 export default function HomePage() {
   return <PageLayout content={
     <div className={`
-      relative h-full w-full flex flex-col gap-20
+      relative h-full w-full flex flex-col gap-30
     `}>
       <div className={`
         flex flex-col gap-[120px]
@@ -47,6 +47,7 @@ export default function HomePage() {
           })
         }
       />
+      <Testimonies testimonies={testimonies} />
     </div>
   } />;
 }
@@ -207,4 +208,66 @@ function Recommendation({ selections }) {
       }
     </div>
   );
+}
+
+/**
+ * @param {Array<Object>} testimonies - a list of testimony. 
+ */
+function Testimonies({ testimonies }) {
+  if (testimonies.length === 0) return;
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const currentTestimony = testimonies[currentIndex];
+  const iconSize = "h-[40px] w-[40px]";
+  const prevDisabled = !currentIndex;
+  const nextDisabled = currentIndex === testimonies.length - 1;
+
+  return (
+    <div className="flex flex-col gap-6 items-center lg:px-20 max-lg:px-10 w-full">
+      <h2 className="font-bold">Testimoni Pelanggan Kami</h2>
+      <div className="flex flex-col gap-4 items-center w-full">
+        <div className="flex gap-4 text-center items-center justify-between w-full">
+          <CircleIconButton
+            icon={
+              <ChevronLeft className={`${iconSize}`} />
+            }
+            onClick={() => setCurrentIndex(currentIndex - 1)}
+            className={`${prevDisabled && "opacity-0"}`}
+            disabled={prevDisabled}
+          />
+          {currentTestimony.content}
+          <CircleIconButton 
+            icon={
+              <ChevronRight className={`${iconSize}`} />
+            }
+            onClick={() => setCurrentIndex(currentIndex + 1)}
+            className={`${nextDisabled && "opacity-0"}`}
+            disabled={nextDisabled}
+          />
+        </div>
+        <div className="flex flex-col items-center">
+          <h3 className="font-bold text-primary">
+            {currentTestimony.name}
+          </h3>
+          <div>{currentTestimony.role}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CircleIconButton({
+  icon,
+  onClick,
+  className,
+  disabled
+}) {
+  return <RoundedButton 
+    action={icon}
+    onClick={onClick}
+    verticalPadding={0}
+    horizontalPadding={0}
+    disabled={disabled}
+    className={`h-fit w-fit ${className}`}
+  />
 }
