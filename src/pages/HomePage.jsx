@@ -14,7 +14,7 @@ import { useState } from "react";
 import { createProduct } from "../models/Product";
 import ProductType from "../models/ProductType";
 import ProductSelections, { createProductSelections } from "../models/ProductSelections";
-import testimonies from "../../public/testimonies.json";
+import testimonies from "../data/testimonies.json";
 import { useNavigate } from "react-router-dom";
 import { productDetailNavigationInfo } from "./DetailPage";
 
@@ -42,7 +42,13 @@ export default function HomePage() {
                 price: 250000,
                 rating: i + 1,
                 totalVotes: i,
-                discountPercentage: 20
+                stock: (i + 1) * (i + 1), 
+                discountPercentage: 20,
+                spec: {
+                  warna: "Merah",
+                  ukuran: "Besar",
+                  jenis_ikan: "Rose Tail"
+                }
               })
             }),
             aquariumItems: [],

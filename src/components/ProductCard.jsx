@@ -1,5 +1,6 @@
 import Star from "../assets/star.svg?react";
 import Product from "../models/Product";
+import ProductPrice from "./ProductPrice";
 
 /**
  * A card to display a product.
@@ -28,20 +29,7 @@ export default function ProductCard({
           className="aspect-[4/3] rounded-[8px]"
         />
         <b className="text-[18px]">{product.name}</b>
-        <div className="flex gap-4 items-center">
-          <b className="text-[16px]">
-            Rp. {
-              !product.discountPercentage ? formatPrice(product.price) : 
-              formatPrice(product.price * (1 - product.discountPercentage / 100))
-            }
-          </b>
-          {
-            product.discountPercentage ? <div className="relative text-primary">
-              <b className="text-[16px]">Rp. {formatPrice(product.price)}</b>
-              <hr className="absolute top-1/2 left-0 w-full border-t-2 border-primary" />
-            </div> : <></>
-          }
-        </div>
+        <ProductPrice product={product} />
         <div className="flex gap-4">
           <div className="flex gap-1 items-center">
             {
@@ -63,8 +51,4 @@ export default function ProductCard({
       </div>
     </div>
   );
-}
-
-function formatPrice(price) {
-  return price.toLocaleString("id-ID");
 }

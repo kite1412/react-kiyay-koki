@@ -6,7 +6,9 @@ export default class Product {
     price,
     rating,
     totalVotes,
-    discountPercentage = 0
+    stock,
+    discountPercentage = 0,
+    spec = {}
   ) {
     this.id = id;
     this.image = image;
@@ -14,7 +16,9 @@ export default class Product {
     this.price = price;
     this.rating = rating;
     this.totalVotes = totalVotes;
+    this.stock = stock;
     this.discountPercentage = discountPercentage;
+    this.spec = spec;
   }
 }
 
@@ -28,7 +32,9 @@ export function createProduct({
   price,
   rating,
   totalVotes,
-  discountPercentage = 0
+  stock,
+  discountPercentage = 0,
+  spec = {}
 }) {
   return new Product(
     id,
@@ -37,6 +43,33 @@ export function createProduct({
     price,
     rating,
     totalVotes,
-    discountPercentage
+    stock,
+    discountPercentage,
+    spec
   )
+}
+
+/**
+ * Convert json spec to a list of string that represents fields in json spec.
+ * 
+ * Example:
+ * input = {
+ *  color: "Red",
+ *  size: "Large"
+ * }
+ * 
+ * output = [
+ *  "Color: Red",
+ *  "Size: Large"
+ * ]
+ * 
+ * @param {Object} spec - the specification of the product. 
+ */
+export function specToString(spec) {
+  return Object.entries(spec).map(([k, v]) => {
+    const keyWords = k.split("_").join(" ");
+    const fixedKey = keyWords.charAt(0).toUpperCase() + keyWords.slice(1);
+    
+    return `${fixedKey}: ${v}`
+  });
 }
