@@ -45,7 +45,13 @@ export default function ProductCard({ product }) {
               ))
             }
           </div>
-          <div className="text-[14px] text-dark-gray">({product.totalVotes})</div>
+          {
+            product.totalVotes ? (
+              <div className="text-[14px] text-dark-gray">
+                ({product.totalVotes})
+              </div>
+            ) : <></>
+          }
         </div>
       </div>
     </div>

@@ -32,13 +32,13 @@ export default function HomePage() {
       <Recommendation
         selections={
           createProductSelections({
-            fishItems: Array.from({ length: 5 }).map((_, i) => {
+            fishItems: Array.from({ length: 8 }).map((_, i) => {
               return createProduct({
                 image: orandaRoseTail,
                 name: "Oranda Rose Tail",
                 price: 250000,
                 rating: i + 1,
-                totaleVotes: 5,
+                totalVotes: i,
                 discountPercentage: 20
               })
             }),
@@ -158,14 +158,15 @@ function Benefit({
   );
 }
 
+const defaultLengthToShow = 6;
+
 /**
  * @param {ProductSelections} selections - selections for this recommendation which each selection
  *  contains the type and the products. read {@link ProductSelections} for clarity. 
  */
 function Recommendation({ selections }) {
-  if (selections.length === 0) return;
-
   const [selected, setSelected] = useState(selections.fishProducts);
+  const [showAll, setShowAll] = useState(false);
   
   return (
     <div className="flex flex-col gap-8 items-center">
@@ -187,7 +188,23 @@ function Recommendation({ selections }) {
           ))
         }
       </div>
-      <ProductCards products={selected.items} />
+      <ProductCards 
+        products={
+          showAll ? selected.items : selected.items.slice(
+            0,
+            Math.min(defaultLengthToShow, selected.items.length)
+          )
+        } 
+      />
+      {
+        selected.items.length > defaultLengthToShow && (
+          <RoundedButton 
+            action={!showAll ? "Lihat Semua" : "Sembunyikan"}
+            onClick={() => setShowAll(!showAll)}
+            verticalPadding={4}
+          />
+        )
+      }
     </div>
   );
 }
