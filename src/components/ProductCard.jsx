@@ -4,10 +4,17 @@ import Product from "../models/Product";
 /**
  * A card to display a product.
  * @param {Product} product - the data for the card. 
+ * @param {Function} onClick - callback function when the product clicked. 
  */
-export default function ProductCard({ product }) {
+export default function ProductCard({ 
+  product,
+  onClick
+}) {
   return (
-    <div className="group relative w-[320px]">
+    <div 
+      className="group relative w-[320px] hover:cursor-pointer"
+      onClick={onClick}
+    >
       <div 
         className={`
           w-full h-2/3 absolute bottom-0 bg-black rounded-[8px] outline-2

@@ -8,7 +8,8 @@ export default function Header({ className = "" }) {
 
   return (
     <div className={`
-      w-full h-[40px] bg-black flex gap-8 justify-center items-center ${className}
+      w-full h-[40px] bg-black flex gap-8 justify-center items-center
+      max-sm:text-[12px] ${className}
     `}>
       <TextButton 
         icon={<FacebookLogo className={size} />}

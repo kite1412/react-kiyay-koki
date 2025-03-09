@@ -1,5 +1,6 @@
 export default class Product {
   constructor(
+    id,
     image,
     name,
     price,
@@ -7,6 +8,7 @@ export default class Product {
     totalVotes,
     discountPercentage = 0
   ) {
+    this.id = id;
     this.image = image;
     this.name = name;
     this.price = price;
@@ -20,6 +22,7 @@ export default class Product {
  * Convenience function to create a {@link Product}.
  */
 export function createProduct({
+  id,
   image,
   name,
   price,
@@ -28,6 +31,7 @@ export function createProduct({
   discountPercentage = 0
 }) {
   return new Product(
+    id,
     image,
     name,
     price,

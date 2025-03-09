@@ -1,8 +1,9 @@
 /**
  * @enum
+ * 
  * NOTE: Change
  * - {@link ProductSelections}
- * if the types added/removed.
+ * if the types defined here added/removed.
  */
 const ProductType = {
   FISH: "Ikan Koki",

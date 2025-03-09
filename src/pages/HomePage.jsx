@@ -15,6 +15,8 @@ import { createProduct } from "../models/Product";
 import ProductType from "../models/ProductType";
 import ProductSelections, { createProductSelections } from "../models/ProductSelections";
 import testimonies from "../../public/testimonies.json";
+import { useNavigate } from "react-router-dom";
+import { productDetailNavigationInfo } from "./DetailPage";
 
 const fishImages = [fishSample1, fishSample2, fishSample3];
 
@@ -34,6 +36,7 @@ export default function HomePage() {
           createProductSelections({
             fishItems: Array.from({ length: 8 }).map((_, i) => {
               return createProduct({
+                id: i + 1,
                 image: orandaRoseTail,
                 name: "Oranda Rose Tail",
                 price: 250000,
@@ -168,7 +171,8 @@ const defaultLengthToShow = 6;
 function Recommendation({ selections }) {
   const [selected, setSelected] = useState(selections.fishProducts);
   const [showAll, setShowAll] = useState(false);
-  
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col gap-8 items-center">
       <h2 className="font-bold">Rekomendasi Terbaik</h2>
@@ -195,7 +199,11 @@ function Recommendation({ selections }) {
             0,
             Math.min(defaultLengthToShow, selected.items.length)
           )
-        } 
+        }
+        onClick={p => {
+          const { path, options } = productDetailNavigationInfo(p, selected.type);
+          navigate(path, options);
+        }}
       />
       {
         selected.items.length > defaultLengthToShow && (
