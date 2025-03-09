@@ -65,9 +65,7 @@ function Content({ onPhoneNumberConfirm, onOtpConfirm }) {
 function Instruction({ title, desc }) {
   return (
     <div className="flex flex-col gap-6 text-center items-center">
-      <div className="font-bold text-4pxl text-[32px]">
-        <div className="text-primary">{title}</div>
-      </div>
+      <h1 className="text-primary font-bold">{title}</h1>
       <div>
         {desc}
       </div>

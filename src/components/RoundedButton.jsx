@@ -6,6 +6,7 @@
  * @param {number} verticalPadding - vertical padding value to the {@link action} in px. 
  * @param {string} className - additional class name. 
  * @param {boolean} disabled - whether the button is disabled or not. 
+ * @param {boolean} fullyRounded - whether the button is round or round rect-shaped. 
  */
 export default function RoundedButton({ 
   action,
@@ -13,13 +14,15 @@ export default function RoundedButton({
   horizontalPadding = 24,
   verticalPadding = 8,
   className = "",
-  disabled = false
+  disabled = false,
+  fullyRounded = true
 }) {
   return (
     <div
       className={`
-        ${ !disabled ? "bg-primary hover:cursor-pointer hover:opacity-80" : "bg-dark-gray text-gray-400" } rounded-full
-        select-none ${className} flex items-center justify-center
+        ${ !disabled ? "bg-primary hover:cursor-pointer hover:opacity-80" : "bg-dark-gray text-gray-400" }
+        select-none ${className} flex items-center justify-center ${fullyRounded ? "rounded-full" : "rounded-[4px]"}
+        transition-colors
       `}
       style={{
         paddingTop: `${verticalPadding}px`,

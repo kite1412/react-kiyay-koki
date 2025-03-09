@@ -9,7 +9,12 @@ import fishSample1 from "../assets/fish-sample-1.png";
 import fishSample2 from "../assets/fish-sample-2.png";
 import fishSample3 from "../assets/fish-sample-3.png";
 import PageLayout from "../layouts/PageLayout";
-import FishCards from "../components/FishCards";
+import ProductCards from "../components/ProductCards";
+import { useState } from "react";
+import { createProduct } from "../models/Product";
+import { createProducts } from "../models/Products";
+import ProductType from "../models/ProductType";
+import ProductSelections, { createProductSelections } from "../models/ProductSelections";
 
 const fishImages = [fishSample1, fishSample2, fishSample3];
 
@@ -24,17 +29,21 @@ export default function HomePage() {
         <Landing />
         <Benefits />
       </div>
-      <FishCards 
-        fishes={
-          Array.from({ length: 5 }).map((_, i) => {
-            return {
-              image: orandaRoseTail,
-              name: "Oranda Rose Tail",
-              price: 250000,
-              rating: i + 1,
-              totalVotes: 5,
-              discountPercentage: 20
-            }
+      <Recommendation
+        selections={
+          createProductSelections({
+            fishItems: Array.from({ length: 5 }).map((_, i) => {
+              return createProduct({
+                image: orandaRoseTail,
+                name: "Oranda Rose Tail",
+                price: 250000,
+                rating: i + 1,
+                totaleVotes: 5,
+                discountPercentage: 20
+              })
+            }),
+            aquariumItems: [],
+            feedItems: []
           })
         }
       />
@@ -57,9 +66,9 @@ function Landing({ className = "" }) {
 function BrandIntroduction() {
   return (
     <div className="flex flex-col gap-6">
-      <div className="font-bold text-4pxl text-[32px]">
-        <div className="text-primary">Kiyay Goldfish Lampung</div>
-        <div>Keindahan Akuarium Dimulai di Sini</div>
+      <div className="font-bold">
+        <h1 className="text-primary">Kiyay Goldfish Lampung</h1>
+        <h1>Keindahan Akuarium Dimulai di Sini</h1>
       </div>
       <div>
         Jadikan akuariummu lebih hidup dengan ikan koki
@@ -120,11 +129,13 @@ function Benefits() {
         icon={<Fish2 />}
         title={"Ikan Besar & Sehat"}
         desc={"Ikan Koki dengan perawatan terbaik."}
+        className="max-sm:hidden"
       />
       <Benefit 
         icon={<FreeShipping />}
         title={"Gratis Pengiriman"}
         desc={"Pengiriman gratis ke lokasi tertentu!"}
+        className="max-sm:hidden"
       />
     </div>
   );
@@ -133,15 +144,50 @@ function Benefits() {
 function Benefit({
   icon,
   title,
-  desc
+  desc,
+  className = ""
 }) {
   return (
-    <div className="flex items-center gap-4">
+    <div className={`flex items-center gap-4 ${className}`}>
       {icon}
       <div className="flex flex-col gap-1">
         <div className="text-[16px] font-bold">{title}</div>
         <div className="text-[14px]">{desc}</div>
       </div>
+    </div>
+  );
+}
+
+/**
+ * @param {ProductSelections} selections - selections for this recommendation which each selection
+ *  contains the type and the products. read {@link ProductSelections} for clarity. 
+ */
+function Recommendation({ selections }) {
+  if (selections.length === 0) return;
+
+  const [selected, setSelected] = useState(selections.fishProducts);
+  
+  return (
+    <div className="flex flex-col gap-8 items-center">
+      <h2 className="font-bold">Rekomendasi Terbaik</h2>
+      <div className="flex gap-4">
+        {
+          ProductType.values.map((p, _) => (
+            <RoundedButton 
+              action={p}
+              onClick={() => setSelected(selections.getProductsByType(p))}
+              fullyRounded={false}
+              className={`
+                outline-2 outline-primary
+                ${
+                  selected.type != p && ("bg-transparent outline-white")
+                }
+              `}
+            />
+          ))
+        }
+      </div>
+      <ProductCards products={selected.items} />
     </div>
   );
 }
