@@ -17,6 +17,7 @@ import ProductSelections, { createProductSelections } from "../models/ProductSel
 import testimonies from "../data/testimonies.json";
 import { useNavigate } from "react-router-dom";
 import { productDetailNavigationInfo } from "./DetailPage";
+import Banners from "../components/Banner";
 
 const fishImages = [fishSample1, fishSample2, fishSample3];
 
