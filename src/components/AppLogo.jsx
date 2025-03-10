@@ -2,8 +2,7 @@ import Logo from "../assets/app-logo.svg?react";
 
 export default function AppLogo({ 
   className = "",
-   withText = true,
-   logoClassName = ""
+  withText = true
 }) {
   return (
     <div className={`flex gap-3 items-center ${className}`}>

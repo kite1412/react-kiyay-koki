@@ -51,7 +51,29 @@ export default function HomePage() {
                   ukuran: "Besar",
                   jenis_ikan: "Rose Tail",
                   ukuran_cm: 13
-                }
+                },
+                ratingDistributions: [
+                  {
+                    score: 1,
+                    count: 2
+                  },
+                  {
+                    score: 2,
+                    count: 3
+                  },
+                  {
+                    score: 3,
+                    count: 3
+                  },
+                  {
+                    score: 4,
+                    count: 10
+                  },
+                  {
+                    score: 5,
+                    count: 18
+                  }
+                ]
               })
             }),
             aquariumItems: [],

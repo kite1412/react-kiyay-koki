@@ -1,6 +1,6 @@
-import Star from "../assets/star.svg?react";
 import Product from "../models/Product";
 import ProductPrice from "./ProductPrice";
+import ProductRating from "./ProductRating";
 
 /**
  * A card to display a product.
@@ -31,15 +31,7 @@ export default function ProductCard({
         <b className="text-[18px]">{product.name}</b>
         <ProductPrice product={product} />
         <div className="flex gap-4">
-          <div className="flex gap-1 items-center">
-            {
-              Array.from({ length: 5 }).map((_, i) => (
-                <Star className={`
-                  ${(i + 1) <= product.rating ? "text-gold" : "text-dark-gray"}  
-                `} />
-              ))
-            }
-          </div>
+          <ProductRating rating={product.rating} />
           {
             product.totalVotes ? (
               <div className="text-[14px] text-dark-gray">

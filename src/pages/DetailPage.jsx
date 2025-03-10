@@ -8,6 +8,8 @@ import RoundedButton from "../components/RoundedButton";
 import { useState } from "react";
 import Add from "../assets/add.svg?react";
 import Remove from "../assets/remove.svg?react";
+import ProductRating from "../components/ProductRating";
+import Star from "../assets/star.svg?react";
 
 export default function DetailPage() {
   const location = useLocation();
@@ -31,6 +33,9 @@ export default function DetailPage() {
             fishType: product.spec.jenis_ikan,
             size: product.spec.ukuran_cm
           }}
+          productAvgScore={product.rating}
+          productTotalVotes={product.totalVotes}
+          productRatingDistributions={product.ratingDistributions}
         />
       </div>
     }
@@ -192,14 +197,20 @@ function ProductImages({ images, className = "" }) {
   );
 }
 
-function DescriptionAndReview({ productType, params }) {
+function DescriptionAndReview({ 
+  productType,
+  params,
+  productAvgScore,
+  productTotalVotes,
+  productRatingDistributions
+}) {
   const [showingDescription, setShowingDescription] = useState(true);
 
   return (
     <div className="flex flex-col w-full items-center gap-10">
-      <div className="flex flex-col gap-4 w-full md:w-[50%] select-none max-sm:px-20">
+      <div className="flex flex-col gap-4 max-sm:w-full w-[50%] select-none max-sm:px-20">
         <div className={`
-          flex justify-evenly font-bold text-[18px] hover:cursor-pointer  
+          flex justify-evenly font-bold text-[18px] max-sm:text-[14px] hover:cursor-pointer 
         `}>
           <div
             onClick={() => setShowingDescription(true)}
@@ -235,7 +246,11 @@ function DescriptionAndReview({ productType, params }) {
               type: productType,
               params: params
             }}
-          /> : <></>
+          /> : <ReviewsAndRating 
+            avgScore={productAvgScore}
+            totalVotes={productTotalVotes}
+            ratingDistributions={productRatingDistributions}
+          />
         }
       </div>
     </div>
@@ -261,7 +276,7 @@ function Description({ descriptionInfo }) {
 
 function FishProductDescription({ fishType, size }) {
   return (
-    <PharagrahpsWithLineBreak 
+    <ParagraphsWithLineBreak 
       contents={[
         {
           items: [
@@ -286,10 +301,10 @@ function FishProductDescription({ fishType, size }) {
         },
         {
           items: [
-            `1 ekor ikan koki ${fishType}, ukuran ${size} cm`,
-            "Panduan perawatan dasar ikan koki",
-            "Garansi ikan dalam kondisi sehat saat diterima",
-            "🚚 Gratis Pengiriman ke lokasi tertentu (S&K berlaku)."
+            `• 1 ekor ikan koki ${fishType}, ukuran ${size} cm`,
+            "• Panduan perawatan dasar ikan koki",
+            "• Garansi ikan dalam kondisi sehat saat diterima",
+            "• 🚚 Gratis Pengiriman ke lokasi tertentu (S&K berlaku)."
           ]
         },
         {
@@ -300,7 +315,81 @@ function FishProductDescription({ fishType, size }) {
   );
 }
 
-function PharagrahpsWithLineBreak({ contents }) {
+function ReviewsAndRating({
+  avgScore,
+  totalVotes,
+  ratingDistributions
+}) {
+  return (
+    <div className="flex flex-col gap-10">
+      <Rating 
+        avgScore={avgScore}
+        totalVotes={totalVotes}
+        ratingDistributions={ratingDistributions}
+      />
+    </div>
+  );
+}
+
+function Rating({
+  avgScore,
+  totalVotes,
+  ratingDistributions
+}) {
+  return (
+    <div className="flex max-md:gap-10 gap-30">
+      <div className="flex flex-col sm:gap-4 max-sm:gap-2">
+        <div>
+          <p>Rata - Rata Rating</p>
+          <div className="flex gap-4 items-center">
+            <h1 className="font-bold">{avgScore}</h1>
+            <ProductRating rating={avgScore} />
+          </div>
+        </div>
+        <div>
+          <p>Total Ulasan</p>
+          <h1 className="font-bold">{totalVotes}</h1>
+        </div>
+      </div>
+      <RatingDistribution 
+        distributions={ratingDistributions}
+      />
+    </div>
+  );
+}
+
+/**
+ * @param {Array<Object>} distributions - a list that consists of pairs of 'score' and 'count'. 
+ */
+function RatingDistribution({ distributions }) {
+  const totalVotes = distributions.map((e, _) => e.count).reduce((a, n) => a + n, 0);
+  console.log(totalVotes);
+
+  return (
+    <div className="flex flex-col gap-2 font-bold">
+      {
+        distributions.sort((a, b) => b.score - a.score).map((r, _) => (
+          <div className="flex gap-2 items-center">
+            <Star className={"text-dark-gray"} />
+            <div>{r.score}</div>
+            <div className="relative h-[6px] w-[200px] min-w-[150px]">
+              <div className="absolute h-full w-full bg-dark-gray rounded-full" />
+              <div 
+                className="absolute h-full bg-primary rounded-full"
+                style={{
+                  width: `${r.count / totalVotes * 100}%`
+                }} 
+              />
+            </div>
+            <div className="text-light-gray">{r.count}</div>
+          </div>
+        ))
+      }
+    </div>
+  );
+}
+
+function ParagraphsWithLineBreak({ contents }) {
   return (
     <>
       {

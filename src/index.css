@@ -6,6 +6,7 @@
   --color-secondary-text: oklch(51.03% 0 0);
   --color-dark-gray: oklch(43.48% 0 0);
   --color-gold: oklch(80.86% 0.1585 71.53);
+  --color-light-gray: oklch(76.68% 0 0);
 }
 
 @font-face {

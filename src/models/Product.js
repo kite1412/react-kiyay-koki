@@ -8,7 +8,8 @@ export default class Product {
     totalVotes,
     stock,
     discountPercentage = 0,
-    spec = {}
+    spec = {},
+    ratingDistributions
   ) {
     this.id = id;
     this.image = image;
@@ -19,6 +20,7 @@ export default class Product {
     this.stock = stock;
     this.discountPercentage = discountPercentage;
     this.spec = spec;
+    this.ratingDistributions = ratingDistributions;
   }
 }
 
@@ -34,7 +36,8 @@ export function createProduct({
   totalVotes,
   stock,
   discountPercentage = 0,
-  spec = {}
+  spec = {},
+  ratingDistributions
 }) {
   return new Product(
     id,
@@ -45,7 +48,8 @@ export function createProduct({
     totalVotes,
     stock,
     discountPercentage,
-    spec
+    spec,
+    ratingDistributions
   )
 }
 
