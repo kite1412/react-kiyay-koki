@@ -47,7 +47,8 @@ export default function HomePage() {
                 spec: {
                   warna: "Merah",
                   ukuran: "Besar",
-                  jenis_ikan: "Rose Tail"
+                  jenis_ikan: "Rose Tail",
+                  ukuran_cm: 13
                 }
               })
             }),

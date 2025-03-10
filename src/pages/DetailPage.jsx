@@ -12,17 +12,25 @@ import Remove from "../assets/remove.svg?react";
 export default function DetailPage() {
   const location = useLocation();
   const data = location.state;
+  const product = data.product;
   const [quantity, setQuantity] = useState(1);
 
   return <PageLayout 
     content={
       <div className={`flex flex-col gap-30`}>
         <ProductDetail 
-          product={data.product}
+          product={product}
           productType={data.type}
           quantity={quantity}
           setQuantity={setQuantity}
           className="lg:px-20 max-lg:px-10"
+        />
+        <DescriptionAndReview
+          productType={data.type}
+          params={{
+            fishType: product.spec.jenis_ikan,
+            size: product.spec.ukuran_cm
+          }}
         />
       </div>
     }
@@ -164,7 +172,7 @@ function ProductImages({ images, className = "" }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   return (
-    <div className={`flex flex-col gap-4 sm:w-[50%] ${className}`}>
+    <div className={`flex flex-col gap-4 sm:w-[50%] select-none ${className}`}>
       <img 
         src={images[currentIndex]}
         className="rounded-[8px]"
@@ -174,12 +182,143 @@ function ProductImages({ images, className = "" }) {
           images.filter((_, i) => i !== currentIndex).map((image, i) => (
             <img 
               src={image}
-              className="rounded-[4px] w-[20%]"
+              className="rounded-[4px] w-[20%] hover:cursor-pointer"
               onClick={() => setCurrentIndex(i)}
             />
           ))
         }
       </div>
     </div>
+  );
+}
+
+function DescriptionAndReview({ productType, params }) {
+  const [showingDescription, setShowingDescription] = useState(true);
+
+  return (
+    <div className="flex flex-col w-full items-center gap-10">
+      <div className="flex flex-col gap-4 w-full md:w-[50%] select-none max-sm:px-20">
+        <div className={`
+          flex justify-evenly font-bold text-[18px] hover:cursor-pointer  
+        `}>
+          <div
+            onClick={() => setShowingDescription(true)}
+            className={`${showingDescription ? "text-primary" : "text-secondary-text"} transition-colors`}
+          >
+            Deskripsi Produk
+          </div>
+          <div
+            onClick={() => setShowingDescription(false)}
+            className={`${!showingDescription ? "text-primary" : "text-secondary-text"} transition-colors`}
+          >
+            Ulasan & Rating
+          </div>
+        </div>
+        <div className="relative">
+          <div 
+            className={`
+              absolute w-[50%] h-1 bg-primary z-1 rounded-[8px] ${
+                !showingDescription && "ms-[50%]"
+              } transition-[margin] duration-200 ease-in-out
+            `}
+          />
+          <div 
+            className="absolute w-full h-1 bg-secondary-text rounded-[8px]"
+          />
+        </div>
+      </div>
+      { /* 40 = ProductDetail's px * 2 */ }
+      <div className="max-sm:px-10 sm:px-40">
+        {
+          showingDescription ? <Description 
+            descriptionInfo={{
+              type: productType,
+              params: params
+            }}
+          /> : <></>
+        }
+      </div>
+    </div>
+  );
+}
+
+/**
+ * @param {Object} descriptionInfo - contains the {@link ProductType} and params needed for the desc. 
+ */
+function Description({ descriptionInfo }) {
+  return (
+    <div>
+      {
+        descriptionInfo.type === ProductType.FISH ? 
+        <FishProductDescription 
+          fishType={descriptionInfo.params.fishType}
+          size={descriptionInfo.params.size}
+        /> : <></>
+      }
+    </div>
+  );
+}
+
+function FishProductDescription({ fishType, size }) {
+  return (
+    <PharagrahpsWithLineBreak 
+      contents={[
+        {
+          items: [
+            `
+              Hadirkan pesona ikan koki ${fishType} di akuariummu! Dengan tubuh yang unik,
+              warna cerah, dan gerakan anggun, ikan ini menjadi favorit bagi pecinta ikan hias.
+            `
+          ]
+        },
+        {
+          items: [
+            `✨ Keunggulan Ikan Koki ${fishType}:`,
+            "✔ Sehat & Berkualitas – Dipilih langsung dari peternak terbaik dengan perawatan optimal.",
+            "✔ Warna Cerah & Menarik – Memiliki warna alami yang semakin indah dengan makanan berkualitas.",
+            "✔ Aktif & Lincah – Gerakan anggun yang menambah keindahan dalam akuarium.",
+            "✔ Mudah Dipelihara – Cocok untuk pemula maupun kolektor ikan hias.",
+            "✔ Bebas Penyakit – Dikarantina sebelum pengiriman untuk memastikan kondisi prima."
+          ]
+        },
+        {
+          items: ["📦 Paket Termasuk:"]
+        },
+        {
+          items: [
+            `1 ekor ikan koki ${fishType}, ukuran ${size} cm`,
+            "Panduan perawatan dasar ikan koki",
+            "Garansi ikan dalam kondisi sehat saat diterima",
+            "🚚 Gratis Pengiriman ke lokasi tertentu (S&K berlaku)."
+          ]
+        },
+        {
+          items: ["💙 Pesan Sekarang dan tambahkan keindahan ikan koki ke dalam akuariummu!"]
+        }
+      ]}
+    />
+  );
+}
+
+function PharagrahpsWithLineBreak({ contents }) {
+  return (
+    <>
+      {
+        contents ? <ul>
+          {
+            contents.map((c, _) => (
+              c.items.map((t, i) => (
+                <>
+                  <li>{t}</li>
+                  {
+                    c.items.length - 1 == i ? <br /> : <></> 
+                  }
+                </>
+              ))
+            ))
+          }
+        </ul> : <></>
+      }
+    </>
   );
 }
