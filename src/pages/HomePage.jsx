@@ -31,6 +31,7 @@ export default function HomePage() {
       `}>
         <Landing />
         <Benefits />
+        <Banners />
       </div>
       <Recommendation
         selections={
@@ -83,9 +84,8 @@ function BrandIntroduction() {
         <h1>Keindahan Akuarium Dimulai di Sini</h1>
       </div>
       <div>
-        Jadikan akuariummu lebih hidup dengan ikan koki
-        pilihan terbaik! Kami menyediakan ikan koki sehat
-        dengan warna cerah dan kualitas unggul.
+        Jadikan akuariummu lebih hidup dengan ikan koki pilihan terbaik! Kami
+        menyediakan ikan koki sehat dengan warna cerah dan kualitas unggul.
       </div>
       <RoundedButton
         action={"Temukan Sekarang"}
@@ -129,21 +129,22 @@ function FishesPager({ images }) {
 
 function Benefits() {
   return (
-    <div className={`
+    <div
+      className={`
       flex py-4 px-6 rounded-full bg-primary text-white justify-evenly
     `}>
-      <Benefit 
+      <Benefit
         icon={<Fish1 />}
         title={"Kualitas Terbaik"}
         desc={"Kualitas Ikan koki dengan warna cerah"}
       />
-      <Benefit 
+      <Benefit
         icon={<Fish2 />}
         title={"Ikan Besar & Sehat"}
         desc={"Ikan Koki dengan perawatan terbaik."}
         className="max-sm:hidden"
       />
-      <Benefit 
+      <Benefit
         icon={<FreeShipping />}
         title={"Gratis Pengiriman"}
         desc={"Pengiriman gratis ke lokasi tertentu!"}
