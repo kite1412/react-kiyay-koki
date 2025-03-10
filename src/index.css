@@ -4,6 +4,8 @@
   --color-primary: oklch(63.4% 0.2307 25.48);
   --color-dark-teal-blue: oklch(43.27% 0.0835 231.32);
   --color-secondary-text: oklch(51.03% 0 0);
+  --color-dark-gray: oklch(43.48% 0 0);
+  --color-gold: oklch(80.86% 0.1585 71.53);
 }
 
 @font-face {
@@ -54,8 +56,18 @@ body {
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 32px;
+  line-height: 1.5;
+}
+
+h2 {
+  font-size: 26px;
+  line-height: 1.5;
+}
+
+h3 {
+  font-size: 20px;
+  line-height: 1.5;
 }
 
 button {
@@ -80,6 +92,29 @@ button:hover {
 
 .unset-all {
   all: unset;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #F73138;
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #ff4b51;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #242424;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
 }
 
 @media (prefers-color-scheme: light) {

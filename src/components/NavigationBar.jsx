@@ -1,11 +1,16 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import AppLogo from "../assets/app-logo.svg?react";
 import Search from "../assets/search.svg?react";
 import RoundedButton from "./RoundedButton";
+import AppLogo from "./AppLogo";
+import useScreenWidth from "../hooks/useScreenWidth";
+import { minLgPx, minMdPx, minSmPx } from "../constants/breakpoints";
+import SignIn from "../assets/sign-in.svg?react";
 
 export default function NavigationBar() {
   const navigate = useNavigate();
   const location = useLocation();
+  const screenWidth = useScreenWidth();
+  const isSm = screenWidth < minMdPx;
 
   const routes = [
     { name: "Beranda", path: "/" },
@@ -19,41 +24,43 @@ export default function NavigationBar() {
   return (
     <div
       className={`
-      w-full h-[60px] rounded-full py-2 px-8 bg-black flex items-center justify-between
-    `}>
-      <div className={`flex items-center ${isLoginPage ? "gap-128" : "gap-6"}`}>
-        <LogoWithText />
-        <div className="flex items-center gap-6">
-          {routes.map(({ name, path }) => (
-            <RouteButton
-              key={path}
-              route={name}
-              selected={location.pathname === path}
-              onClick={() => navigate(path)}
-            />
-          ))}
+        w-full h-[60px] rounded-full py-2 px-8 max-md:px-4 bg-black flex 
+        items-center justify-between flex-wrap max-md:text-[14px]
+      `}
+    >
+      <div 
+        className={`
+          flex items-center ${!isLoginPage ? "gap-4" : "justify-between w-full"}
+        `}
+      >
+        <AppLogo withText={screenWidth > minLgPx} />
+        <div className="flex items-center gap-4 max-lg:gap-3">
+          {
+            routes.map(({ name, path }) => (
+              <RouteButton
+                key={path}
+                route={name}
+                selected={location.pathname === path}
+                onClick={() => navigate(path)}
+              />
+            ))
+          }
         </div>
       </div>
 
       {!isLoginPage && (
-        <div className="flex items-center gap-6 h-full py-1">
+        <div className="flex items-center lg:gap-6 gap-2 h-full py-1">
           <SearchBar />
           <RoundedButton
-            action={"Masuk"}
+            action={
+              !isSm ? "Masuk" : <SignIn className="h-[20px] w-[20px]" /> 
+            }
             onClick={() => navigate("/login")}
             className="h-full"
+            horizontalPadding={ isSm ? 8 : 24 }
           />
         </div>
       )}
-    </div>
-  );
-}
-
-function LogoWithText() {
-  return (
-    <div className="flex gap-4 items-center">
-      <AppLogo className="h-[30px] w-[30px]" />
-      <b>Kiyay Goldfish</b>
     </div>
   );
 }
@@ -74,7 +81,8 @@ function RouteButton({ route, selected, onClick }) {
           selected ? "hover:opacity-100" : "hover:opacity-80"
         }
       `}
-      onClick={onClick}>
+      onClick={onClick}
+    >
       {route}
     </div>
   );
@@ -89,14 +97,15 @@ function SearchBar({ value, onValueChange }) {
   return (
     <div
       className={`
-      flex py-2 px-4 w-full h-full items-center text-secondary-text
-      rounded-full bg-white
-    `}>
+        flex lg:py-2 lg:px-4 max-lg:p-2 w-full h-full items-center text-secondary-text
+        rounded-full bg-white
+      `}
+    >
       <input
         value={value}
         onChange={(e) => onValueChange(e.target)}
         placeholder="Pencarian"
-        className="unset-all"
+        className="lg:unset-all max-lg:hidden max-xl:w-[100px]"
       />
       <Search className="w-[20px] h-[20px] select-none" />
     </div>
