@@ -1,6 +1,6 @@
 import Product from "../models/Product";
 import ProductPrice from "./ProductPrice";
-import ProductRating from "./ProductRating";
+import Rating from "./Rating";
 
 /**
  * A card to display a product.
@@ -31,7 +31,7 @@ export default function ProductCard({
         <b className="text-[18px]">{product.name}</b>
         <ProductPrice product={product} />
         <div className="flex gap-4">
-          <ProductRating rating={product.rating} />
+          <Rating rating={product.rating} />
           {
             product.totalVotes ? (
               <div className="text-[14px] text-dark-gray">

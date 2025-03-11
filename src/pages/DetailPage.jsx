@@ -8,7 +8,7 @@ import RoundedButton from "../components/RoundedButton";
 import { useState } from "react";
 import Add from "../assets/add.svg?react";
 import Remove from "../assets/remove.svg?react";
-import ProductRating from "../components/ProductRating";
+import _Rating from "../components/Rating";
 import Star from "../assets/star.svg?react";
 
 export default function DetailPage() {
@@ -36,6 +36,7 @@ export default function DetailPage() {
           productAvgScore={product.rating}
           productTotalVotes={product.totalVotes}
           productRatingDistributions={product.ratingDistributions}
+          reviews={product.reviews}
         />
       </div>
     }
@@ -202,7 +203,8 @@ function DescriptionAndReview({
   params,
   productAvgScore,
   productTotalVotes,
-  productRatingDistributions
+  productRatingDistributions,
+  reviews
 }) {
   const [showingDescription, setShowingDescription] = useState(true);
 
@@ -239,7 +241,7 @@ function DescriptionAndReview({
         </div>
       </div>
       { /* 40 = ProductDetail's px * 2 */ }
-      <div className="max-sm:px-10 sm:px-40">
+      <div className="max-sm:px-10 sm:px-40 w-full">
         {
           showingDescription ? <Description 
             descriptionInfo={{
@@ -250,6 +252,7 @@ function DescriptionAndReview({
             avgScore={productAvgScore}
             totalVotes={productTotalVotes}
             ratingDistributions={productRatingDistributions}
+            reviews={reviews}
           />
         }
       </div>
@@ -318,15 +321,17 @@ function FishProductDescription({ fishType, size }) {
 function ReviewsAndRating({
   avgScore,
   totalVotes,
-  ratingDistributions
+  ratingDistributions,
+  reviews
 }) {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-10 w-full items-center">
       <Rating 
         avgScore={avgScore}
         totalVotes={totalVotes}
         ratingDistributions={ratingDistributions}
       />
+      <Reviews reviews={reviews} />
     </div>
   );
 }
@@ -343,7 +348,7 @@ function Rating({
           <p>Rata - Rata Rating</p>
           <div className="flex gap-4 items-center">
             <h1 className="font-bold">{avgScore}</h1>
-            <ProductRating rating={avgScore} />
+            <_Rating rating={avgScore} />
           </div>
         </div>
         <div>
@@ -354,6 +359,39 @@ function Rating({
       <RatingDistribution 
         distributions={ratingDistributions}
       />
+    </div>
+  );
+}
+
+function Reviews({ reviews }) {
+  if (reviews.length === 0) return;
+  
+  return (
+    <div className="flex flex-col gap-10 w-full">
+      {reviews.map((r, _) => (
+        <UserReview review={r} className="gap-10" />
+      ))}
+    </div>
+  );
+}
+
+/**
+ * @param {Object} review - the review data. 
+ */
+function UserReview({ review, className = "" }) {
+  return (
+    <div className={`flex flex-col w-full ${className}`}>
+      <hr className="text-light-gray" />
+      <div className="flex flex-col gap-3">
+        <b className="text-[18px]">{review.phoneNumber}</b>
+        <div className="flex gap-6 items-center">
+          <_Rating rating={review.rating} starSize={20} />
+          <div className="text-light-gray">{review.publishedAt}</div>
+        </div>
+        <div className="mt-2">
+          {review.content}
+        </div>
+      </div>
     </div>
   );
 }
