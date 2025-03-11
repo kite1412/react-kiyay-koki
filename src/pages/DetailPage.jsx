@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import PageLayout from "../layouts/PageLayout";
 import { toPath } from "../utils/paths";
 import ProductType from "../models/ProductType";
@@ -12,6 +12,8 @@ import _Rating from "../components/Rating";
 import Star from "../assets/star.svg?react";
 import ChevronLeft from "../assets/chevron-left.svg?react";
 import ChevronRight from "../assets/chevron-right.svg?react";
+import ProductCards from "../components/ProductCards";
+import { mockFishesData } from "../data/mocks";
 
 export default function DetailPage() {
   const location = useLocation();
@@ -40,11 +42,26 @@ export default function DetailPage() {
           productRatingDistributions={product.ratingDistributions}
           reviews={product.reviews}
         />
+        <Recommendations 
+          products={mockFishesData}
+        />
       </div>
     }
   />
 }
 
+/**
+ * Generates path and options needed for route navigation to DetailPage.
+ * @param {Product} product - the product that will be displayed in the DetailPage. 
+ * @param {ProductType} productType - the product's type, check {@link ProductType}. 
+ * @returns {{ path: string, options: NavigateOptions}}
+ * 
+ * @example
+ * const navigate = useNavigate();
+ * const { path, options } = productDetailNavigationInfo(p, type);
+ * 
+ * navigate(path, options);
+ */
 export function productDetailNavigationInfo(product, productType) {
   return {
     path: `/detail/${toPath(productType)}/${product.id}`,
@@ -378,6 +395,24 @@ function Reviews({ reviews }) {
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         totalReviews={reviews.length}
+      />
+    </div>
+  );
+}
+
+function Recommendations({ products }) {
+  const navigate = useNavigate();
+  const productType = useLocation().state.type;
+
+  return (
+    <div className="flex flex-col items-center gap-8">
+      <h1 className="font-bold">Rekomendasi Lainnya</h1>
+      <ProductCards 
+        products={products}
+        onClick={p => {
+          const { path, options } = productDetailNavigationInfo(p, productType);
+          navigate(path, options);
+        }}
       />
     </div>
   );
