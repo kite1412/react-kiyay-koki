@@ -31,7 +31,7 @@ export default function HomePage() {
       `}>
         <Landing />
         <Benefits />
-        <Banners />
+        <Banners onClick={() => {}} />
       </div>
       <Recommendation
         selections={
