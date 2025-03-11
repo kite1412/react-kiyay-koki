@@ -1,5 +1,10 @@
 import React from "react";
+import PageLayout from "../layouts/PageLayout";
 
 export default function ContactPage() {
-  return <div>ContactPage</div>;
+  return <PageLayout content={
+    <div>
+      
+    </div>
+  } />;
 };

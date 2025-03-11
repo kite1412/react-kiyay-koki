@@ -10,6 +10,8 @@ import Add from "../assets/add.svg?react";
 import Remove from "../assets/remove.svg?react";
 import _Rating from "../components/Rating";
 import Star from "../assets/star.svg?react";
+import ChevronLeft from "../assets/chevron-left.svg?react";
+import ChevronRight from "../assets/chevron-right.svg?react";
 
 export default function DetailPage() {
   const location = useLocation();
@@ -34,7 +36,7 @@ export default function DetailPage() {
             size: product.spec.ukuran_cm
           }}
           productAvgScore={product.rating}
-          productTotalVotes={product.totalVotes}
+          productTotalReviews={product.reviews.length}
           productRatingDistributions={product.ratingDistributions}
           reviews={product.reviews}
         />
@@ -202,7 +204,7 @@ function DescriptionAndReview({
   productType,
   params,
   productAvgScore,
-  productTotalVotes,
+  productTotalReviews,
   productRatingDistributions,
   reviews
 }) {
@@ -250,7 +252,7 @@ function DescriptionAndReview({
             }}
           /> : <ReviewsAndRating 
             avgScore={productAvgScore}
-            totalVotes={productTotalVotes}
+            totalReviews={productTotalReviews}
             ratingDistributions={productRatingDistributions}
             reviews={reviews}
           />
@@ -320,7 +322,7 @@ function FishProductDescription({ fishType, size }) {
 
 function ReviewsAndRating({
   avgScore,
-  totalVotes,
+  totalReviews,
   ratingDistributions,
   reviews
 }) {
@@ -328,7 +330,7 @@ function ReviewsAndRating({
     <div className="flex flex-col gap-10 w-full items-center">
       <Rating 
         avgScore={avgScore}
-        totalVotes={totalVotes}
+        totalReviews={totalReviews}
         ratingDistributions={ratingDistributions}
       />
       <Reviews reviews={reviews} />
@@ -338,7 +340,7 @@ function ReviewsAndRating({
 
 function Rating({
   avgScore,
-  totalVotes,
+  totalReviews,
   ratingDistributions
 }) {
   return (
@@ -353,7 +355,7 @@ function Rating({
         </div>
         <div>
           <p>Total Ulasan</p>
-          <h1 className="font-bold">{totalVotes}</h1>
+          <h1 className="font-bold">{totalReviews}</h1>
         </div>
       </div>
       <RatingDistribution 
@@ -365,12 +367,18 @@ function Rating({
 
 function Reviews({ reviews }) {
   if (reviews.length === 0) return;
+  const [currentPage, setCurrentPage] = useState(1);
   
   return (
     <div className="flex flex-col gap-10 w-full">
-      {reviews.map((r, _) => (
+      {reviews.slice(10 * currentPage - 10, 10 * currentPage).map((r, _) => (
         <UserReview review={r} className="gap-10" />
       ))}
+      <ReviewsPager 
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalReviews={reviews.length}
+      />
     </div>
   );
 }
@@ -396,12 +404,53 @@ function UserReview({ review, className = "" }) {
   );
 }
 
+function ReviewsPager({
+  currentPage,
+  setCurrentPage,
+  totalReviews
+}) {
+  const iconButton = "size-[32px] hover:cursor-pointer select-none";
+
+  return (
+    <div className={`
+      flex w-full items-center justify-between py-4 ps-6 pr-8 bg-black
+      rounded-[4px]
+    `}>
+      <div>
+        Menampilkan <b>1 - 10</b> Dari <b>{totalReviews}</b> Ulasan
+      </div>
+      <div className="flex gap-4 items-center">
+        <ChevronLeft 
+          className={`
+            ${iconButton} ${
+              !(currentPage >= 2) && "text-dark-gray"
+            }  
+          `}
+          onClick={() => {
+            if (currentPage >= 2) setCurrentPage(currentPage - 1);
+          }}
+        />
+        <b className="border-2 border-white rounded-[4px] px-4 py-2 text-[18px]">{currentPage}</b>
+        <ChevronRight 
+          className={`
+            ${iconButton} ${
+              !(currentPage * 10 < totalReviews) && "text-dark-gray"
+            }
+          `}
+          onClick={() => {
+            if (currentPage * 10 < totalReviews) setCurrentPage(currentPage + 1);
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
 /**
  * @param {Array<Object>} distributions - a list that consists of pairs of 'score' and 'count'. 
  */
 function RatingDistribution({ distributions }) {
   const totalVotes = distributions.map((e, _) => e.count).reduce((a, n) => a + n, 0);
-  console.log(totalVotes);
 
   return (
     <div className="flex flex-col gap-2 font-bold">

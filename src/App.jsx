@@ -53,7 +53,7 @@ function App() {
               }
             />
             <Route 
-              path="/contact"
+              path="/kontak"
               element={
                 <ContactPage />
               } 
