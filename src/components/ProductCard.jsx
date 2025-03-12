@@ -26,7 +26,7 @@ export default function ProductCard({
       <div className="flex flex-col gap-4 px-12 py-6 relative z-1">
         <img
           src={product.image}
-          className="aspect-[4/3] rounded-[8px]"
+          className="aspect-[4/3] rounded-[8px] group-hover:scale-110 transition-transform"
         />
         <b className="text-[18px]">{product.name}</b>
         <ProductPrice product={product} />

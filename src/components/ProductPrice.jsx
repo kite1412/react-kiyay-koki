@@ -28,5 +28,5 @@ export function subtractByDiscount(
   actualPrice,
   discountPercentage
 ) {
-  return actualPrice * (1 - discountPercentage / 100)
+  return actualPrice * (1 - discountPercentage / 100);
 }
