@@ -7,6 +7,7 @@ import ContactPage from "./pages/ContactPage";
 import bg from "./assets/landing-page-bg.png";
 import DetailPage from "./pages/DetailPage";
 import CollectionPage from "./pages/CollectionPage";
+import AboutPage from "./pages/AboutPage";
 
 function App() {
   return (
@@ -59,6 +60,14 @@ function App() {
                 <ContactPage />
               } 
             />
+
+            <Route 
+              path="/tentang"
+              element={
+                <AboutPage />
+              } 
+            />
+
             <Route 
               path="/detail/:type/:id"
               element={
