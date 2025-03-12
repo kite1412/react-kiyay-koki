@@ -6,6 +6,7 @@ import LoginPage from "./pages/LoginPage";
 import ContactPage from "./pages/ContactPage";
 import bg from "./assets/landing-page-bg.png";
 import DetailPage from "./pages/DetailPage";
+import CollectionPage from "./pages/CollectionPage";
 
 function App() {
   return (
@@ -62,6 +63,12 @@ function App() {
               path="/detail/:type/:id"
               element={
                 <DetailPage />
+              }
+            />
+            <Route 
+              path="/koleksi"
+              element={
+                <CollectionPage />
               }
             />
             <Route   />

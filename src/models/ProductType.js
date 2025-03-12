@@ -8,11 +8,11 @@
 const ProductType = {
   FISH: "Ikan Koki",
   AQUARIUM: "Akuarium",
-  FEED: "Pakan Koki",
+  FEED: "Pakan Ikan",
   values: [
     "Ikan Koki",
     "Akuarium",
-    "Pakan Koki"
+    "Pakan Ikan"
   ]
 }
 

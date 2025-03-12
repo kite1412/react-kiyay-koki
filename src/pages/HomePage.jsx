@@ -161,7 +161,6 @@ function Benefit({
  */
 function Recommendation({ selections }) {
   const [selected, setSelected] = useState(selections.fishProducts);
-  const [showAll, setShowAll] = useState(false);
   const navigate = useNavigate();
 
   return (
