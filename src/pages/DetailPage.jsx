@@ -14,6 +14,7 @@ import ChevronLeft from "../assets/chevron-left.svg?react";
 import ChevronRight from "../assets/chevron-right.svg?react";
 import ProductCards from "../components/ProductCards";
 import { mockFishesData } from "../data/mocks";
+import { defaultShowCount } from "../constants/productCards";
 
 export default function DetailPage() {
   const location = useLocation();
@@ -413,6 +414,7 @@ function Recommendations({ products }) {
           const { path, options } = productDetailNavigationInfo(p, productType);
           navigate(path, options);
         }}
+        showCount={defaultShowCount}
       />
     </div>
   );

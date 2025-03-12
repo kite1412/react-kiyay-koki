@@ -1,0 +1,1 @@
+export const defaultShowCount = 6;

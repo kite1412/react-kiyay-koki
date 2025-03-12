@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 import { productDetailNavigationInfo } from "./DetailPage";
 import Banners from "../components/Banner";
 import { mockFishesData } from "../data/mocks";
+import { defaultShowCount } from "../constants/productCards";
 
 const fishImages = [fishSample1, fishSample2, fishSample3];
 
@@ -154,8 +155,6 @@ function Benefit({
   );
 }
 
-const defaultLengthToShow = 6;
-
 /**
  * @param {ProductSelections} selections - selections for this recommendation which each selection
  *  contains the type and the products. read {@link ProductSelections} for clarity. 
@@ -186,26 +185,13 @@ function Recommendation({ selections }) {
         }
       </div>
       <ProductCards 
-        products={
-          showAll ? selected.items : selected.items.slice(
-            0,
-            Math.min(defaultLengthToShow, selected.items.length)
-          )
-        }
+        products={selected.items}
         onClick={p => {
           const { path, options } = productDetailNavigationInfo(p, selected.type);
           navigate(path, options);
         }}
+        showCount={defaultShowCount}
       />
-      {
-        selected.items.length > defaultLengthToShow && (
-          <RoundedButton 
-            action={!showAll ? "Lihat Semua" : "Sembunyikan"}
-            onClick={() => setShowAll(!showAll)}
-            verticalPadding={4}
-          />
-        )
-      }
     </div>
   );
 }
