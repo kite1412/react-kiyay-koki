@@ -10,5 +10,9 @@ Components:
 
 Pages:
   * HomePage
-   * FishesPager
-    - implement paging funcitonality
+    * FishesPager
+      - implement paging funcitonality
+
+  * CollectionPage
+    * PriceRange
+      - Consider use input instead
