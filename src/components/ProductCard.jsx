@@ -13,7 +13,7 @@ export default function ProductCard({
 }) {
   return (
     <div 
-      className="group relative w-[320px] hover:cursor-pointer"
+      className="group relative w-[300px] hover:cursor-pointer"
       onClick={onClick}
     >
       <div 

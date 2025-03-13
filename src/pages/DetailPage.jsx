@@ -10,11 +10,10 @@ import Add from "../assets/add.svg?react";
 import Remove from "../assets/remove.svg?react";
 import _Rating from "../components/Rating";
 import Star from "../assets/star.svg?react";
-import ChevronLeft from "../assets/chevron-left.svg?react";
-import ChevronRight from "../assets/chevron-right.svg?react";
 import ProductCards from "../components/ProductCards";
 import { mockFishesData } from "../data/mocks";
 import { defaultShowCount } from "../constants/productCards";
+import PagerBar from "../components/PagerBar";
 
 export default function DetailPage() {
   const location = useLocation();
@@ -392,10 +391,11 @@ function Reviews({ reviews }) {
       {reviews.slice(10 * currentPage - 10, 10 * currentPage).map((r, _) => (
         <UserReview review={r} className="gap-10" />
       ))}
-      <ReviewsPager 
+      <PagerBar 
+        resultPlaceholder="Ulasan"
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
-        totalReviews={reviews.length}
+        totalItems={reviews.length}
       />
     </div>
   );
@@ -436,48 +436,6 @@ function UserReview({ review, className = "" }) {
         <div className="mt-2">
           {review.content}
         </div>
-      </div>
-    </div>
-  );
-}
-
-function ReviewsPager({
-  currentPage,
-  setCurrentPage,
-  totalReviews
-}) {
-  const iconButton = "size-[32px] hover:cursor-pointer select-none";
-
-  return (
-    <div className={`
-      flex w-full items-center justify-between py-4 ps-6 pr-8 bg-black
-      rounded-[4px]
-    `}>
-      <div>
-        Menampilkan <b>1 - 10</b> Dari <b>{totalReviews}</b> Ulasan
-      </div>
-      <div className="flex gap-4 items-center">
-        <ChevronLeft 
-          className={`
-            ${iconButton} ${
-              !(currentPage >= 2) && "text-dark-gray"
-            }  
-          `}
-          onClick={() => {
-            if (currentPage >= 2) setCurrentPage(currentPage - 1);
-          }}
-        />
-        <b className="border-2 border-white rounded-[4px] px-4 py-2 text-[18px]">{currentPage}</b>
-        <ChevronRight 
-          className={`
-            ${iconButton} ${
-              !(currentPage * 10 < totalReviews) && "text-dark-gray"
-            }
-          `}
-          onClick={() => {
-            if (currentPage * 10 < totalReviews) setCurrentPage(currentPage + 1);
-          }}
-        />
       </div>
     </div>
   );

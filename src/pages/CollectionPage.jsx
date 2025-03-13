@@ -7,6 +7,7 @@ import { mockFishesData } from "../data/mocks";
 import ProductCards from "../components/ProductCards";
 import { useNavigate } from "react-router-dom";
 import { productDetailNavigationInfo } from "./DetailPage";
+import PagerBar from "../components/PagerBar";
 
 export default function CollectionPage() {
   const [selectedType, setSelectedType] = useState(ProductType.FISH);
@@ -23,6 +24,7 @@ export default function CollectionPage() {
   const navigate = useNavigate();
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
 
   return <PageLayout 
     content={
@@ -49,6 +51,13 @@ export default function CollectionPage() {
             navigate(path, options);
           }}
           className={"items-stretch"}
+        />
+        <PagerBar
+          resultPlaceholder="Koleksi"
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalItems={selectedProducts.items.length}
+          itemsPerPage={15}
         />
       </div>
     }

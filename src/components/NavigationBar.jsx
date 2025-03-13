@@ -3,7 +3,7 @@ import Search from "../assets/search.svg?react";
 import RoundedButton from "./RoundedButton";
 import AppLogo from "./AppLogo";
 import useScreenWidth from "../hooks/useScreenWidth";
-import { minLgPx, minMdPx, minSmPx } from "../constants/breakpoints";
+import { minLgPx, minMdPx } from "../constants/breakpoints";
 import SignIn from "../assets/sign-in.svg?react";
 
 export default function NavigationBar() {
@@ -105,7 +105,7 @@ function SearchBar({ value, onValueChange }) {
         value={value}
         onChange={(e) => onValueChange(e.target)}
         placeholder="Pencarian"
-        className="lg:unset-all max-lg:hidden max-xl:w-[100px]"
+        className={`max-lg:hidden lg:w-[100px] xl:w-[150px] outline-none`}
       />
       <Search className="w-[20px] h-[20px] select-none" />
     </div>
