@@ -260,7 +260,7 @@ function DescriptionAndReview({
         </div>
       </div>
       { /* 40 = ProductDetail's px * 2 */ }
-      <div className="max-sm:px-10 sm:px-40 w-full">
+      <div className="max-sm:px-10 max-lg:px-20 lg:px-40 w-full">
         {
           showingDescription ? <Description 
             descriptionInfo={{

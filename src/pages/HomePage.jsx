@@ -19,20 +19,24 @@ import { productDetailNavigationInfo } from "./DetailPage";
 import Banners from "../components/Banner";
 import { mockFishesData } from "../data/mocks";
 import { defaultShowCount } from "../constants/productCards";
+import useScreenWidth from "../hooks/useScreenWidth";
+import { minLgPx } from "../constants/breakpoints";
 
 const fishImages = [fishSample1, fishSample2, fishSample3];
 
 export default function HomePage() {
+  const navigate = useNavigate();
+
   return <PageLayout content={
     <div className={`
       relative h-full w-full flex flex-col gap-30
     `}>
       <div className={`
-        flex flex-col gap-[120px]
+        flex flex-col max-lg:gap-[60px] lg:gap-[120px]
       `}>
         <Landing />
         <Benefits />
-        <Banners onClick={() => {}} />
+        <Banners onClick={() => navigate("/koleksi")} />
       </div>
       <Recommendation
         selections={
@@ -52,7 +56,7 @@ function Landing({ className = "" }) {
   return (
     <div className={`
       flex items-center justify-between px-6
-      ${className} gap-20
+      ${className} gap-20 max-md:flex-col
     `}>
       <BrandIntroduction />
       <FishesPager images={fishImages} />
@@ -61,6 +65,8 @@ function Landing({ className = "" }) {
 }
 
 function BrandIntroduction() {
+  const navigate = useNavigate();
+  
   return (
     <div className="flex flex-col gap-6">
       <div className="font-bold">
@@ -76,6 +82,7 @@ function BrandIntroduction() {
         className="w-fit"
         horizontalPadding={16}
         verticalPadding={4}
+        onClick={() => navigate("/koleksi")}
       />
     </div>
   );
@@ -112,27 +119,53 @@ function FishesPager({ images }) {
 }
 
 function Benefits() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const widthMinLg = useScreenWidth() >= minLgPx;
+  const iconButton = `
+    size-[40px] absolute inset-y-0 lg:hidden hover:cursor-pointer h-full select-none
+  `;
+
   return (
     <div
       className={`
-      flex py-4 px-6 rounded-full bg-primary text-white justify-evenly
-    `}>
-      <Benefit
-        icon={<Fish1 />}
-        title={"Kualitas Terbaik"}
-        desc={"Kualitas Ikan koki dengan warna cerah"}
+        flex py-4 px-6 rounded-full bg-primary text-white justify-evenly
+        relative
+      `}
+    >
+      {
+        (widthMinLg || !currentIndex) && <Benefit
+          icon={<Fish1 />}
+          title={"Kualitas Terbaik"}
+          desc={"Kualitas Ikan koki dengan warna cerah"}
+        />
+      }
+      {
+        (widthMinLg || currentIndex === 1) && <Benefit
+          icon={<Fish2 />}
+          title={"Ikan Besar & Sehat"}
+          desc={"Ikan Koki dengan perawatan terbaik."}
+        />
+      }
+      {
+        (widthMinLg || currentIndex === 2) && <Benefit
+          icon={<FreeShipping />}
+          title={"Gratis Pengiriman"}
+          desc={"Pengiriman gratis ke lokasi tertentu!"}
+        />
+      }
+      <ChevronLeft 
+        className={`${iconButton} left-4`}
+        onClick={() => {
+          if (currentIndex !== 0) setCurrentIndex(currentIndex - 1)
+            else setCurrentIndex(2);
+        }}
       />
-      <Benefit
-        icon={<Fish2 />}
-        title={"Ikan Besar & Sehat"}
-        desc={"Ikan Koki dengan perawatan terbaik."}
-        className="max-sm:hidden"
-      />
-      <Benefit
-        icon={<FreeShipping />}
-        title={"Gratis Pengiriman"}
-        desc={"Pengiriman gratis ke lokasi tertentu!"}
-        className="max-sm:hidden"
+      <ChevronRight 
+        className={`${iconButton} right-4`}
+        onClick={() => {
+          if (currentIndex !== 2) setCurrentIndex(currentIndex + 1)
+            else setCurrentIndex(0);
+        }}
       />
     </div>
   );

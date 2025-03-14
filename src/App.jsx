@@ -39,7 +39,7 @@ function App() {
                       absolute inset-0 bg-gradient-to-tr from-[rgb(40,40,40)] to-dark-teal-blue
                       mix-blend-multiply
                     `} />
-                    <img src={bg} className="inset-0 w-full h-full object-cover" />
+                    <img src={bg} className="inset-0 w-full max-lg:h-screen max-md:h-[200vh] object-cover" />
                   </div>
                   <HomePage />
                 </>
