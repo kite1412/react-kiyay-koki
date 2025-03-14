@@ -5,12 +5,14 @@ import AppLogo from "./AppLogo";
 import useScreenWidth from "../hooks/useScreenWidth";
 import { minLgPx, minMdPx } from "../constants/breakpoints";
 import SignIn from "../assets/sign-in.svg?react";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function NavigationBar() {
   const navigate = useNavigate();
   const location = useLocation();
   const screenWidth = useScreenWidth();
   const isSm = screenWidth < minMdPx;
+  const { isAuthenticated } = useAuth();
 
   const routes = [
     { name: "Beranda", path: "/" },
@@ -51,14 +53,16 @@ export default function NavigationBar() {
       {!isLoginPage && (
         <div className="flex items-center lg:gap-6 gap-2 h-full py-1">
           <SearchBar />
-          <RoundedButton
-            action={
-              !isSm ? "Masuk" : <SignIn className="h-[20px] w-[20px]" /> 
-            }
-            onClick={() => navigate("/login")}
-            className="h-full"
-            horizontalPadding={ isSm ? 8 : 24 }
-          />
+          {
+            !isAuthenticated ? <RoundedButton
+              action={
+                !isSm ? "Masuk" : <SignIn className="h-[20px] w-[20px]" /> 
+              }
+              onClick={() => navigate("/login")}
+              className="h-full"
+              horizontalPadding={ isSm ? 8 : 24 }
+            /> : <>Signed in</>
+          }
         </div>
       )}
     </div>

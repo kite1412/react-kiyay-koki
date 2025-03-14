@@ -1,25 +1,33 @@
 import { useEffect, useRef, useState } from "react";
 import RoundedButton from "../components/RoundedButton";
 import PageLayout from "../layouts/PageLayout";
+import { useAuth } from "../contexts/AuthContext";
 
-/**
- * @param {(number) => void} onPhoneNumberConfirm - confirm callback with phone number as parameter. 
- * @param {(number) => void} onOtpConfirm - confirm callback with otp code as parameter. 
- */
-export default function LoginPage({ onPhoneNumberConfirm, onOtpConfirm }) {
+export default function LoginPage() {
+  const { signIn } = useAuth();
+
   return <PageLayout 
     content={
       <Content 
-        onPhoneNumberConfirm={onPhoneNumberConfirm}
-        onOtpConfirm={onOtpConfirm}
+        onPhoneNumberConfirm={() => {}}
+        onOtpConfirm={(phoneNumber, otpCode) => {
+          signIn(phoneNumber, otpCode);
+        }}
       />
     }
     useFooter={false} 
   />;
 }
 
+/**
+ * @param {(number) => void} onPhoneNumberConfirm - callback function when the inputted phone number confirmed,
+ *  used for phone number verification and sending otp.
+ * @param {(phoneNumber: number, otpCode: number) => void} onOtpConfirm - callback function when the inputted otp code confirmed,
+ *  used for complete sign in process. 
+ */
 function Content({ onPhoneNumberConfirm, onOtpConfirm }) {
   const [otpMode, setOtpMode] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState();
 
   return (
     <div
@@ -40,6 +48,8 @@ function Content({ onPhoneNumberConfirm, onOtpConfirm }) {
             }
           />
           <LoginForm 
+            phoneNumber={phoneNumber}
+            setPhoneNumber={setPhoneNumber}
             onConfirm={ n => {
               setOtpMode(true);
               onPhoneNumberConfirm(n);
@@ -55,7 +65,9 @@ function Content({ onPhoneNumberConfirm, onOtpConfirm }) {
               </div>
             }
           />
-          <OtpForm onConfirm={onOtpConfirm} />
+          <OtpForm
+            onConfirm={code => onOtpConfirm(phoneNumber, code)} 
+          />
         </>
       }
     </div>
@@ -77,8 +89,12 @@ function handleEnterKeyDown(e, callback) {
   if (e.key === "Enter") callback();
 }
 
-function LoginForm({ onConfirm }) {
-  const [phoneNumber, setPhoneNumber] = useState();
+/**
+ * @param {number} phoneNumber - the phone number used for sign in.
+ * @param {(number) => void} phoneNumber - callback function for updating {@link phoneNumber} state.
+ * @param {(number) => void} onConfirm - callback function that retrieve the phone number as a param. 
+ */
+function LoginForm({ phoneNumber, setPhoneNumber, onConfirm }) {
   const onClick = () => onConfirm(phoneNumber);
   const ref = useRef();
 
@@ -124,6 +140,9 @@ function LoginForm({ onConfirm }) {
   );
 }
 
+/**
+ * @param {(number) => void} onConfirm - callback function that retrieve otp code as a param. 
+ */
 function OtpForm({ onConfirm }) {
   const otpLength = 6;
   const [otp, setOtp] = useState(Array(6).fill(""));
@@ -184,6 +203,7 @@ function OtpForm({ onConfirm }) {
         action={"Konfirmasi OTP"}
         onClick={onConfirm}
         className={"w-fit"}
+        disabled={otp.includes("")}
       />
       <div className={`
         underline italic text-blue-500 hover:cursor-pointer hover:opacity-70 select-none
