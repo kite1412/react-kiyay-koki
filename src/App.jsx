@@ -9,8 +9,13 @@ import DetailPage from "./pages/DetailPage";
 import CollectionPage from "./pages/CollectionPage";
 import AboutPage from "./pages/AboutPage";
 import { AuthProvider } from "./contexts/AuthContext";
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 
 function App() {
+  const [scrollY, setScrollY] = useState(0);
+  const [showNavBar, setShowNavBar] = useState(true);
+
   return (
     <Router>
       <AuthProvider 
@@ -20,17 +25,30 @@ function App() {
             text-white w-screen h-screen bg-gradient-to-tr from-black to-dark-teal-blue
               overflow-x-hidden relative
             `}
+            onScroll={e => {
+              const y = e.currentTarget.scrollTop;
+              setShowNavBar(scrollY > y);
+              setScrollY(y);
+            }}
           >
             <Header className="sticky top-0 z-100" />
             {/* 40px comes from Header's height */}
-            <div
-              className={`
-                max-lg:w-full max-lg:px-6 lg:w-3/4 fixed z-100 left-1/2 transform -translate-x-1/2 
-                top-[calc(40px*3)]
-              `}
-            >
-              <NavigationBar />
-            </div>
+            <AnimatePresence>
+              {
+                showNavBar && <motion.div
+                  className={`
+                    max-lg:w-full max-lg:px-6 lg:w-3/4 fixed z-100 left-1/2 transform -translate-x-1/2 
+                    top-[calc(40px*3)]
+                  `}
+                  initial={{ y: -100, opacity: 0 }} 
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -100, opacity: 0 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                >
+                  <NavigationBar />
+                </motion.div>
+              }
+            </AnimatePresence>
 
             <div className="flex justify-center">
               <Routes>
