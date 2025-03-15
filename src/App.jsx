@@ -11,6 +11,7 @@ import AboutPage from "./pages/AboutPage";
 import { AuthProvider } from "./contexts/AuthContext";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import ResetScroll from "./components/ResetScroll";
 
 function App() {
   const [scrollY, setScrollY] = useState(0);
@@ -18,16 +19,19 @@ function App() {
 
   return (
     <Router>
+      <ResetScroll />
       <AuthProvider 
         children={
           <div
+            id="container"
             className={`
             text-white w-screen h-screen bg-gradient-to-tr from-black to-dark-teal-blue
               overflow-x-hidden relative
             `}
             onScroll={e => {
+              console.log("triggered");
               const y = e.currentTarget.scrollTop;
-              setShowNavBar(scrollY > y);
+              setShowNavBar(scrollY > y || scrollY === 0);
               setScrollY(y);
             }}
           >
