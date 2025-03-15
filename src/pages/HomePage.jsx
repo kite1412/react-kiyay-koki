@@ -16,11 +16,12 @@ import ProductSelections, { createProductSelections } from "../models/ProductSel
 import testimonies from "../data/testimonies.json";
 import { useNavigate } from "react-router-dom";
 import { productDetailNavigationInfo } from "./DetailPage";
-import Banners from "../components/Banner";
+import Banners from "../components/Banners";
 import { mockFishesData } from "../data/mocks";
 import { defaultShowCount } from "../constants/productCards";
 import useScreenWidth from "../hooks/useScreenWidth";
 import { minLgPx } from "../constants/breakpoints";
+import { motion } from "framer-motion";
 
 const fishImages = [fishSample1, fishSample2, fishSample3];
 
@@ -54,13 +55,27 @@ export default function HomePage() {
 
 function Landing({ className = "" }) {
   return (
-    <div className={`
-      flex items-center justify-between px-6
-      ${className} gap-20 max-md:flex-col
-    `}>
+    <motion.div
+      className={`
+        flex items-center justify-between px-6
+        ${className} gap-20 max-md:flex-col
+      `}
+      initial={{
+        scale: 0,
+        opacity: 0
+      }}
+      animate={{
+        scale: 1,
+        opacity: 1
+      }}
+      transition={{
+        delay: 0.1,
+        duration: 0.4
+      }}
+    >
       <BrandIntroduction />
       <FishesPager images={fishImages} />
-    </div>
+    </motion.div>
   );
 }
 
