@@ -1,5 +1,7 @@
 import RoundedButton from "./RoundedButton";
 import Banner1 from "../assets/Akuarium.jpg";
+import { useEffect, useRef } from "react";
+import { easeIn, motion, spring, useInView } from "framer-motion";
 
 export default function Banners({ onClick }) {
   return (
@@ -13,6 +15,7 @@ export default function Banners({ onClick }) {
         imageSrc={Banner1}
         onClick={onClick}
         className="max-sm:hidden md:w-[33%]"
+        index={0}
       />
       <Banner
         title="Ikan Koki Berkualitas Terbaik"
@@ -24,6 +27,7 @@ export default function Banners({ onClick }) {
         isCenter
         onClick={onClick}
         className="md:w-[33%] max-sm:w-[100%]"
+        index={1}
       />
       <Banner
         title="Makanan Ikan Sehat"
@@ -34,6 +38,7 @@ export default function Banners({ onClick }) {
         imageSrc={Banner1}
         onClick={onClick}
         className="max-sm:hidden md:w-[33%]"
+        index={2}
       />
     </div>
   );
@@ -45,15 +50,43 @@ function Banner({
   imageSrc,
   isCenter,
   onClick,
+  index,
   className = "" 
 }) {
+  const ref = useRef();
+  const isInView = useInView(ref, { once: true,  margin: "-20px" });
+  const invisible = {
+    opacity: 0,
+    scale: 0
+  }
+
+  useEffect(() => {
+    console.log(isInView);
+  }, [isInView]);
+
   return (
-    <div
+    <motion.div
       className={`
-          group relative size-[100%] rounded-2xl overflow-hidden transition-all duration-300 ease-in-out transform ${
-            !isCenter && "h-[90%] scale-x-95"
-          } flex items-center ${className}
+        group relative size-[100%] rounded-2xl overflow-hidden transition-all duration-300 ease-in-out transform ${
+          !isCenter && "h-[90%] scale-x-95"
+        } flex items-center ${className}
       `}
+      ref={ref}
+      initial={{
+        ...invisible,
+        marginRight: `${index * 80}px`
+      }}
+      animate={
+        isInView ? {
+          opacity: 1,
+          scale: 1,
+          marginRight: 0
+        } : invisible
+      }
+      transition={{
+        delay: 0.05 * index,
+        duration: 0.05 * index
+      }}
     >
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-all duration-300 ease-in-out group-hover:scale-110"
@@ -73,6 +106,6 @@ function Banner({
           onClick={onClick}
         />
       </div>
-    </div>
+    </motion.div>
   );
 }
