@@ -12,6 +12,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import ResetScroll from "./components/ResetScroll";
+import CartPage from "./pages/CartPage";
 
 function App() {
   const [scrollY, setScrollY] = useState(0);
@@ -53,7 +54,7 @@ function App() {
               }
             </AnimatePresence>
 
-            <div className="flex justify-center">
+            <div className="flex justify-center h-full">
               <Routes>
                 <Route 
                   path="/"
@@ -82,14 +83,12 @@ function App() {
                     <ContactPage />
                   } 
                 />
-
                 <Route 
                   path="/tentang"
                   element={
                     <AboutPage />
                   } 
                 />
-
                 <Route 
                   path="/detail/:type/:id"
                   element={
@@ -100,6 +99,12 @@ function App() {
                   path="/koleksi"
                   element={
                     <CollectionPage />
+                  }
+                />
+                <Route 
+                  path="/keranjang"
+                  element={
+                    <CartPage />
                   }
                 />
                 <Route   />

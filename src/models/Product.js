@@ -1,4 +1,18 @@
 export default class Product {
+
+  /**
+   * @param {number} id 
+   * @param {string} image 
+   * @param {string} name 
+   * @param {number} price 
+   * @param {number} rating 
+   * @param {number} totalVotes 
+   * @param {number} stock 
+   * @param {number} discountPercentage 
+   * @param {Object} spec 
+   * @param {number} ratingDistributions 
+   * @param {Array<Object>} reviews 
+   */
   constructor(
     id,
     image,

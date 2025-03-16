@@ -58,3 +58,19 @@ export const mockFishesData = Array.from({ length: 8 }).map((_, i) => {
     ))
   })
 })
+
+export const mockUser = {
+  id: 1,
+  phoneNumber: "08994144513"
+};
+
+export const cartItems = Array.from({ length: 5 }).map((_, i) => {
+  const num = i + 1;
+
+  return {
+    id: num,
+    userId: 1,
+    productId: num,
+    quantity: num
+  };
+});

@@ -1,5 +1,5 @@
-import { PHONE_NUMBER } from "../constants/auth";
-import UserService from "./UserService";
+import { PHONE_NUMBER } from "../../constants/auth";
+import UserService from "../UserService";
 
 /**
  * Mock implementation of {@link UserService}.

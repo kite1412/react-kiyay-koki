@@ -8,7 +8,7 @@ import Footer from "../components/Footer";
  */
 export default function PageLayout({ content, useFooter = true }) {
   return (
-    <div className="flex flex-col lg:w-3/4 pt-[calc(40px*3+80px)] gap-20">
+    <div className="flex flex-col h-full lg:w-3/4 pt-[calc(40px*3+80px)] gap-20 justify-between">
       <div className="max-lg:px-4">
         {content}
       </div>
