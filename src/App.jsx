@@ -29,7 +29,6 @@ function App() {
               overflow-x-hidden relative
             `}
             onScroll={e => {
-              console.log("triggered");
               const y = e.currentTarget.scrollTop;
               setShowNavBar(scrollY > y || scrollY === 0);
               setScrollY(y);

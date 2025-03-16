@@ -6,6 +6,9 @@ import useScreenWidth from "../hooks/useScreenWidth";
 import { minLgPx, minMdPx } from "../constants/breakpoints";
 import SignIn from "../assets/sign-in.svg?react";
 import { useAuth } from "../contexts/AuthContext";
+import ShoppingCart from "../assets/shopping-cart.svg?react";
+import Love from "../assets/love.svg?react";
+import User from "../assets/user.svg?react";
 
 export default function NavigationBar() {
   const navigate = useNavigate();
@@ -13,6 +16,7 @@ export default function NavigationBar() {
   const screenWidth = useScreenWidth();
   const isSm = screenWidth < minMdPx;
   const { isAuthenticated } = useAuth();
+  const icon = "hover:cursor-pointer hover:text-primary";
 
   const routes = [
     { name: "Beranda", path: "/" },
@@ -61,7 +65,20 @@ export default function NavigationBar() {
               onClick={() => navigate("/login")}
               className="h-full"
               horizontalPadding={ isSm ? 8 : 24 }
-            /> : <>Signed in</>
+            /> : <div 
+              className="flex gap-2 items-center select-none"
+            >
+              <ShoppingCart 
+                className={`${icon} size-[24px]`}
+                onClick={() => navigate("/keranjang")} 
+              />
+              <Love 
+                className={`${icon} size-[20px] max-md:hidden`} 
+              />
+              <User 
+                className={`p-1 bg-primary rounded-full md:ml-4 hover:cursor-pointer`}
+              />
+            </div>
           }
         </div>
       )}
