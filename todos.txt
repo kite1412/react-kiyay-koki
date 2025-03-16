@@ -11,8 +11,11 @@ Components:
 Pages:
   * HomePage
     * FishesPager
-      - implement paging funcitonality
+      - Implement paging functionality
 
   * CollectionPage
     * PriceRange
       - Consider use input instead
+
+  * CartPage
+    - Adjust item description header.

@@ -23,6 +23,11 @@ export default function CartPage() {
     if (checkedIds.includes(id)) removeChecked(id)
       else addChecked(id);
   };
+  const purchaseDismissStyle = {
+    opacity: 0,
+    marginTop: "-50px",
+    scale: 0.4
+  }
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -40,6 +45,16 @@ export default function CartPage() {
     content={
       <div className="flex flex-col gap-6">
         <h2 className="font-bold">Keranjang</h2>
+        <div className="max-xl:hidden">
+          {/* Adjust Later */}
+          <div className="grid grid-cols-[2fr_1fr_1fr_0fr] text-light-gray font-bold text-[24px]">
+            <p>Barang</p>
+            <p>Harga</p>
+            <p>Jumlah</p>
+            <p>Total</p>
+          </div>
+          <hr />
+        </div>
         {
           products.map((p, _) => (
             <CartItem 
@@ -51,10 +66,49 @@ export default function CartPage() {
             />
           ))
         }
+        <AnimatePresence>
+          {
+            checkedIds.length && <motion.div
+              className="flex flex-col gap-4 font-bold ml-auto"
+              initial={purchaseDismissStyle}
+              animate={{
+                opacity: 1,
+                marginTop: "0px",
+                scale: 1
+              }}
+              exit={purchaseDismissStyle}
+            >
+              <h3>
+                Subtotal: <span className="text-light-orange">
+                  Rp. {
+                    formatPrice(
+                      products
+                        .filter(p => checkedIds.includes(p.id))
+                        .map(p => {
+                          const price = subtractByDiscount(p.price, p.discountPercentage);
+                          const q = cartItems.find(i => i.productId === p.id).quantity;
+                          return price * q;
+                        })
+                        .reduce((prev, cur) => prev + cur)
+                    )
+                  }
+                </span>
+              </h3>
+              <RoundedButton 
+                action={"Pesan Sekarang"}
+                fullyRounded={false}
+                horizontalPadding={60}
+                onClick={() => {}}
+              />
+            </motion.div>
+          }
+        </AnimatePresence>
       </div>
     }
   />;
 }
+
+
 
 function CartItem({ 
   checked,
@@ -66,7 +120,7 @@ function CartItem({
 }) {
   return (
     <div className={`flex w-full flex-col ${className}`}>
-      <div className="flex items-center w-full justify-between">
+      <div className="flex items-center w-full justify-between flex-wrap">
         <div className="flex gap-4 items-center">
           <div 
             className={`
