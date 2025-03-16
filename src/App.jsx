@@ -26,7 +26,7 @@ function App() {
           <div
             id="container"
             className={`
-            text-white w-screen h-screen bg-gradient-to-tr from-black to-dark-teal-blue
+            text-white w-screen h-screen bg-[linear-gradient(30deg,_#000000_20%,_#0b5876_100%)]
               overflow-x-hidden relative
             `}
             onScroll={e => {
@@ -62,8 +62,8 @@ function App() {
                     <>
                       <div className="absolute">
                         <div className={`
-                          absolute inset-0 bg-gradient-to-tr from-[rgb(40,40,40)] to-dark-teal-blue
-                          mix-blend-multiply
+                          absolute inset-0 bg-[linear-gradient(60deg,_rgba(0,0,0,0.85)_40%,_rgba(11,88,118,0.75)_100%)]
+                          
                         `} />
                         <img src={bg} className="inset-0 w-full max-lg:h-screen max-md:h-[200vh] object-cover" />
                       </div>

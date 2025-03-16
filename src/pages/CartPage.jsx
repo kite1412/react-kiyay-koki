@@ -95,7 +95,7 @@ function CartItem({
           </div>
           <img 
             src={product.image}
-            className="rounded-[8px] w-[200px] h-[150px]"
+            className="rounded-[8px] w-[200px] h-[150px] select-none"
           />
           <div className="flex flex-col gap-2">
             <span className="text-[12px] text-light-orange">
