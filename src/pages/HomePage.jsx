@@ -234,7 +234,7 @@ function Recommendation({ selections }) {
       <ProductCards 
         products={selected.items}
         onClick={p => {
-          const { path, options } = productDetailNavigationInfo(p, selected.type);
+          const { path, options } = productDetailNavigationInfo(p, p.type);
           navigate(path, options);
         }}
         showCount={defaultShowCount}

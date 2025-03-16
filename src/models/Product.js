@@ -12,6 +12,7 @@ export default class Product {
    * @param {Object} spec 
    * @param {number} ratingDistributions 
    * @param {Array<Object>} reviews 
+   * @param {string} type 
    */
   constructor(
     id,
@@ -24,7 +25,8 @@ export default class Product {
     discountPercentage = 0,
     spec = {},
     ratingDistributions,
-    reviews
+    reviews,
+    type
   ) {
     this.id = id;
     this.image = image;
@@ -37,6 +39,7 @@ export default class Product {
     this.spec = spec;
     this.ratingDistributions = ratingDistributions;
     this.reviews = reviews;
+    this.type = type;
   }
 }
 
@@ -54,7 +57,8 @@ export function createProduct({
   discountPercentage = 0,
   spec = {},
   ratingDistributions,
-  reviews
+  reviews,
+  type
 }) {
   return new Product(
     id,
@@ -67,7 +71,8 @@ export function createProduct({
     discountPercentage,
     spec,
     ratingDistributions,
-    reviews
+    reviews,
+    type
   )
 }
 

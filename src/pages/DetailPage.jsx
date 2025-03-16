@@ -6,14 +6,14 @@ import { specToString } from "../models/Product";
 import ProductPrice, { formatPrice, subtractByDiscount } from "../components/ProductPrice";
 import RoundedButton from "../components/RoundedButton";
 import { useState } from "react";
-import Add from "../assets/add.svg?react";
-import Remove from "../assets/remove.svg?react";
 import _Rating from "../components/Rating";
 import Star from "../assets/star.svg?react";
 import ProductCards from "../components/ProductCards";
 import { mockFishesData } from "../data/mocks";
 import { defaultShowCount } from "../constants/productCards";
 import PagerBar from "../components/PagerBar";
+import { resolveStockDesc } from "../utils/product";
+import QuantityPicker from "../components/QuantityPicker";
 
 export default function DetailPage() {
   const location = useLocation();
@@ -138,52 +138,6 @@ function ProductDetail({
         images={mockImages}
         className={"max-sm:hidden"}
       />
-    </div>
-  );
-}
-
-function resolveStockDesc(type) {
-  switch (type) {
-    case ProductType.FISH:
-      return "Ekor";
-    default:
-      return "Buah";
-  }
-}
-
-/**
- * @param {number} quantity - the quantity state. 
- * @param {(number) => void} setQuantity - callback function when the quantity changed. 
- */
-function QuantityPicker({
-  quantity,
-  setQuantity
-}) {
-  const iconSize = "size-[22px] max-lg:size-[18px] max-sm:-size[14px]"
-
-  return (
-    <div className={`
-      flex gap-6 items-center outline-1 rounded-[4px] text-[20px] px-4 py-1
-      max-lg:px-2
-    `}>
-      <button 
-        className="font-bold"
-        onClick={() => {
-          if (quantity > 1) setQuantity(quantity - 1);
-        }}
-      >
-        <Remove className={iconSize} />
-      </button>
-      <div>
-        {quantity}
-      </div>
-      <button
-        onClick={() => {
-          setQuantity(quantity + 1);
-        }}
-      >
-        <Add className={iconSize} />
-      </button>
     </div>
   );
 }

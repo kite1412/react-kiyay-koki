@@ -69,8 +69,13 @@ export default function NavigationBar() {
               className="flex gap-2 items-center select-none"
             >
               <ShoppingCart 
-                className={`${icon} size-[24px]`}
-                onClick={() => navigate("/keranjang")} 
+                className={`
+                  ${icon} size-[24px] ${location.pathname === "/keranjang" && "text-primary"}
+                  transition-colors
+                `}
+                onClick={() => {
+                  if (location.pathname !== "/keranjang") navigate("/keranjang")
+                }} 
               />
               <Love 
                 className={`${icon} size-[20px] max-md:hidden`} 

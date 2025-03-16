@@ -1,5 +1,6 @@
 import orandaRoseTail from "../assets/oranda-rose-tail.png";
 import { createProduct } from "../models/Product";
+import ProductType from "../models/ProductType";
 
 export const mockFishesData = Array.from({ length: 8 }).map((_, i) => {
   return createProduct({
@@ -55,7 +56,8 @@ export const mockFishesData = Array.from({ length: 8 }).map((_, i) => {
         `,
         rating: 4
       }
-    ))
+    )),
+    type: ProductType.FISH
   })
 })
 
