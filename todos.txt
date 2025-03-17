@@ -19,3 +19,4 @@ Pages:
 
   * CartPage
     - Adjust item description header ✅
+    - Responsive

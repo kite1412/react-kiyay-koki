@@ -13,6 +13,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import ResetScroll from "./components/ResetScroll";
 import CartPage from "./pages/CartPage";
+import WishlistPage from "./pages/WishlistPage";
 
 function App() {
   const [scrollY, setScrollY] = useState(0);
@@ -104,6 +105,12 @@ function App() {
                   path="/keranjang"
                   element={
                     <CartPage />
+                  }
+                />
+                <Route 
+                  path="/wishlist"
+                  element={
+                    <WishlistPage />
                   }
                 />
                 <Route   />

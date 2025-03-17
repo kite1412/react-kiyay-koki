@@ -7,16 +7,24 @@ import Product from "../models/Product";
 export default function ProductPrice({
   product,
   showOriginalPrice = true,
+  showDiscountAmount = false,
   className = "text-[16px]"
  }) {
   return (
     <div className={`flex gap-4 items-center ${className}`}>
-      <b>
-        Rp. {
-          !product.discountPercentage ? formatPrice(product.price) : 
-          formatPrice(subtractByDiscount(product.price, product.discountPercentage))
+      <div className="font-bold">
+        <p>
+          Rp. {
+            !product.discountPercentage ? formatPrice(product.price) : 
+            formatPrice(subtractByDiscount(product.price, product.discountPercentage))
+          }
+        </p>
+        {
+          showDiscountAmount && product.discountPercentage && <span className="text-light-orange text-[16px]">
+            Hemat Rp. {formatPrice(discountAmount(product.price, product.discountPercentage))}
+          </span>
         }
-      </b>
+      </div>
       {
         product.discountPercentage && showOriginalPrice ? <StrippedPrice price={product.price} /> : <></>
       }
@@ -44,7 +52,7 @@ export function subtractByDiscount(
   return actualPrice * (1 - discountPercentage / 100);
 }
 
-export function discountValue(
+export function discountAmount(
   actualPrice,
   discountPercentage
 ) {

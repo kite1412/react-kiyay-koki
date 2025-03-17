@@ -76,3 +76,14 @@ export const cartItems = Array.from({ length: 5 }).map((_, i) => {
     quantity: num
   };
 });
+
+export const wishlistItems = Array.from({ length: 5 }).map((_, i) => {
+  const num = i + 1;
+
+  return {
+    id: num,
+    userId: 1,
+    productId: num,
+    quantity: num
+  };
+}); 

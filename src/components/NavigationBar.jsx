@@ -74,11 +74,19 @@ export default function NavigationBar() {
                   transition-colors
                 `}
                 onClick={() => {
-                  if (location.pathname !== "/keranjang") navigate("/keranjang")
+                  const path = "/keranjang";
+                  if (location.pathname !== path) navigate(path);
                 }} 
               />
               <Love 
-                className={`${icon} size-[20px] max-md:hidden`} 
+                className={`
+                  ${icon} size-[20px] max-md:hidden ${location.pathname === "/wishlist" && "text-primary"}
+                  transition-colors
+                `} 
+                onClick={() => {
+                  const path = "/wishlist";
+                  if (location.pathname !== path) navigate(path);
+                }}
               />
               <User 
                 className={`p-1 bg-primary rounded-full md:ml-4 hover:cursor-pointer`}

@@ -3,11 +3,12 @@ import Check from "../assets/check.svg?react";
 import { cartService, productService } from "../objects";
 import { useEffect, useState } from "react";
 import { resolveStockDesc } from "../utils/product";
-import ProductPrice, { discountValue, formatPrice, StrippedPrice, subtractByDiscount } from "../components/ProductPrice";
+import ProductPrice, { discountAmount, formatPrice, StrippedPrice, subtractByDiscount } from "../components/ProductPrice";
 import QuantityPicker from "../components/QuantityPicker";
 import RoundedButton from "../components/RoundedButton";
 import Cancel from "../assets/cancel.svg?react";
 import { AnimatePresence, motion } from "framer-motion";
+import SimpleProductCard from "../components/SimpleProductCard";
 
 export default function CartPage() {
   const [cartItems, setCartItems] = useState([]);
@@ -114,6 +115,7 @@ function CartItem({
   product,
   onCheck,
   quantity,
+  setQuantity,
   onRemove,
   className = ""
 }) {
@@ -146,50 +148,29 @@ function CartItem({
               }
             </AnimatePresence>
           </div>
-          <img 
-            src={product.image}
-            className="rounded-[8px] w-[200px] h-[150px] select-none"
+          <SimpleProductCard 
+            product={product}
           />
-          <div className="flex flex-col gap-2">
-            <span className="text-[12px] text-light-orange">
-              {product.type}
-            </span>
-            <h2 className="font-bold">{product.name}</h2>
-            <span className="text-[14px]">
-              Stok: <span className="text-light-orange">
-                {product.stock} {resolveStockDesc(product.type)}
-              </span>
-            </span>
-            {
-              product.discountPercentage ? <StrippedPrice 
-                price={product.price}
-                className="w-fit" 
-              /> : <></>
-            }
-          </div>
         </div>
         <ProductPrice 
           product={product}
           showOriginalPrice={false}
-          className={"text-[20px] text-light-gray font-bold size-fit"}
+          className={"text-[20px] text-light-gray font-bold"}
         />
         <QuantityPicker
           quantity={quantity}
+          setQuantity={setQuantity}
           iconSizePx={16}
           gap={16}
           className={"size-fit"}
         />
         <div className="flex items-center justify-between">
-          <div className="font-bold">
-            <p className="text-[22px]">
-              Rp. {formatPrice(subtractByDiscount(product.price, product.discountPercentage) * quantity)}
-            </p>
-            {
-              product.discountPercentage && <span className="text-light-orange">
-                Hemat Rp. {formatPrice(discountValue(product.price, product.discountPercentage))}
-              </span>
-            }
-          </div>
+          <ProductPrice 
+            product={product}
+            showOriginalPrice={false}
+            showDiscountAmount={true}
+            className={"text-[22px]"}
+          />
           <RoundedButton 
             action={<Cancel className="size-[20px] p-1" />}
             onClick={onRemove}
