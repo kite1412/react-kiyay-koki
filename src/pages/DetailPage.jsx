@@ -5,7 +5,7 @@ import ProductType from "../models/ProductType";
 import { specToString } from "../models/Product";
 import ProductPrice, { formatPrice, subtractByDiscount } from "../components/ProductPrice";
 import RoundedButton from "../components/RoundedButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import _Rating from "../components/Rating";
 import Star from "../assets/star.svg?react";
 import ProductCards from "../components/ProductCards";
@@ -14,12 +14,25 @@ import { defaultShowCount } from "../constants/productCards";
 import PagerBar from "../components/PagerBar";
 import { resolveStockDesc } from "../utils/product";
 import QuantityPicker from "../components/QuantityPicker";
+import { useAuth } from "../contexts/AuthContext";
+import Love from "../assets/love.svg?react";
+import { wishlistService } from "../objects";
 
 export default function DetailPage() {
   const location = useLocation();
   const data = location.state;
   const product = data.product;
+  const [wishlist, setWishlist] = useState([]); 
   const [quantity, setQuantity] = useState(1);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const res = await wishlistService.getByUserId(1);
+      setWishlist(res);
+    };
+
+    fetch();
+  }, []);
 
   return <PageLayout 
     content={
@@ -29,6 +42,7 @@ export default function DetailPage() {
           productType={data.type}
           quantity={quantity}
           setQuantity={setQuantity}
+          wishlisted={wishlist.find(i => i.productId === product.id)}
           className="lg:px-20 max-lg:px-10"
         />
         <DescriptionAndReview
@@ -79,9 +93,12 @@ function ProductDetail({
   productType,
   quantity,
   setQuantity,
+  wishlisted,
+  setWishlisted,
   className = ""
 }) {
   const mockImages = Array.from({ length: 5 }).fill(product.image);
+  const { isAuthenticated } = useAuth();
 
   return (
     <div 
@@ -111,10 +128,24 @@ function ProductDetail({
             ))}
           </div> : <></>
         }
-        <ProductPrice 
-          product={product}
-          className="xl:text-[22px] min-lg:text-[18px]" 
-        />
+        <div className="flex flex-col gap-2">
+          <ProductPrice 
+            product={product}
+            className="xl:text-[22px] min-lg:text-[18px]" 
+          />
+          {
+            isAuthenticated && <div 
+              className={`
+                flex gap-2 items-center hover:cursor-pointer select-none hover:opacity-80
+                size-fit
+              `}
+              onClick={() => setWishlisted(!wishlisted)}
+            >
+              <Love className={`size-[24px] ${wishlisted ? "text-primary" : "fill-none"}`} />
+              Wishlist
+            </div>
+          }
+        </div>
         <div className="flex items-center justify-between gap-2">
           <QuantityPicker
             quantity={quantity}

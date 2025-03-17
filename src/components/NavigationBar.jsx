@@ -81,7 +81,7 @@ export default function NavigationBar() {
               <Love 
                 className={`
                   ${icon} size-[20px] max-md:hidden ${location.pathname === "/wishlist" && "text-primary"}
-                  transition-colors
+                  transition-colors fill-none
                 `} 
                 onClick={() => {
                   if (location.pathname !== WISHLIST_PATH) navigate(WISHLIST_PATH);
