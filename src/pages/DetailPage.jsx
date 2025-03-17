@@ -17,6 +17,7 @@ import QuantityPicker from "../components/QuantityPicker";
 import { useAuth } from "../contexts/AuthContext";
 import Love from "../assets/love.svg?react";
 import { wishlistService } from "../objects";
+import OutlinedButton from "../components/OutlinedButton";
 
 export default function DetailPage() {
   const location = useLocation();
@@ -485,24 +486,53 @@ function ParagraphsWithLineBreak({ contents }) {
 
 function RatingAndReviewForm() {
   const [rating, setRating] = useState(0);
+  const [reviewContent, setReviewContent] = useState("");
   
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-8">
       <RatingForm 
         rating={rating}
         setRating={setRating}
       />
-      <div className="flex gap-6">
-        
+      <ReviewForm 
+        content={reviewContent}
+        setContent={setReviewContent}
+      />
+      <div className="flex gap-6 ml-auto">
+        <OutlinedButton 
+          action={"Hapus"}
+          onClick={() => {}}
+          verticalPadding={6}
+        />
+        <RoundedButton 
+          action={"Kirim Ulasan & Rating"}
+          onClick={() => {}}
+          fullyRounded={false}
+          verticalPadding={6}
+        />
       </div>
     </div>
   );
 }
 
-function ReviewForm() {  
+function ReviewForm({
+  content,
+  setContent
+}) {  
   return (
-    <div className="flex flex-col gap-4">
-      
+    <div className="flex flex-col gap-4 font-bold">
+      Berikan Ulasan
+      <div className="p-4 border-2 border-white bg-black rounded-[8px]">
+        <textarea
+          value={content}
+          onChange={e => setContent(e.target.value)}
+          placeholder="Masukkan Ulasan Anda..."
+          className={`
+            ${!content && "italic text-secondary-text"} w-full focus:outline-none
+            min-h-[150px]
+          `}
+        />
+      </div>
     </div>
   );
 }
@@ -520,7 +550,7 @@ function RatingForm({
             const score = i + 1;
             return <Star 
               className={`
-                size-[30px] ${rating >= score ? "text-gold" : "text-secondary-text"}
+                size-[28px] ${rating >= score ? "text-gold" : "text-secondary-text"}
                 hover:cursor-pointer select-none transition-colors
               `}
               onClick={() => setRating(score)}
