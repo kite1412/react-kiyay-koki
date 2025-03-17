@@ -46,8 +46,7 @@ export default function CartPage() {
       <div className="flex flex-col gap-6">
         <h2 className="font-bold">Keranjang</h2>
         <div className="max-xl:hidden">
-          {/* Adjust Later */}
-          <div className="grid grid-cols-[2fr_1fr_1fr_0fr] text-light-gray font-bold text-[24px]">
+          <div className="grid grid-cols-[2.5fr_1fr_1fr_1.2fr] text-light-gray font-bold text-[24px]">
             <p>Barang</p>
             <p>Harga</p>
             <p>Jumlah</p>
@@ -120,7 +119,7 @@ function CartItem({
 }) {
   return (
     <div className={`flex w-full flex-col ${className}`}>
-      <div className="flex items-center w-full justify-between flex-wrap">
+      <div className="grid grid-cols-[2.5fr_1fr_1fr_1.2fr] items-center">
         <div className="flex gap-4 items-center">
           <div 
             className={`
@@ -172,29 +171,32 @@ function CartItem({
         <ProductPrice 
           product={product}
           showOriginalPrice={false}
-          className={"text-[20px] text-light-gray font-bold"}
+          className={"text-[20px] text-light-gray font-bold size-fit"}
         />
         <QuantityPicker
           quantity={quantity}
           iconSizePx={16}
           gap={16}
+          className={"size-fit"}
         />
-        <div className="font-bold">
-          <p className="text-[22px]">
-            Rp. {formatPrice(subtractByDiscount(product.price, product.discountPercentage) * quantity)}
-          </p>
-          {
-            product.discountPercentage && <span className="text-light-orange">
-              Hemat Rp. {formatPrice(discountValue(product.price, product.discountPercentage))}
-            </span>
-          }
+        <div className="flex items-center justify-between">
+          <div className="font-bold">
+            <p className="text-[22px]">
+              Rp. {formatPrice(subtractByDiscount(product.price, product.discountPercentage) * quantity)}
+            </p>
+            {
+              product.discountPercentage && <span className="text-light-orange">
+                Hemat Rp. {formatPrice(discountValue(product.price, product.discountPercentage))}
+              </span>
+            }
+          </div>
+          <RoundedButton 
+            action={<Cancel className="size-[20px] p-1" />}
+            onClick={onRemove}
+            verticalPadding={8}
+            horizontalPadding={8}
+          />
         </div>
-        <RoundedButton 
-          action={<Cancel className="size-[20px] p-1" />}
-          onClick={onRemove}
-          verticalPadding={8}
-          horizontalPadding={8}
-        />
       </div>
       <hr className="text-secondary-text h-2" />
     </div>

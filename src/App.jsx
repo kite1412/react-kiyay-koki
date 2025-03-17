@@ -64,7 +64,7 @@ function App() {
                         <div className={`
                           absolute inset-0 bg-[linear-gradient(60deg,_rgba(0,0,0,0.85)_40%,_rgba(11,88,118,0.75)_100%)]
                         `} />
-                        <img src={bg} className="inset-0 w-full max-lg:h-screen max-md:h-[200vh] object-cover" />
+                        <img src={bg} className="inset-0 w-full max-lg:h-screen max-md:h-[200vh] object-cover select-none" />
                       </div>
                       <HomePage />
                     </>

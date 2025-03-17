@@ -9,7 +9,8 @@ export default function QuantityPicker({
   quantity,
   setQuantity,
   iconSizePx,
-  gap
+  gap,
+  className = ""
 }) {
   const iconSize = "max-lg:size-[18px] max-sm:-size[14px]"
 
@@ -17,7 +18,7 @@ export default function QuantityPicker({
     <div 
       className={`
         flex ${!gap && "gap-6"} items-center outline-1 rounded-[4px] px-4 py-1
-        max-lg:px-2 ${!iconSizePx ? "text-[20px]" : ""}
+        max-lg:px-2 ${!iconSizePx ? "text-[20px]" : ""} ${className}
       `}
       style={gap ? {
         gap: `${gap}px`

@@ -18,4 +18,4 @@ Pages:
       - Consider use input instead
 
   * CartPage
-    - Adjust item description header.
+    - Adjust item description header ✅
