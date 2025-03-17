@@ -14,6 +14,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import ResetScroll from "./components/ResetScroll";
 import CartPage from "./pages/CartPage";
 import WishlistPage from "./pages/WishlistPage";
+import { ABOUT_PATH, CART_PATH, COLLECTION_PATH, CONTACT_PATH, DETAIL_PATH, HOME_PATH, LOGIN_PATH, PROFILE_PATH, WISHLIST_PATH } from "./constants/paths";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   const [scrollY, setScrollY] = useState(0);
@@ -58,7 +60,7 @@ function App() {
             <div className="flex justify-center h-full">
               <Routes>
                 <Route 
-                  path="/"
+                  path={HOME_PATH}
                   element={
                     <>
                       <div className="absolute">
@@ -72,48 +74,53 @@ function App() {
                   } 
                 />
                 <Route
-                  path="/login"
+                  path={LOGIN_PATH}
                   element={
                     <LoginPage />
                   }
                 />
                 <Route 
-                  path="/kontak"
+                  path={CONTACT_PATH}
                   element={
                     <ContactPage />
                   } 
                 />
                 <Route 
-                  path="/tentang"
+                  path={ABOUT_PATH}
                   element={
                     <AboutPage />
                   } 
                 />
                 <Route 
-                  path="/detail/:type/:id"
+                  path={DETAIL_PATH}
                   element={
                     <DetailPage />
                   }
                 />
                 <Route 
-                  path="/koleksi"
+                  path={COLLECTION_PATH}
                   element={
                     <CollectionPage />
                   }
                 />
                 <Route 
-                  path="/keranjang"
+                  path={CART_PATH}
                   element={
                     <CartPage />
                   }
                 />
                 <Route 
-                  path="/wishlist"
+                  path={WISHLIST_PATH}
                   element={
                     <WishlistPage />
                   }
                 />
-                <Route   />
+                <Route 
+                  path={PROFILE_PATH}
+                  element={
+                    <ProfilePage />
+                  }
+                />
               </Routes>
             </div>
           </div>

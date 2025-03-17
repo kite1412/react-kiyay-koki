@@ -189,13 +189,13 @@ function DescriptionAndReview({
         `}>
           <div
             onClick={() => setShowingDescription(true)}
-            className={`${showingDescription ? "text-primary" : "text-secondary-text"} transition-colors`}
+            className={`${showingDescription ? "text-light-orange" : "text-secondary-text"} transition-colors`}
           >
             Deskripsi Produk
           </div>
           <div
             onClick={() => setShowingDescription(false)}
-            className={`${!showingDescription ? "text-primary" : "text-secondary-text"} transition-colors`}
+            className={`${!showingDescription ? "text-light-orange" : "text-secondary-text"} transition-colors`}
           >
             Ulasan & Rating
           </div>

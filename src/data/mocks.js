@@ -63,7 +63,16 @@ export const mockFishesData = Array.from({ length: 8 }).map((_, i) => {
 
 export const mockUser = {
   id: 1,
-  phoneNumber: "08994144513"
+  phoneNumber: "08994144513",
+  addresses: Array.from({ length: 2 }).map(_ => (
+    {
+      type: "Rumah",
+      name: "Ramayuda M",
+      phoneNumber: "08994144513",
+      address: "Jl. Merdeka, Gang Tokyo No.15, Kampung Baru, Kota Bandar Lampung, Lampung, 40112",
+      detail: "Kos Cendrawasih, Kamar nomor 5 dari kanan, No. 3 dari kiri, Nomor 2 dari gerbang"
+    }
+  ))
 };
 
 export const cartItems = Array.from({ length: 5 }).map((_, i) => {

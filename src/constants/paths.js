@@ -1,0 +1,9 @@
+export const HOME_PATH = "/";
+export const LOGIN_PATH = "/login";
+export const DETAIL_PATH = "/detail/:type/:id";
+export const COLLECTION_PATH = "/koleksi";
+export const CONTACT_PATH = "/kontak";
+export const ABOUT_PATH = "/tentang";
+export const CART_PATH = "/keranjang";
+export const WISHLIST_PATH = "/wishlist";
+export const PROFILE_PATH = "/profile";

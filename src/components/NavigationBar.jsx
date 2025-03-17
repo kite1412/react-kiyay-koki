@@ -9,6 +9,7 @@ import { useAuth } from "../contexts/AuthContext";
 import ShoppingCart from "../assets/shopping-cart.svg?react";
 import Love from "../assets/love.svg?react";
 import User from "../assets/user.svg?react";
+import { ABOUT_PATH, CART_PATH, COLLECTION_PATH, CONTACT_PATH, HOME_PATH, PROFILE_PATH, WISHLIST_PATH } from "../constants/paths";
 
 export default function NavigationBar() {
   const navigate = useNavigate();
@@ -19,10 +20,10 @@ export default function NavigationBar() {
   const icon = "hover:cursor-pointer hover:text-primary";
 
   const routes = [
-    { name: "Beranda", path: "/" },
-    { name: "Koleksi", path: "/koleksi" },
-    { name: "Kontak", path: "/kontak" },
-    { name: "Tentang", path: "/tentang" },
+    { name: "Beranda", path: HOME_PATH },
+    { name: "Koleksi", path: COLLECTION_PATH },
+    { name: "Kontak", path: CONTACT_PATH },
+    { name: "Tentang", path: ABOUT_PATH }
   ];
 
   const isLoginPage = location.pathname === "/login";
@@ -74,8 +75,7 @@ export default function NavigationBar() {
                   transition-colors
                 `}
                 onClick={() => {
-                  const path = "/keranjang";
-                  if (location.pathname !== path) navigate(path);
+                  if (location.pathname !== CART_PATH) navigate(CART_PATH);
                 }} 
               />
               <Love 
@@ -84,12 +84,14 @@ export default function NavigationBar() {
                   transition-colors
                 `} 
                 onClick={() => {
-                  const path = "/wishlist";
-                  if (location.pathname !== path) navigate(path);
+                  if (location.pathname !== WISHLIST_PATH) navigate(WISHLIST_PATH);
                 }}
               />
               <User 
                 className={`p-1 bg-primary rounded-full md:ml-4 hover:cursor-pointer`}
+                onClick={() => {
+                  if (location.pathname !== PROFILE_PATH) navigate(PROFILE_PATH);
+                }}
               />
             </div>
           }
