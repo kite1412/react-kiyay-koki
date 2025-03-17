@@ -370,6 +370,7 @@ function Rating({
 function Reviews({ reviews }) {
   if (reviews.length === 0) return;
   const [currentPage, setCurrentPage] = useState(1);
+  const { isAuthenticated } = useAuth();
   
   return (
     <div className="flex flex-col gap-10 w-full">
@@ -382,6 +383,9 @@ function Reviews({ reviews }) {
         setCurrentPage={setCurrentPage}
         totalItems={reviews.length}
       />
+      {
+        isAuthenticated && <RatingAndReviewForm />
+      }
     </div>
   );
 }
@@ -476,5 +480,54 @@ function ParagraphsWithLineBreak({ contents }) {
         </ul> : <></>
       }
     </>
+  );
+}
+
+function RatingAndReviewForm() {
+  const [rating, setRating] = useState(0);
+  
+  return (
+    <div className="flex flex-col gap-6">
+      <RatingForm 
+        rating={rating}
+        setRating={setRating}
+      />
+      <div className="flex gap-6">
+        
+      </div>
+    </div>
+  );
+}
+
+function ReviewForm() {  
+  return (
+    <div className="flex flex-col gap-4">
+      
+    </div>
+  );
+}
+
+function RatingForm({
+  rating,
+  setRating
+}) {
+  return (
+    <div className="flex flex-col gap-4 font-bold">
+      Berikan Rating
+      <div className="flex gap-2">
+        {
+          Array.from({ length: 5 }).map((_, i) => {
+            const score = i + 1;
+            return <Star 
+              className={`
+                size-[30px] ${rating >= score ? "text-gold" : "text-secondary-text"}
+                hover:cursor-pointer select-none transition-colors
+              `}
+              onClick={() => setRating(score)}
+            />
+          })
+        }
+      </div>
+    </div>
   );
 }
