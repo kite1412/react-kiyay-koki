@@ -4,6 +4,7 @@ import { mockUser } from "../data/mocks";
 import RoundedButton from "../components/RoundedButton";
 import SignOut from "../assets/sign-out.svg?react";
 import { ModalType, useModal } from "../contexts/ModalContext";
+import Cancel from "../assets/cancel.svg?react";
 
 export default function ProfilePage() {
   return <PageLayout 
@@ -17,7 +18,47 @@ export default function ProfilePage() {
   />;
 }
 
+/**
+ * Form to fill address information.
+ * @param {Object | null} address
+ */
+export function AddressForm({ address, onCancel }) {
+  return (
+    <div className={`
+      border-2 border-primary bg-black rounded-[8px]
+      max-w-[1000px] w-[80%]
+    `}>
+      <div className="h-full flex flex-col gap-2 items-center p-8">
+        <RoundedButton 
+          action={<Cancel className={"size-[18px]"} />}
+          verticalPadding={12}
+          horizontalPadding={12}
+          className={`ml-auto`}
+          onClick={onCancel}
+        />
+        <div className="flex flex-col gap-6 items-center text-center px-8">
+          <div className="flex flex-col gap-3">
+            <h1 className="font-bold text-light-orange">
+              {
+                address ? "Edit Alamat Pengiriman" : "Masukkan Alamat Anda"
+              }
+            </h1>
+            <p>
+              {
+                address ? "Perbarui informasi alamat jika ada perubahan. Pastikan semua data sudah benar sebelum menyimpan."
+                  : "Lengkapi detail alamat pengiriman dengan benar untuk memastikan pesanan tiba dengan tepat waktu. Pastikan nomor WhatsApp aktif untuk kemudahan konfirmasi pengiriman."
+              }
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ProfileBox({ user }) {
+  const { createModal } = useModal();
+
   return (
     <div className="flex flex-col bg-black rounded-[8px] p-8 gap-12">
       <div className="flex flex-col gap-6">
@@ -37,6 +78,18 @@ function ProfileBox({ user }) {
             fullyRounded={false}
             verticalPadding={4}
             horizontalPadding={12}
+            onClick={() => {
+              const { request, dismiss } = createModal(
+                ModalType.ADDRESS_FORM,
+                {
+                  address: null,
+                  onCancel: () => {
+                    dismiss();
+                  }
+                }
+              )
+              request();
+            }}
           />
         </div>
         <div className="flex flex-wrap gap-4 justify-center">

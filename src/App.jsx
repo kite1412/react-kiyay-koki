@@ -15,7 +15,7 @@ import ResetScroll from "./components/ResetScroll";
 import CartPage from "./pages/CartPage";
 import WishlistPage from "./pages/WishlistPage";
 import { ABOUT_PATH, CART_PATH, COLLECTION_PATH, CONTACT_PATH, DETAIL_PATH, HOME_PATH, LOGIN_PATH, PROFILE_PATH, WISHLIST_PATH } from "./constants/paths";
-import ProfilePage from "./pages/ProfilePage";
+import ProfilePage, { AddressForm } from "./pages/ProfilePage";
 import AlertDialog from "./components/AlertDialog";
 import { ModalProvider, ModalType, useModal } from "./contexts/ModalContext";
 
@@ -181,7 +181,12 @@ function Overlay() {
                 confirmText={params.confirmText}
                 onCancel={params.onCancel}
                 onConfirm={params.onConfirm}
-              /> : <></>
+              /> : 
+              modalType === ModalType.ADDRESS_FORM ? <AddressForm 
+                address={params.address}
+                onCancel={params.onCancel}
+              /> :
+              <></>
             }
           </motion.div>
         </motion.div>
