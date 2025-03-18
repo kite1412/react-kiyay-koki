@@ -5,6 +5,8 @@ import RoundedButton from "../components/RoundedButton";
 import SignOut from "../assets/sign-out.svg?react";
 import { ModalType, useModal } from "../contexts/ModalContext";
 import Cancel from "../assets/cancel.svg?react";
+import _TextField, { Accessory } from "../components/TextField";
+import OutlinedButton from "../components/OutlinedButton";
 
 export default function ProfilePage() {
   return <PageLayout 
@@ -23,37 +25,124 @@ export default function ProfilePage() {
  * @param {Object | null} address
  */
 export function AddressForm({ address, onCancel }) {
+  const buttonVerticalPadding = 4;
+
   return (
     <div className={`
       border-2 border-primary bg-black rounded-[8px]
-      max-w-[1000px] w-[80%]
+      max-w-[1000px] w-[80%] h-[80%] overflow-y-auto
+      flex flex-col gap-2 items-center p-8 pb-16
     `}>
-      <div className="h-full flex flex-col gap-2 items-center p-8">
-        <RoundedButton 
-          action={<Cancel className={"size-[18px]"} />}
-          verticalPadding={12}
-          horizontalPadding={12}
-          className={`ml-auto`}
-          onClick={onCancel}
-        />
-        <div className="flex flex-col gap-6 items-center text-center px-8">
-          <div className="flex flex-col gap-3">
-            <h1 className="font-bold text-light-orange">
-              {
-                address ? "Edit Alamat Pengiriman" : "Masukkan Alamat Anda"
-              }
-            </h1>
-            <p>
-              {
-                address ? "Perbarui informasi alamat jika ada perubahan. Pastikan semua data sudah benar sebelum menyimpan."
-                  : "Lengkapi detail alamat pengiriman dengan benar untuk memastikan pesanan tiba dengan tepat waktu. Pastikan nomor WhatsApp aktif untuk kemudahan konfirmasi pengiriman."
-              }
-            </p>
-          </div>
+      <RoundedButton 
+        action={<Cancel className={"size-[18px]"} />}
+        verticalPadding={12}
+        horizontalPadding={12}
+        className={`ml-auto`}
+        onClick={onCancel}
+      />
+      <div className="flex flex-col gap-14 items-center text-center px-8">
+        <div className="flex flex-col gap-3">
+          <h1 className="font-bold text-light-orange">
+            {
+              address ? "Edit Alamat Pengiriman" : "Masukkan Alamat Anda"
+            }
+          </h1>
+          <p>
+            {
+              address ? "Perbarui informasi alamat jika ada perubahan. Pastikan semua data sudah benar sebelum menyimpan."
+                : "Lengkapi detail alamat pengiriman dengan benar untuk memastikan pesanan tiba dengan tepat waktu. Pastikan nomor WhatsApp aktif untuk kemudahan konfirmasi pengiriman."
+            }
+          </p>
+        </div>
+        <div className="flex flex-col gap-6 w-full">
+          <RowFields>
+            <TextField 
+              label={"Nama Penerima"}
+              placeholder={"Masukkan nama pemilik alamat"}
+            />
+            <TextField 
+              label={"Nomor Whatsapp"}
+              placeholder={"0000 0000 0000"}
+              leading={<Accessory text={"+62"} />}
+            />
+          </RowFields>
+          <RowFields>
+            <TextField 
+              label={"Provinsi"}
+              placeholder={"Masukkan Provinsi"}
+            />
+            <TextField 
+              label={"Kota/Kabupaten"}
+              placeholder={"Masukkan kota/kabupaten"}
+            />
+          </RowFields>
+          <RowFields>
+            <TextField 
+              label={"Kecamatan"}
+              placeholder={"Masukkan Kecamatan"}
+            />
+            <TextField 
+              label={"Kode Pos"}
+              placeholder={"Masukkan kode pos"}
+            />
+          </RowFields>
+          <TextField 
+            label={"Alamat Lengkap"}
+            placeholder={"Masukkan Nama Jalan, Gedung, No. Rumah"}
+            half={false}
+          />
+          <TextField 
+            label={"Detail Tambahan"}
+            placeholder={"Masukkan Detail Lainnya (Cth: Blok/Unit No., Patokan)"}
+            half={false}
+          />
+        </div>
+        <div className="flex gap-6 ml-auto">
+          <OutlinedButton 
+            action={"Batal"}
+            onClick={onCancel}
+            verticalPadding={buttonVerticalPadding}
+          />
+          <RoundedButton 
+            action={"Simpan Alamat"}
+            onClick={() => {}}
+            fullyRounded={false}
+            verticalPadding={buttonVerticalPadding}
+          />
         </div>
       </div>
     </div>
   );
+}
+
+function RowFields({ children }) {
+  return (
+    <div className="flex justify-center gap-4 w-full flex-wrap">
+      {children}          
+    </div>
+  );
+}
+
+function TextField({
+  label,
+  value,
+  setValue,
+  placeholder,
+  leading,
+  trailing,
+  half = true
+}) {
+  return <_TextField 
+    label={label}
+    value={value}
+    setValue={setValue}
+    placeholder={placeholder}
+    leading={leading}
+    trailing={trailing}
+    className={`
+      ${half ? "w-[49%]" : "w-[100%]"} max-lg:w-[100%]  
+    `}
+  />;
 }
 
 function ProfileBox({ user }) {

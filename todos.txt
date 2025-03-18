@@ -20,3 +20,8 @@ Pages:
   * CartPage
     - Adjust item description header ✅
     - Responsive
+
+  * ProfilePage
+    * AddressForm
+      - Set TextFields value and setValue
+      - Callback for onConfirm
