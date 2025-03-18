@@ -149,16 +149,33 @@ function Overlay() {
       z-200 h-screen w-screen fixed inset-0 bg-black/80 flex items-center justify-center
       ${modalType === ModalType.NONE && "hidden"}
     `}>
-      {
-        modalType === ModalType.ALERT_DIALOG ? <AlertDialog 
-          title={params.title}
-          desc={params.desc}
-          cancelText={params.cancelText}
-          confirmText={params.confirmText}
-          onCancel={params.onCancel}
-          onConfirm={params.onConfirm}
-        /> : <></>
-      }
+      <AnimatePresence>
+        {
+          modalType !== ModalType.NONE && <motion.div
+            initial={dismissStyle}
+            exit={dismissStyle}
+            animate={{
+              scale: 1,
+              opacity: 1
+            }}
+            transition={{
+              delay: 0.1
+            }}
+            className="w-full h-full flex items-center justify-center"
+          >
+            {
+              modalType === ModalType.ALERT_DIALOG ? <AlertDialog 
+                title={params.title}
+                desc={params.desc}
+                cancelText={params.cancelText}
+                confirmText={params.confirmText}
+                onCancel={params.onCancel}
+                onConfirm={params.onConfirm}
+              /> : <></>
+            }
+          </motion.div>
+        }
+      </AnimatePresence>
     </div>
   );
 }
