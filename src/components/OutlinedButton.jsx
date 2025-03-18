@@ -9,7 +9,7 @@ export default function OutlinedButton({
     <div
       className={`
         border-2 border-white hover:opacity-80 select-none rounded-[4px] ${className}
-        hover:cursor-pointer
+        hover:cursor-pointer text-center flex items-center justify-center
       `}
       style={{
         paddingRight: `${horizontalPadding}px`,

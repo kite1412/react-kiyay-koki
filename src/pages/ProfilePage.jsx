@@ -3,6 +3,7 @@ import User from "../assets/user.svg?react";
 import { mockUser } from "../data/mocks";
 import RoundedButton from "../components/RoundedButton";
 import SignOut from "../assets/sign-out.svg?react";
+import { ModalType, useModal } from "../contexts/ModalContext";
 
 export default function ProfilePage() {
   return <PageLayout 
@@ -57,6 +58,8 @@ function AddressCard({
   address,
   className = ""
  }) {
+  const { createModal } = useModal();
+
   return (
     <div className={`flex flex-col gap-4 p-6 outline-1 rounded-[8px] ${className}`}>
       <div className="font-bold flex flex-col">
@@ -76,6 +79,25 @@ function AddressCard({
         />
         <TextButton 
           action={"Hapus Alamat"}
+          onClick={() => {
+            const { request, dismiss } = createModal(
+              ModalType.ALERT_DIALOG,
+              {
+                title: "Hapus Alamat",
+                desc: "Apakah Anda yakin untuk menghapus alamat? Alamat akan dihapus secara permanen dan tidak dapat dikembalikan",
+                cancelText: "Batal",
+                confirmText: "Hapus Alamat",
+                onCancel: () => {
+                  dismiss();
+                },
+                onConfirm: () => {
+
+                  dismiss();
+                }
+              }
+            );
+            request();
+          }}
         />
       </div>
     </div>

@@ -22,7 +22,7 @@ export default function RoundedButton({
       className={`
         ${ !disabled ? "bg-primary hover:cursor-pointer hover:opacity-80" : "bg-dark-gray text-gray-400" }
         select-none flex items-center justify-center ${fullyRounded ? "rounded-full" : "rounded-[4px]"}
-        transition-colors ${className}
+        transition-colors text-center ${className}
       `}
       style={{
         paddingTop: `${verticalPadding}px`,

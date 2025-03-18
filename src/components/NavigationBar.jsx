@@ -72,7 +72,7 @@ export default function NavigationBar() {
               <ShoppingCart 
                 className={`
                   ${icon} size-[24px] ${location.pathname === "/keranjang" && "text-primary"}
-                  transition-colors
+                  transition-colors select-none
                 `}
                 onClick={() => {
                   if (location.pathname !== CART_PATH) navigate(CART_PATH);
@@ -81,14 +81,14 @@ export default function NavigationBar() {
               <Love 
                 className={`
                   ${icon} size-[20px] max-md:hidden ${location.pathname === "/wishlist" && "text-primary"}
-                  transition-colors fill-none
+                  transition-colors fill-none select-none
                 `} 
                 onClick={() => {
                   if (location.pathname !== WISHLIST_PATH) navigate(WISHLIST_PATH);
                 }}
               />
               <User 
-                className={`p-1 bg-primary rounded-full md:ml-4 hover:cursor-pointer`}
+                className={`p-1 bg-primary rounded-full md:ml-4 hover:cursor-pointer select-none`}
                 onClick={() => {
                   if (location.pathname !== PROFILE_PATH) navigate(PROFILE_PATH);
                 }}

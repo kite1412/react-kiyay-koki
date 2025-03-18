@@ -16,6 +16,8 @@ import CartPage from "./pages/CartPage";
 import WishlistPage from "./pages/WishlistPage";
 import { ABOUT_PATH, CART_PATH, COLLECTION_PATH, CONTACT_PATH, DETAIL_PATH, HOME_PATH, LOGIN_PATH, PROFILE_PATH, WISHLIST_PATH } from "./constants/paths";
 import ProfilePage from "./pages/ProfilePage";
+import AlertDialog from "./components/AlertDialog";
+import { ModalProvider, ModalType, useModal } from "./contexts/ModalContext";
 
 function App() {
   const [scrollY, setScrollY] = useState(0);
@@ -24,8 +26,8 @@ function App() {
   return (
     <Router>
       <ResetScroll />
-      <AuthProvider 
-        children={
+      <AuthProvider>
+        <ModalProvider>
           <div
             id="container"
             className={`
@@ -123,11 +125,40 @@ function App() {
                 />
               </Routes>
             </div>
+            <Overlay />
           </div>
-        }
-      />
+        </ModalProvider>
+      </AuthProvider>
     </Router>
   );
 }
 
 export default App;
+
+function Overlay() {
+  const { modalData } = useModal();
+  const modalType = modalData.type;
+  const params = modalData.params;
+  const dismissStyle = {
+    scale: 0,
+    opacity: 0
+  }
+
+  return (
+    <div className={`
+      z-200 h-screen w-screen fixed inset-0 bg-black/80 flex items-center justify-center
+      ${modalType === ModalType.NONE && "hidden"}
+    `}>
+      {
+        modalType === ModalType.ALERT_DIALOG ? <AlertDialog 
+          title={params.title}
+          desc={params.desc}
+          cancelText={params.cancelText}
+          confirmText={params.confirmText}
+          onCancel={params.onCancel}
+          onConfirm={params.onConfirm}
+        /> : <></>
+      }
+    </div>
+  );
+}
