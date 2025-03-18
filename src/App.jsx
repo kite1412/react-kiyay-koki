@@ -145,21 +145,31 @@ function Overlay() {
   }
 
   return (
-    <div className={`
-      z-200 h-screen w-screen fixed inset-0 bg-black/80 flex items-center justify-center
-      ${modalType === ModalType.NONE && "hidden"}
-    `}>
-      <AnimatePresence>
-        {
-          modalType !== ModalType.NONE && <motion.div
+    <AnimatePresence>
+      {
+        modalType !== ModalType.NONE && <motion.div
+          className={`
+            z-200 h-screen w-screen fixed inset-0 bg-black/80 flex items-center justify-center
+          `}
+          initial={{
+            opacity: 0
+          }}
+          animate={{
+            opacity: 1
+          }}
+          exit={{
+            opacity: 0
+          }}
+        >
+          <motion.div
             initial={dismissStyle}
             exit={dismissStyle}
             animate={{
               scale: 1,
-              opacity: 1
-            }}
-            transition={{
-              delay: 0.1
+              opacity: 1,
+              transition: {
+                delay: 0.1
+              }
             }}
             className="w-full h-full flex items-center justify-center"
           >
@@ -174,8 +184,8 @@ function Overlay() {
               /> : <></>
             }
           </motion.div>
-        }
-      </AnimatePresence>
-    </div>
+        </motion.div>
+      }
+    </AnimatePresence>
   );
 }
