@@ -22,7 +22,7 @@ export default function LoginPage() {
 /**
  * @param {(number) => void} onPhoneNumberConfirm - callback function when the inputted phone number confirmed,
  *  used for phone number verification and sending otp.
- * @param {(phoneNumber: number, otpCode: number) => void} onOtpConfirm - callback function when the inputted otp code confirmed,
+ * @param {(phoneNumber: number, otpCode: string) => void} onOtpConfirm - callback function when the inputted otp code confirmed,
  *  used for complete sign in process. 
  */
 function Content({ onPhoneNumberConfirm, onOtpConfirm }) {
@@ -141,7 +141,7 @@ function LoginForm({ phoneNumber, setPhoneNumber, onConfirm }) {
 }
 
 /**
- * @param {(number) => void} onConfirm - callback function that retrieve otp code as a param. 
+ * @param {(string) => void} onConfirm - callback function that retrieve otp code as a param. 
  */
 function OtpForm({ onConfirm }) {
   const otpLength = 6;
@@ -201,7 +201,7 @@ function OtpForm({ onConfirm }) {
       </div>
       <RoundedButton 
         action={"Konfirmasi OTP"}
-        onClick={onConfirm}
+        onClick={() => onConfirm(otp.join(""))}
         className={"w-fit"}
         disabled={otp.includes("")}
       />

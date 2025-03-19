@@ -8,6 +8,7 @@
   --color-gold: oklch(80.86% 0.1585 71.53);
   --color-light-gray: oklch(76.68% 0 0);
   --color-light-orange: oklch(68.69% 0.2025 22.23);
+  --color-soft-black: oklch(14.96% 0 0);
 }
 
 @font-face {

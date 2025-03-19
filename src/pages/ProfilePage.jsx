@@ -2,11 +2,11 @@ import PageLayout from "../layouts/PageLayout";
 import User from "../assets/user.svg?react";
 import { mockUser } from "../data/mocks";
 import RoundedButton from "../components/RoundedButton";
-import SignOut from "../assets/sign-out.svg?react";
 import { ModalType, useModal } from "../contexts/ModalContext";
 import Cancel from "../assets/cancel.svg?react";
 import _TextField, { Accessory } from "../components/TextField";
 import OutlinedButton from "../components/OutlinedButton";
+import SignOutButton from "../components/SignOutButton";
 
 export default function ProfilePage() {
   return <PageLayout 
@@ -256,24 +256,6 @@ function TextButton({
       onClick={onClick}
     >
       {action}
-    </div>
-  );
-}
-
-function SignOutButton({
-  onClick,
-  className = ""
-}) {
-  return (
-    <div 
-      className={`
-        flex items-center gap-4 font-bold hover:cursor-pointer
-        hover:opacity-80 select-none ${className}
-      `}
-      onClick={onClick}
-    >
-      <SignOut className={"size-[20px]"} />
-      Keluar
     </div>
   );
 }
