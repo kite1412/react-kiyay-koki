@@ -7,6 +7,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import ProductType from "../../models/ProductType";
 import PriceRange from "../../components/PriceRange";
 import RatingSelection from "../../components/RatingSelection";
+import { mockFishesData } from "../../data/mocks";
+import ProductCards from "../../components/ProductCards";
+import PagerBar from "../../components/PagerBar";
 
 export default function AdminCollectionPage() {
   const [searchValue, setSearchValue] = useState("");
@@ -16,6 +19,8 @@ export default function AdminCollectionPage() {
   ];
   const [selectedTypeIndex, setSelectedTypeIndex] = useState(0);
   const [selectedAvailabilityIndex, setSelectedAvailabilityIndex] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const products = mockFishesData;
 
   return <AdminPageLayout>
     <div className="size-full">
@@ -38,7 +43,7 @@ export default function AdminCollectionPage() {
               className="h-fit"
             />
           </div>
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center flex-wrap gap-4">
             <div className="flex gap-6">
               <DropdownMenu 
                 selections={types}
@@ -56,9 +61,22 @@ export default function AdminCollectionPage() {
               <RatingSelection />
             </div>
           </div>
-          
         </div>
-        asd
+        <div className="flex flex-col gap-6">
+          <ProductCards 
+            products={products.slice(currentPage * 3 - 3, currentPage * 3)}
+            showCount={3}
+            expandable={false}
+          />
+          {
+            products.length && <PagerBar 
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              totalItems={products.length}
+              itemsPerPage={3}
+            />
+          }
+        </div>
       </div>
     </div>
   </AdminPageLayout>;

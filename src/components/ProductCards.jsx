@@ -8,11 +8,13 @@ import RoundedButton from "./RoundedButton";
  * @param {Array<Product>} products - a list of product to display in a grid. 
  * @param {(Product) => void} onClick - a callback function when a product clicked. 
  * @param {number} showCount - initial number of products to show before expanded, 0 means show all items. 
+ * @param {boolean} expandable - whether the list is expandable or not. 
  */
 export default function ProductCards({
-   products,
-   onClick,
-   showCount = 0
+  products,
+  onClick,
+  showCount = 0,
+  expandable = true
 }) {
   const [showAll, setShowAll] = useState(false);
 
@@ -33,7 +35,7 @@ export default function ProductCards({
         }
       </div>
       {
-        showCount && products.length > showCount ? <RoundedButton 
+        showCount && expandable && products.length > showCount ? <RoundedButton 
           action={!showAll ? "Lihat Semua" : "Sembunyikan"}
           onClick={() => setShowAll(!showAll)}
           verticalPadding={4}
