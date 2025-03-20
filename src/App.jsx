@@ -19,6 +19,8 @@ import ProfilePage, { AddressForm } from "./pages/ProfilePage";
 import AlertDialog from "./components/AlertDialog";
 import { ModalProvider, ModalType, useModal } from "./contexts/ModalContext";
 import AdminNavigationBar from "./components/AdminNavigationBar";
+import { ADMIN_COLLECTION_PATH } from "./constants/adminPaths";
+import AdminCollectionPage from "./pages/admin/AdminCollectionPage";
 
 function App() {
   return (
@@ -159,9 +161,18 @@ function UserContent() {
 
 function AdminContent() {
   return (
-    <div className="h-screen w-screen bg-soft-black grid grid-cols-[1fr_4fr]">
+    <div className={`
+      h-screen w-screen bg-soft-black grid grid-cols-[1fr_4fr]
+      overflow-y-auto
+    `}>
       <AdminNavigationBar />
-      <div>content</div>
+      <Routes>
+        <Route 
+          index
+          path={ADMIN_COLLECTION_PATH}
+          element={<AdminCollectionPage />}          
+        />
+      </Routes>
     </div>
   );
 }

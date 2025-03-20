@@ -1,5 +1,4 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import Search from "../assets/search.svg?react";
 import RoundedButton from "./RoundedButton";
 import AppLogo from "./AppLogo";
 import useScreenWidth from "../hooks/useScreenWidth";
@@ -10,6 +9,7 @@ import ShoppingCart from "../assets/shopping-cart.svg?react";
 import Love from "../assets/love.svg?react";
 import User from "../assets/user.svg?react";
 import { ABOUT_PATH, CART_PATH, COLLECTION_PATH, CONTACT_PATH, HOME_PATH, PROFILE_PATH, WISHLIST_PATH } from "../constants/paths";
+import SearchBar from "./SearchBar";
 
 export default function NavigationBar() {
   const navigate = useNavigate();
@@ -57,7 +57,7 @@ export default function NavigationBar() {
 
       {!isLoginPage && (
         <div className="flex items-center lg:gap-6 gap-2 h-full py-1">
-          <SearchBar />
+          <SearchBar inputClassName="lg:w-[100px] xl:w-[150px]" />
           {
             !isAuthenticated ? <RoundedButton
               action={
@@ -120,30 +120,6 @@ function RouteButton({ route, selected, onClick }) {
       onClick={onClick}
     >
       {route}
-    </div>
-  );
-}
-
-/**
- * Search bar for navigation bar.
- * @param {string} value - text field's value.
- * @param {(newValue: string) => void} onValueChange - callback function when the value changes.
- */
-function SearchBar({ value, onValueChange }) {
-  return (
-    <div
-      className={`
-        flex lg:py-2 lg:px-4 max-lg:p-2 w-full h-full items-center text-secondary-text
-        rounded-full bg-white
-      `}
-    >
-      <input
-        value={value}
-        onChange={(e) => onValueChange(e.target)}
-        placeholder="Pencarian"
-        className={`max-lg:hidden lg:w-[100px] xl:w-[150px] outline-none`}
-      />
-      <Search className="w-[20px] h-[20px] select-none" />
     </div>
   );
 }

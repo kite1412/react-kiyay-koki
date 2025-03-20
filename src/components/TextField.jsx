@@ -17,7 +17,7 @@ export default function TextField({
           onChange={e => setValue(e.target.value)}
           placeholder={placeholder}
           className={`
-            ${value ? "text-white" : "text-secondary-text"} border-2 border-primary
+            ${value ? "text-white" : "text-secondary-text italic"} border-2 border-primary
             p-4 rounded-[8px] transition-colors w-full
           `}
         />
