@@ -31,9 +31,9 @@ export default function TextField({
  * Typically used as {@link TextField}'s 'leading' or 'trailing'.
  * @param {any} text
  */
-export function Accessory({ text }) {
+export function Accessory({ text, className = "" }) {
   return (
-    <div className="bg-primary rounded-[8px] font-bold p-4">
+    <div className={`bg-primary rounded-[8px] font-bold p-4 ${className}`}>
       {text}
     </div>
   );

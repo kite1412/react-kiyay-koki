@@ -1,6 +1,8 @@
 Models:
   * Product
     - List of images instead of an image
+    - Add description
+    - Add status (listed/not listed)
 
 Components:
   * NavigationBar:

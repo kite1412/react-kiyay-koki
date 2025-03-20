@@ -2,8 +2,6 @@ import { useState } from "react";
 import SearchBar from "../../components/SearchBar";
 import AdminPageLayout from "../../layouts/AdminPageLayout";
 import RoundedButton from "../../components/RoundedButton";
-import ChevronRight from "../../assets/chevron-right.svg?react";
-import { AnimatePresence, motion } from "framer-motion";
 import ProductType from "../../models/ProductType";
 import PriceRange from "../../components/PriceRange";
 import RatingSelection from "../../components/RatingSelection";
@@ -12,15 +10,16 @@ import ProductCards from "../../components/ProductCards";
 import PagerBar from "../../components/PagerBar";
 import { useNavigate } from "react-router-dom";
 import { ADMIN_EDIT_PRODUCT_PATH } from "../../constants/adminPaths";
+import DropdownMenu from "../../components/DropdownMenu";
 
 export default function AdminCollectionPage() {
   const [searchValue, setSearchValue] = useState("");
   const types = ["Semua", ...ProductType.values];
-  const availabilities = [
+  const statuses = [
     "Semua", "Terdaftar", "Tidak Terdaftar"
   ];
   const [selectedTypeIndex, setSelectedTypeIndex] = useState(0);
-  const [selectedAvailabilityIndex, setSelectedAvailabilityIndex] = useState(0);
+  const [selectedStatusIndex, setSelectedStatusIndex] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const products = mockFishesData;
   const navigate = useNavigate();
@@ -55,9 +54,9 @@ export default function AdminCollectionPage() {
                 setSelectedIndex={setSelectedTypeIndex}
               />
               <DropdownMenu 
-                selections={availabilities}
-                selectedIndex={selectedAvailabilityIndex}
-                setSelectedIndex={setSelectedAvailabilityIndex}
+                selections={statuses}
+                selectedIndex={selectedStatusIndex}
+                setSelectedIndex={setSelectedStatusIndex}
               />
             </div>
             <div className="flex gap-6" >
@@ -94,77 +93,4 @@ export default function AdminCollectionPage() {
       </div>
     </div>
   </AdminPageLayout>;
-}
-
-/**
- * @param {Array<string>} selections 
- * @param {number} selectedIndex 
- * @param {(number) => void} setSelectedIndex 
- */
-function DropdownMenu({
-  selections,
-  selectedIndex,
-  setSelectedIndex
-}) {
-  if (selections.length === 0 || selections.length - 1 < selectedIndex) return;
-  
-  const [expanded, setExpanded] = useState(false);
-  const hidden = {
-    scale: 0.4,
-    opacity: 0,
-    marginTop: "-50px"
-  };
-
-  return (
-    <div className="relative">
-      <div 
-        className={`
-          flex justify-between items-center border-1 p-2 ${
-            expanded ? "bg-primary border-primary rounded-tl-[4px] rounded-tr-[4px]" 
-              : "rounded-[4px] border-white bg-transparent"
-          } transition-all gap-4 select-none cursor-pointer duration-200
-        `}
-        onClick={() => setExpanded(!expanded)}
-      >
-        {selections[selectedIndex]}
-        <ChevronRight className="rotate-90 size-[16px]" />
-      </div>
-      <AnimatePresence>
-        {
-          expanded && <motion.div
-            className={`
-              rounded-bl-[4px] rounded-br-[4px] border-1 border-white bg-black
-              absolute
-            `}
-            initial={hidden}
-            animate={{
-              scale: 1,
-              opacity: 1,
-              marginTop: "8px"
-            }}
-            exit={hidden}
-          >
-            {
-              selections.map((s, i) => (
-                <div
-                  className="select-none cursor-pointer"
-                  onClick={() => {
-                    setExpanded(false);
-                    setSelectedIndex(i);
-                  }}
-                >
-                  <div className="p-2">
-                    {s}
-                  </div>
-                  {
-                    (i !== selections.length - 1) && <hr className="border-1 border-white" />
-                  }
-                </div>
-              ))
-            }
-          </motion.div>
-        }
-      </AnimatePresence>
-    </div>
-  );
 }
