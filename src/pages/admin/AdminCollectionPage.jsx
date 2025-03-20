@@ -10,6 +10,8 @@ import RatingSelection from "../../components/RatingSelection";
 import { mockFishesData } from "../../data/mocks";
 import ProductCards from "../../components/ProductCards";
 import PagerBar from "../../components/PagerBar";
+import { useNavigate } from "react-router-dom";
+import { ADMIN_EDIT_PRODUCT_PATH } from "../../constants/adminPaths";
 
 export default function AdminCollectionPage() {
   const [searchValue, setSearchValue] = useState("");
@@ -21,6 +23,7 @@ export default function AdminCollectionPage() {
   const [selectedAvailabilityIndex, setSelectedAvailabilityIndex] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const products = mockFishesData;
+  const navigate = useNavigate();
 
   return <AdminPageLayout>
     <div className="size-full">
@@ -37,6 +40,7 @@ export default function AdminCollectionPage() {
             />
             <RoundedButton 
               action="Tambah Koleksi"
+              onClick={() => navigate(ADMIN_EDIT_PRODUCT_PATH)}
               fullyRounded={false}
               verticalPadding={6}
               horizontalPadding={16}
@@ -65,6 +69,16 @@ export default function AdminCollectionPage() {
         <div className="flex flex-col gap-6">
           <ProductCards 
             products={products.slice(currentPage * 3 - 3, currentPage * 3)}
+            onClick={p => 
+              navigate(
+                ADMIN_EDIT_PRODUCT_PATH,
+                { 
+                  state: {
+                    product: p
+                  }
+                }
+              )
+            }
             showCount={3}
             expandable={false}
           />

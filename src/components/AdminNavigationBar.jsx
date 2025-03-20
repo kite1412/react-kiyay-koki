@@ -2,13 +2,23 @@ import { useLocation, useNavigate } from "react-router-dom";
 import AppLogo from "./AppLogo";
 import Fishbowl from "../assets/fishbowl.svg?react";
 import Contact from "../assets/contact.svg?react";
-import { ADMIN_COLLECTION_PATH, ADMIN_CONTACT_PATH } from "../constants/adminPaths";
+import { ADMIN_COLLECTION_PATH, ADMIN_CONTACT_PATH, ADMIN_EDIT_PRODUCT_PATH } from "../constants/adminPaths";
 import SignOutButton from "./SignOutButton";
 
 export default function AdminNavigationBar() {
   const destinations = [
-    { name: "Koleksi", icon: <Fishbowl />, route: ADMIN_COLLECTION_PATH },
-    { name: "Kontak", icon: <Contact />, route: ADMIN_CONTACT_PATH }
+    { 
+      name: "Koleksi",
+      icon: <Fishbowl />, 
+      mainRoute: ADMIN_COLLECTION_PATH,
+      altRoutes: [ADMIN_EDIT_PRODUCT_PATH]
+    },
+    { 
+      name: "Kontak",
+      icon: <Contact />, 
+      mainRoute: ADMIN_CONTACT_PATH,
+      altRoutes: [] 
+    }
   ];
   
   return (
@@ -21,7 +31,8 @@ export default function AdminNavigationBar() {
               <DestinationBar 
                 name={d.name}
                 icon={d.icon}
-                route={d.route}
+                mainRoute={d.mainRoute}
+                altRoutes={d.altRoutes}
               />
             ))
           }
@@ -35,11 +46,12 @@ export default function AdminNavigationBar() {
 function DestinationBar({
   name,
   icon,
-  route
+  mainRoute,
+  altRoutes
 }) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const selected = pathname === route;
+  const selected = pathname === mainRoute || altRoutes.find(r => r === pathname);
 
   return (
     <div 
@@ -48,7 +60,7 @@ function DestinationBar({
         ${selected ? "border-primary bg-black" : "border-soft-black bg-soft-black"}
         transition-colors select-none cursor-pointer duration-300 min-w-[200px]
       `}
-      onClick={() => navigate(route)}
+      onClick={() => navigate(mainRoute)}
     >
       <div className={`
         p-2 rounded-[8px] border-1 border-primary ${selected ? "bg-primary" : "bg-black"}

@@ -19,8 +19,9 @@ import ProfilePage, { AddressForm } from "./pages/ProfilePage";
 import AlertDialog from "./components/AlertDialog";
 import { ModalProvider, ModalType, useModal } from "./contexts/ModalContext";
 import AdminNavigationBar from "./components/AdminNavigationBar";
-import { ADMIN_COLLECTION_PATH } from "./constants/adminPaths";
+import { ADMIN_COLLECTION_PATH, ADMIN_EDIT_PRODUCT_PATH } from "./constants/adminPaths";
 import AdminCollectionPage from "./pages/admin/AdminCollectionPage";
+import AdminEditProductPage from "./pages/admin/AdminEditProductPage";
 
 function App() {
   return (
@@ -171,6 +172,10 @@ function AdminContent() {
           index
           path={ADMIN_COLLECTION_PATH}
           element={<AdminCollectionPage />}          
+        />
+        <Route 
+          path={ADMIN_EDIT_PRODUCT_PATH}
+          element={<AdminEditProductPage />}
         />
       </Routes>
     </div>
