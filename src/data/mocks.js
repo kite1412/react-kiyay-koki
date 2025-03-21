@@ -7,6 +7,7 @@ export const mockFishesData = Array.from({ length: 8 }).map((_, i) => {
     id: i + 1,
     image: orandaRoseTail,
     name: "Oranda Rose Tail",
+    description: "Ikan oranda rose tail",
     price: 250000,
     rating: i + 1,
     totalVotes: i,

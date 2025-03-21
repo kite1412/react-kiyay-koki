@@ -164,7 +164,7 @@ function AdminContent() {
   return (
     <div className={`
       h-screen w-screen bg-soft-black grid grid-cols-[1fr_4fr]
-      overflow-y-auto
+      overflow-y-auto relative
     `}>
       <AdminNavigationBar />
       <Routes>
@@ -178,6 +178,7 @@ function AdminContent() {
           element={<AdminEditProductPage />}
         />
       </Routes>
+      <Overlay />
     </div>
   );
 }

@@ -10,6 +10,7 @@ import DropdownMenu from "../../components/DropdownMenu";
 import ProductType from "../../models/ProductType";
 import { AnimatePresence, motion } from "framer-motion";
 import OutlinedButton from "../../components/OutlinedButton";
+import { ModalType, useModal } from "../../contexts/ModalContext";
 
 const collectionTypes = ProductType.values;
 const statuses = ["Terdaftar", "Tidak Terdaftar"];
@@ -32,6 +33,8 @@ export default function AdminEditProductPage() {
     marginTop: "0px",
     scaleY: 1
   };
+  const pop = () => navigate("/", { replace: true });
+  const { createModal } = useModal();
 
   return <AdminPageLayout>
     <div className="size-full flex flex-col gap-10">
@@ -40,7 +43,7 @@ export default function AdminEditProductPage() {
           action={
             <ChevronLeft className="size-[40px]" />
           }
-          onClick={() => navigate("/", { replace: true })}
+          onClick={() => pop()}
           verticalPadding={0}
           horizontalPadding={0}
         />
@@ -200,7 +203,32 @@ export default function AdminEditProductPage() {
       </div>
       <div className="flex gap-6 ml-auto">
         <OutlinedButton 
-          action="Batal"
+          action={`
+            ${data ? "Hapus Koleksi" : "Batal"}  
+          `}
+          onClick={() => {
+            if (!data) {
+              pop();
+            } else {
+              const { request, dismiss } = createModal(
+                ModalType.ALERT_DIALOG,
+                {
+                  title: "Hapus Koleksi",
+                  desc: "Apakah Anda yakin untuk menghapus koleksi? Koleksi akan dihapus secara permanen dan tidak dapat dikembalikan",
+                  cancelText: "Batal",
+                  confirmText: "Hapus Koleksi",
+                  onCancel: () => {
+                    dismiss();
+                  },
+                  onConfirm: () => {
+                    // delete product
+                    dismiss();
+                  }
+                }
+              );
+              request();
+            } 
+          }}
         />
         <RoundedButton 
           action="Simpan Koleksi"
