@@ -3,6 +3,7 @@ import SearchBar from "../../components/SearchBar";
 import AdminPageLayout from "../../layouts/AdminPageLayout";
 import { mockUsers } from "../../data/mocks";
 import PagerBar from "../../components/PagerBar";
+import { useNavigate } from "react-router-dom";
 
 export default function AdminContactsPage() {
   const [searchValue, setSearchValue] = useState("");
@@ -53,8 +54,22 @@ export default function AdminContactsPage() {
 function Contact({
   user
 }) {
+  const navigate = useNavigate();
+
   return (
-    <div className="flex flex-col gap-4 cursor-pointer">
+    <div
+      className="flex flex-col gap-4 cursor-pointer"
+      onClick={() => 
+        navigate(
+          `/kontak/${user.id}`,
+          { 
+            state: {
+              user: user
+            }  
+          }
+        )
+      }
+    >
       <div className="grid grid-cols-[1fr_1fr_1fr] justify-items-center font-bold">
         <p>{user.phoneNumber}</p>
         <p>{user.totalReviews}</p>

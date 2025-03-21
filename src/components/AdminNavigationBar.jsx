@@ -51,7 +51,11 @@ function DestinationBar({
 }) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const selected = pathname === mainRoute || altRoutes.find(r => r === pathname);
+  const selected = pathname === mainRoute 
+    || altRoutes.find(r => 
+      // index of 1: assume every route starts with /
+      r === pathname || pathname.includes(r.split("/")[1])
+    );
 
   return (
     <div 

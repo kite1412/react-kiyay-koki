@@ -19,10 +19,11 @@ import ProfilePage, { AddressForm } from "./pages/ProfilePage";
 import AlertDialog from "./components/AlertDialog";
 import { ModalProvider, ModalType, useModal } from "./contexts/ModalContext";
 import AdminNavigationBar from "./components/AdminNavigationBar";
-import { ADMIN_COLLECTION_PATH, ADMIN_CONTACTS_PATH, ADMIN_EDIT_PRODUCT_PATH } from "./constants/adminPaths";
+import { ADMIN_COLLECTION_PATH, ADMIN_CONTACT_DETAIL_PATH, ADMIN_CONTACTS_PATH, ADMIN_EDIT_PRODUCT_PATH } from "./constants/adminPaths";
 import AdminCollectionPage from "./pages/admin/AdminCollectionPage";
 import AdminEditProductPage from "./pages/admin/AdminEditProductPage";
 import AdminContactsPage from "./pages/admin/AdminContactsPage";
+import AdminContactDetailPage from "./pages/admin/AdminContactDetailPage";
 
 function App() {
   return (
@@ -181,6 +182,10 @@ function AdminContent() {
         <Route 
           path={ADMIN_CONTACTS_PATH}
           element={<AdminContactsPage />}
+        />
+        <Route 
+          path={ADMIN_CONTACT_DETAIL_PATH}
+          element={<AdminContactDetailPage />}
         />
       </Routes>
       <Overlay />
