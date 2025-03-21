@@ -5,6 +5,7 @@ export default function TextField({
   placeholder,
   leading,
   trailing,
+  disabled = false,
   className = ""
 }) {
   return (
@@ -15,6 +16,7 @@ export default function TextField({
         <input 
           value={value}
           onChange={e => setValue(e.target.value)}
+          disabled={disabled}
           placeholder={placeholder}
           className={`
             ${value ? "text-white" : "text-secondary-text italic"} border-2 border-primary

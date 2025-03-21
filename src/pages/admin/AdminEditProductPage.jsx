@@ -11,6 +11,7 @@ import ProductType from "../../models/ProductType";
 import { AnimatePresence, motion } from "framer-motion";
 import OutlinedButton from "../../components/OutlinedButton";
 import { ModalType, useModal } from "../../contexts/ModalContext";
+import { formatPrice, subtractByDiscount } from "../../components/ProductPrice";
 
 const collectionTypes = ProductType.values;
 const statuses = ["Terdaftar", "Tidak Terdaftar"];
@@ -21,6 +22,15 @@ export default function AdminEditProductPage() {
   const data = location.state;
   const product = data?.product;
   const [descEdit, setDescEdit] = useState(product?.description);
+  const [nameEdit, setNameEdit] = useState(product?.name);
+  const [priceEdit, setPriceEdit] = useState(product?.price);
+  const [stockEdit, setStockEdit] = useState(product?.stock);
+  const [discountEdit, setDiscountEdit] = useState(product?.discountPercentage);
+  const [fishColorEdit, setFishColorEdit] = useState(product?.spec.warna);
+  const [typeEdit, setTypeEdit] = useState(
+    product?.type === ProductType.FISH ? product?.spec.jenis_ikan : ""
+  );
+  const [fishSizeEdit, setFishSizeEdit] = useState(product?.spec.ukuran);
   const [typeIndex, setTypeIndex] = useState(product ? collectionTypes.indexOf(product?.type) : 0);
   const [statusIndex, setStatusIndex] = useState(0);
   const dismissedFieldStyle = {
@@ -63,6 +73,7 @@ export default function AdminEditProductPage() {
                   <MediaForm
                     inputLabel={i} 
                     className="flex-1/3" 
+                    media={product?.image}
                   />
                 ))
               }
@@ -81,12 +92,16 @@ export default function AdminEditProductPage() {
             <TextField 
               label="Nama Koleksi"
               placeholder="Masukkan nama produk"
+              value={nameEdit}
+              setValue={setNameEdit}
             />
           }
           second={
             <TextField 
               label="Harga Koleksi"
               placeholder="Contoh: 250.000"
+              value={priceEdit}
+              setValue={setPriceEdit}
               leading={
                 <Accessory 
                   text="Rp"
@@ -101,6 +116,8 @@ export default function AdminEditProductPage() {
             <TextField 
               label="Stok Koleksi"
               placeholder="Masukkan jumlah produk. Contoh: 20"
+              value={stockEdit}
+              setValue={setStockEdit}
             />
           }
           second={
@@ -108,6 +125,8 @@ export default function AdminEditProductPage() {
               <TextField 
                 label="Harga Diskon"
                 placeholder="Contoh: 0-100"
+                value={discountEdit}
+                setValue={setDiscountEdit}
                 trailing={
                   <Accessory 
                     text="%"
@@ -119,6 +138,14 @@ export default function AdminEditProductPage() {
               <TextField 
                 label="Harga Akhir"
                 placeholder="Dihitung otomatis"
+                disabled
+                value={
+                  `${
+                      priceEdit 
+                      ? `Rp ${formatPrice(subtractByDiscount(priceEdit, discountEdit | 0))}` 
+                      : ""
+                  }`
+                }
               />
             </div>
           }
@@ -176,12 +203,16 @@ export default function AdminEditProductPage() {
                   <TextField 
                     label="Warna"
                     placeholder="Masukkan jenis ikan"
+                    value={fishColorEdit}
+                    setValue={setFishColorEdit}
                   />
                 }
                 second={
                   <TextField 
                     label="Ukuran"
                     placeholder="Masukkan ukuran ikan"
+                    value={fishSizeEdit}
+                    setValue={setFishSizeEdit}
                   />
                 }
               />
@@ -199,6 +230,8 @@ export default function AdminEditProductPage() {
             typeIndex === 1 ? "dimensi akuarium" :
             typeIndex === 2 ? "berat pakan ikan" : ""
           }`}
+          value={typeEdit}
+          setValue={setTypeEdit}
         />
       </div>
       <div className="flex gap-6 ml-auto">
@@ -247,7 +280,7 @@ function MediaForm({
   className = ""
 }) {
   const [file, setFile] = useState(null);
-  const [previewUrl, setPreviewUrl] = useState("");
+  const [previewUrl, setPreviewUrl] = useState(media);
   const onFileChange = e => {
     if (e.target.files && e.target.files[0]) {
       const selectedFile = e.target.files[0];
