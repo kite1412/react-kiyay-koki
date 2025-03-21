@@ -10,6 +10,7 @@ export default function SearchBar({
   value,
   onValueChange,
   placeholder = "Pencarian",
+  inputType = "",
   className = "",
   inputClassName = ""
 }) {
@@ -24,6 +25,7 @@ export default function SearchBar({
         value={value}
         onChange={(e) => onValueChange(e.target.value)}
         placeholder={placeholder}
+        type={inputType}
         className={`max-lg:hidden outline-none ${inputClassName}`}
       />
       <Search className="w-[20px] h-[20px] select-none" />

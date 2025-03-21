@@ -2,7 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import AppLogo from "./AppLogo";
 import Fishbowl from "../assets/fishbowl.svg?react";
 import Contact from "../assets/contact.svg?react";
-import { ADMIN_COLLECTION_PATH, ADMIN_CONTACT_PATH, ADMIN_EDIT_PRODUCT_PATH } from "../constants/adminPaths";
+import { ADMIN_COLLECTION_PATH, ADMIN_CONTACT_DETAIL_PATH, ADMIN_CONTACTS_PATH, ADMIN_EDIT_PRODUCT_PATH } from "../constants/adminPaths";
 import SignOutButton from "./SignOutButton";
 
 export default function AdminNavigationBar() {
@@ -16,8 +16,8 @@ export default function AdminNavigationBar() {
     { 
       name: "Kontak",
       icon: <Contact />, 
-      mainRoute: ADMIN_CONTACT_PATH,
-      altRoutes: [] 
+      mainRoute: ADMIN_CONTACTS_PATH,
+      altRoutes: [ADMIN_CONTACT_DETAIL_PATH] 
     }
   ];
   
