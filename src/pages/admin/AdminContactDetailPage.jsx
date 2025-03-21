@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import AdminPageLayout from "../../layouts/AdminPageLayout";
 import { useEffect, useMemo, useRef, useState } from "react";
+import PagerBar from "../../components/PagerBar";
 
 const menus = [
   "Daftar Alamat",
@@ -13,7 +14,15 @@ export default function AdminContactDetailPage() {
   const location = useLocation();
   const user = location.state.user;
   const [currentMenu, setCurrentMenu] = useState(menus[0]);
-  
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
+  const endIndex = currentPage * itemsPerPage;
+  const startIndex = endIndex - itemsPerPage;
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [currentMenu]);
+
   return <AdminPageLayout>
     <div className="size-full flex flex-col gap-15">
       <h2 className="font-bold">{user.phoneNumber}</h2>
@@ -23,6 +32,20 @@ export default function AdminContactDetailPage() {
           setSelectedMenu={setCurrentMenu}
         />
       </div>
+      {
+        currentMenu === menus[0] ? <Addresses addresses={
+          user.addresses.slice(startIndex, endIndex)
+        } />
+        : <></>
+      }
+      <PagerBar 
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        itemsPerPage={itemsPerPage}
+        totalItems={
+          currentMenu === menus[0] ? user.addresses.length : 1
+        }
+      />
     </div>
   </AdminPageLayout>;
 }
@@ -68,7 +91,7 @@ function Menus({
 
   return (
     <>
-      <div className="flex gap-8">
+      <div className="flex gap-8 select-none">
         {
           menus.map((m, i) => (
             <div 
@@ -88,7 +111,7 @@ function Menus({
           ))
         }
       </div>
-      <div className="relative">
+      <div className="relative select-none">
         <div 
           className={`
             absolute bg-primary z-1 transition-all h-[2px]
@@ -101,5 +124,55 @@ function Menus({
         <div className="absolute w-full h-[2px] bg-white/70" />
       </div>
     </>
+  );
+}
+
+function Addresses({ addresses }) {
+  return (
+    <div className="flex flex-wrap gap-4 justify-between">
+      {
+        addresses.map(a => (
+          <Address 
+            address={a}
+            className="w-[49%] h-full"
+          />
+        ))
+      }
+    </div>
+  );
+}
+
+function Address({ address, className = "" }) {
+  return (
+    <div className={`
+      flex flex-col p-4 gap-2 bg-black rounded-[8px] border-1 
+      ${className}
+    `}>
+      <div>
+        <p className="font-bold italic text-light-orange">{address.type}</p>
+        <b>{address.name}</b>
+      </div>
+      <div className="flex flex-col gap-[2px]">
+        <RowInfo label={"Nomor Whatsapp"} value={address.phoneNumber} />
+        <RowInfo label={"Provinsi"} value={address.province} />
+        <RowInfo label={"Kota/Kabupaten"} value={address.city} />
+        <RowInfo label={"Kecamatan"} value={address.subdistrict} />
+        <RowInfo label={"Kode Pos"} value={address.postalCode} />
+        <RowInfo label={"Alamat Lengkap"} value={address.fullAddress} />
+        <RowInfo label={"Detail Tambahan"} value={address.detail} />
+      </div>
+    </div>
+  );
+}
+
+function RowInfo({
+  label,
+  value
+}) {
+  return (
+    <div className="flex items-center gap-4 justify-between">
+      <div>{label}</div>
+      <div className="text-end">{value}</div>
+    </div>
   );
 }

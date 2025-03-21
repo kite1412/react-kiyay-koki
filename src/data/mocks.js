@@ -70,6 +70,11 @@ export const mockUser = {
       type: "Rumah",
       name: "Ramayuda M",
       phoneNumber: "08994144513",
+      province: "Lampung",
+      city: "Bandar Lampung",
+      subdistrict: "Kp Baru",
+      postalCode: 35666,
+      fullAddress: "Jl. Merdeka, Gang Tokyo No.15",
       address: "Jl. Merdeka, Gang Tokyo No.15, Kampung Baru, Kota Bandar Lampung, Lampung, 40112",
       detail: "Kos Cendrawasih, Kamar nomor 5 dari kanan, No. 3 dari kiri, Nomor 2 dari gerbang"
     }
@@ -82,11 +87,16 @@ export const mockUsers = Array.from({ length: 4 }).map((_, i) => (
     phoneNumber: "08994144513",
     totalReviews: 2 * (i + 1),
     joinDate: "23-1-2025",
-    addresses: Array.from({ length: 2 }).map(_ => (
+    addresses: Array.from({ length: 5 }).map(_ => (
       {
         type: "Rumah",
         name: "Ramayuda M",
         phoneNumber: "08994144513",
+        province: "Lampung",
+        city: "Bandar Lampung",
+        subdistrict: "Kp Baru",
+        postalCode: 35666,
+        fullAddress: "Jl. Merdeka, Gang Tokyo No.15",
         address: "Jl. Merdeka, Gang Tokyo No.15, Kampung Baru, Kota Bandar Lampung, Lampung, 40112",
         detail: "Kos Cendrawasih, Kamar nomor 5 dari kanan, No. 3 dari kiri, Nomor 2 dari gerbang"
       }
