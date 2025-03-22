@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import AdminPageLayout from "../../layouts/AdminPageLayout";
 import { useEffect, useRef, useState } from "react";
 import PagerBar from "../../components/PagerBar";
-import { cartService, productService, reviewService } from "../../objects";
+import { cartService, productService, reviewService, wishlistService } from "../../objects";
 import Rating from "../../components/Rating";
 import { resolveStockDesc } from "../../utils/product";
 import ProductPrice from "../../components/ProductPrice";
@@ -23,6 +23,8 @@ export default function AdminContactDetailPage() {
   const [reviewProducts, setReviewProducts] = useState(null);
   const [cartItems, setCartItems] = useState(null);
   const [cartProducts, setCartProducts] = useState(null);
+  const [wishlistItems, setWishlistItems] = useState(null);
+  const [wishlistProducts, setWishlistProducts] = useState(null);
   const itemsPerPage = 4;
   const endIndex = currentPage * itemsPerPage;
   const startIndex = endIndex - itemsPerPage;
@@ -50,8 +52,19 @@ export default function AdminContactDetailPage() {
       setCartProducts(products);
     };
     
+    const fetchWishlistItems = async () => {
+      const items = await wishlistService.getByUserId(user.id);
+      setWishlistItems(items);
+
+      const products = await productService.getByIds(
+        [...new Set(items.map(i => i.productId))]
+      );
+      setWishlistProducts(products)
+    };
+
     if (currentMenu === menus[1] && !reviews) fetchReviews()
-      else if (currentMenu === menus[2] && !cartItems) fetchCartItems();
+      else if (currentMenu === menus[2] && !cartItems) fetchCartItems()
+        else if (currentMenu === menus[3] && !wishlistItems) fetchWishlistItems();
   }, [currentMenu]);
 
   return <AdminPageLayout>
@@ -75,7 +88,10 @@ export default function AdminContactDetailPage() {
           items={cartItems.slice(startIndex, endIndex)}
           products={cartProducts}
         /> :
-        <></>
+        currentMenu === menus[3] && wishlistItems && wishlistProducts ? <WishlistItems 
+          items={wishlistItems.slice(startIndex, endIndex)}
+          products={wishlistProducts}
+        /> : <></>
       }
       <PagerBar 
         currentPage={currentPage}
@@ -84,7 +100,8 @@ export default function AdminContactDetailPage() {
         totalItems={
           currentMenu === menus[0] ? user.addresses.length :
           currentMenu === menus[1] ? reviews ? reviews.length : 0 :
-          currentMenu === menus[2] ? cartItems ? cartItems.length : 0 : 0
+          currentMenu === menus[2] ? cartItems ? cartItems.length : 0 :
+          currentMenu === menus[3] ? wishlistItems ? wishlistItems.length : 0 : 0
         }
         resultPlaceholder="Koleksi"
       />
@@ -177,6 +194,8 @@ function ItemsDisplay({ children }) {
 }
 
 function Addresses({ addresses }) {
+  if (!addresses.length) return;
+
   return <ItemsDisplay>
     {
       addresses.map(a => (
@@ -225,6 +244,8 @@ function RowInfo({
 }
 
 function Reviews({ reviews, products }) {
+  if (!reviews.length || !products.length) return;
+
   return <ItemsDisplay>
     {
       reviews.map(r => (
@@ -273,6 +294,8 @@ function Review({
 }
 
 function CartItems({ items, products }) {
+  if (!items.length || !products.length) return;
+
   return <ItemsDisplay>
     {
       items.map(i => (
@@ -283,6 +306,25 @@ function CartItems({ items, products }) {
           className="w-[49%]"
         />
       ))
+    }
+  </ItemsDisplay>;
+}
+
+function WishlistItems({ items, products }) {
+  if (!items.length || !products.length) return;
+
+  return <ItemsDisplay>
+    {
+      items.map(i => {
+        const p = products.find(p => p.id === i.productId);
+        
+        return <ProductCard 
+          quantity={p.stock}
+          quantityDesc={"Stok"}
+          product={p}
+          className="w-[49%]"
+        />
+      })
     }
   </ItemsDisplay>;
 }
