@@ -24,7 +24,7 @@ export default function PagerBar({
     `}>
       <div>
         Menampilkan <b>
-          {itemsPerPage * currentPage - itemsPerPage + 1} - {Math.min(itemsPerPage * currentPage, totalItems)}
+          {Math.min(itemsPerPage * currentPage - itemsPerPage + 1, totalItems)} - {Math.min(itemsPerPage * currentPage, totalItems)}
         </b> Dari <b>{totalItems}</b> {resultPlaceholder}
       </div>
       <div className="flex gap-4 items-center">

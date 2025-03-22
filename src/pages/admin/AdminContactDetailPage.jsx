@@ -1,9 +1,11 @@
 import { useLocation } from "react-router-dom";
 import AdminPageLayout from "../../layouts/AdminPageLayout";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import PagerBar from "../../components/PagerBar";
-import { productService, reviewService } from "../../objects";
+import { cartService, productService, reviewService } from "../../objects";
 import Rating from "../../components/Rating";
+import { resolveStockDesc } from "../../utils/product";
+import ProductPrice from "../../components/ProductPrice";
 
 const menus = [
   "Daftar Alamat",
@@ -19,6 +21,8 @@ export default function AdminContactDetailPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [reviews, setReviews] = useState(null);
   const [reviewProducts, setReviewProducts] = useState(null);
+  const [cartItems, setCartItems] = useState(null);
+  const [cartProducts, setCartProducts] = useState(null);
   const itemsPerPage = 4;
   const endIndex = currentPage * itemsPerPage;
   const startIndex = endIndex - itemsPerPage;
@@ -35,8 +39,19 @@ export default function AdminContactDetailPage() {
       );
       setReviewProducts(products);
     };
+
+    const fetchCartItems = async () => {
+      const items = await cartService.getByUserId(user.id);
+      setCartItems(items);
+
+      const products = await productService.getByIds(
+        [...new Set(items.map(i => i.productId))]
+      );
+      setCartProducts(products);
+    };
     
-    if (currentMenu === menus[1] && !reviews) fetchReviews();
+    if (currentMenu === menus[1] && !reviews) fetchReviews()
+      else if (currentMenu === menus[2] && !cartItems) fetchCartItems();
   }, [currentMenu]);
 
   return <AdminPageLayout>
@@ -51,12 +66,16 @@ export default function AdminContactDetailPage() {
       {
         currentMenu === menus[0] ? <Addresses addresses={
           user.addresses.slice(startIndex, endIndex)
-        } />
-        : currentMenu === menus[1] && reviews && reviewProducts ? <Reviews
+        } /> : 
+        currentMenu === menus[1] && reviews && reviewProducts ? <Reviews
           reviews={reviews.slice(startIndex, endIndex)}
           products={reviewProducts}
-        />
-        : <></>
+        /> : 
+        currentMenu === menus[2] && cartItems && cartProducts ? <CartItems 
+          items={cartItems.slice(startIndex, endIndex)}
+          products={cartProducts}
+        /> :
+        <></>
       }
       <PagerBar 
         currentPage={currentPage}
@@ -64,7 +83,8 @@ export default function AdminContactDetailPage() {
         itemsPerPage={itemsPerPage}
         totalItems={
           currentMenu === menus[0] ? user.addresses.length :
-          currentMenu === menus[1] ? reviews ? reviews.length : 1 : 1
+          currentMenu === menus[1] ? reviews ? reviews.length : 0 :
+          currentMenu === menus[2] ? cartItems ? cartItems.length : 0 : 0
         }
         resultPlaceholder="Koleksi"
       />
@@ -148,19 +168,25 @@ function Menus({
   );
 }
 
-function Addresses({ addresses }) {
+function ItemsDisplay({ children }) {
   return (
     <div className="flex flex-wrap gap-4 justify-between">
-      {
-        addresses.map(a => (
-          <Address 
-            address={a}
-            className="w-[49%] h-full"
-          />
-        ))
-      }
+      {children}
     </div>
   );
+}
+
+function Addresses({ addresses }) {
+  return <ItemsDisplay>
+    {
+      addresses.map(a => (
+        <Address 
+          address={a}
+          className="w-[49%] h-full"
+        />
+      ))
+    }
+  </ItemsDisplay>;
 }
 
 function Address({ address, className = "" }) {
@@ -199,19 +225,17 @@ function RowInfo({
 }
 
 function Reviews({ reviews, products }) {
-  return (
-    <div className="flex flex-wrap gap-4 justify-between">
-      {
-        reviews.map(r => (
-          <Review 
-            review={r}
-            product={products.find(p => p.id === r.productId)}
-            className="w-[49%]"
-          />
-        ))
-      }
-    </div>
-  );
+  return <ItemsDisplay>
+    {
+      reviews.map(r => (
+        <Review 
+          review={r}
+          product={products.find(p => p.id === r.productId)}
+          className="w-[49%]"
+        />
+      ))
+    }
+  </ItemsDisplay>;
 }
 
 function Review({ 
@@ -243,6 +267,54 @@ function Review({
           <span className="text-light-gray">{review.publishedAt}</span>
         </div>
         <p>{review.content}</p>
+      </div>
+    </div>
+  );
+}
+
+function CartItems({ items, products }) {
+  return <ItemsDisplay>
+    {
+      items.map(i => (
+        <ProductCard 
+          quantity={i.quantity}
+          quantityDesc="Jumlah di Keranjang"
+          product={products.find(p => p.id === i.productId)}
+          className="w-[49%]"
+        />
+      ))
+    }
+  </ItemsDisplay>;
+}
+
+function ProductCard({ 
+  quantity,
+  quantityDesc, 
+  product, 
+  className = ""
+}) {
+  return (
+    <div className={`
+      flex gap-2 items-center bg-black border-1 rounded-[8px] p-4
+      ${className}
+    `}>
+      <img 
+        src={product.image}
+        className="rounded-[8px] w-[210px] h-[140px]"
+      />
+      <div className="flex flex-col gap-3">
+        <p className="text-light-orange text-[12px] ">{product.type}</p>
+        <div className="flex flex-col gap-2">
+          <b className="text-[18px]">{product.name}</b>
+          <span>
+            {quantityDesc}: <span className="text-light-orange">
+              {quantity} {resolveStockDesc(product.type)}
+            </span>
+          </span>
+          <ProductPrice 
+            product={product}
+          />
+        </div>
       </div>
     </div>
   );
