@@ -2,6 +2,8 @@ import { useLocation } from "react-router-dom";
 import AdminPageLayout from "../../layouts/AdminPageLayout";
 import { useEffect, useMemo, useRef, useState } from "react";
 import PagerBar from "../../components/PagerBar";
+import { productService, reviewService } from "../../objects";
+import Rating from "../../components/Rating";
 
 const menus = [
   "Daftar Alamat",
@@ -15,12 +17,26 @@ export default function AdminContactDetailPage() {
   const user = location.state.user;
   const [currentMenu, setCurrentMenu] = useState(menus[0]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [reviews, setReviews] = useState(null);
+  const [reviewProducts, setReviewProducts] = useState(null);
   const itemsPerPage = 4;
   const endIndex = currentPage * itemsPerPage;
   const startIndex = endIndex - itemsPerPage;
 
   useEffect(() => {
     setCurrentPage(1);
+
+    const fetchReviews = async () => {
+      const reviews = await reviewService.getByUserId(user.id);
+      setReviews(reviews);
+
+      const products = await productService.getByIds(
+        [...new Set(reviews.map(r => r.productId))]
+      );
+      setReviewProducts(products);
+    };
+    
+    if (currentMenu === menus[1] && !reviews) fetchReviews();
   }, [currentMenu]);
 
   return <AdminPageLayout>
@@ -36,6 +52,10 @@ export default function AdminContactDetailPage() {
         currentMenu === menus[0] ? <Addresses addresses={
           user.addresses.slice(startIndex, endIndex)
         } />
+        : currentMenu === menus[1] && reviews && reviewProducts ? <Reviews
+          reviews={reviews.slice(startIndex, endIndex)}
+          products={reviewProducts}
+        />
         : <></>
       }
       <PagerBar 
@@ -43,8 +63,10 @@ export default function AdminContactDetailPage() {
         setCurrentPage={setCurrentPage}
         itemsPerPage={itemsPerPage}
         totalItems={
-          currentMenu === menus[0] ? user.addresses.length : 1
+          currentMenu === menus[0] ? user.addresses.length :
+          currentMenu === menus[1] ? reviews ? reviews.length : 1 : 1
         }
+        resultPlaceholder="Koleksi"
       />
     </div>
   </AdminPageLayout>;
@@ -67,7 +89,6 @@ function Menus({
         if (!v) return;
         const curWidth = v.getBoundingClientRect().width;
         updated[i] = curWidth + extraWidth;
-        console.log(updated);
       });
       setIndicatorWidth(updated[0]);
       setMenuWidths(updated);
@@ -173,6 +194,56 @@ function RowInfo({
     <div className="flex items-center gap-4 justify-between">
       <div>{label}</div>
       <div className="text-end">{value}</div>
+    </div>
+  );
+}
+
+function Reviews({ reviews, products }) {
+  return (
+    <div className="flex flex-wrap gap-4 justify-between">
+      {
+        reviews.map(r => (
+          <Review 
+            review={r}
+            product={products.find(p => p.id === r.productId)}
+            className="w-[49%]"
+          />
+        ))
+      }
+    </div>
+  );
+}
+
+function Review({ 
+  review, 
+  product,
+  className = ""
+}) {
+  return (
+    <div className={`
+      flex flex-col gap-8 border-1 rounded-[8px] p-4
+      ${className}
+    `}>
+      <div className="flex gap-2 items-center">
+        <img 
+          src={product?.image}
+          className="h-[80px] w-[120px] rounded-[8px]"
+        />
+        <div className="font-bold">
+          <p className="text-[12px] text-light-orange">{product?.type}</p>
+          <p className="text-[18px]">{product?.name}</p>
+        </div>
+      </div>
+      <div className="flex flex-col gap-4">
+        <div className="flex gap-4 items-center">
+          <Rating 
+            rating={review.rating}
+            starSize={22} 
+          />
+          <span className="text-light-gray">{review.publishedAt}</span>
+        </div>
+        <p>{review.content}</p>
+      </div>
     </div>
   );
 }

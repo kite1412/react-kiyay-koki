@@ -2,6 +2,27 @@ import orandaRoseTail from "../assets/oranda-rose-tail.png";
 import { createProduct } from "../models/Product";
 import ProductType from "../models/ProductType";
 
+export const mockReviews = Array.from({ length: 20 }).map((_, i) => (
+  {
+    id: i + 1,
+    userId: 1,
+    productId: Math.min(8, i + 1),
+    phoneNumber: "081234124",
+    publishedAt: "22-01-2025",
+    content: `
+      ${i % 2 === 0 ? `
+        Lorem Ipsum is simply dummy text of the printing and typesetting
+        industry. Lorem Ipsum has been the industry's standard dummy text
+        ever since the 1500s, when an unknown printer took a galley of
+        type and scrambled it to make a type specimen book.
+        It has survived not only five centuries, but also the leap
+        into electronic typesetting, remaining essentially unchanged.  
+      ` : "Empty comment"}
+    `,
+    rating: 4
+  }
+))
+
 export const mockFishesData = Array.from({ length: 8 }).map((_, i) => {
   return createProduct({
     id: i + 1,
@@ -41,23 +62,7 @@ export const mockFishesData = Array.from({ length: 8 }).map((_, i) => {
         count: 18
       }
     ],
-    reviews: Array.from({ length: 20 }).map((_, i) => (
-      {
-        phoneNumber: "081234124",
-        publishedAt: "22-01-2025",
-        content: `
-          ${i > 9 ? `
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of
-            type and scrambled it to make a type specimen book.
-            It has survived not only five centuries, but also the leap
-            into electronic typesetting, remaining essentially unchanged.  
-          ` : "Empty comment"}
-        `,
-        rating: 4
-      }
-    )),
+    reviews: mockReviews,
     type: ProductType.FISH
   })
 })
